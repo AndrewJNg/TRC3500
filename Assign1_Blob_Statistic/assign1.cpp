@@ -1,5 +1,21 @@
 // #include <opencv2/opencv.hpp>
-// #include <iostream>
+// #include <iostrea
+    /*
+    // Turning on camera and stream video
+    cv::VideoCapture cap(0); // On my laptop "0" is the built-in camera. 
+    if (!cap.isOpened()) {
+        std::cerr << "Error opening the camera!" << std::endl;
+        return -1;
+    }
+
+    // Capture a picture from video feed
+    cv::Mat frame;
+    cap >> frame;
+    if (frame.empty()) {
+        std::cerr << "No frame captured?" << std::endl;
+        return -1;
+    }
+    */m>
 #include <iostream>
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/mat.hpp>
@@ -25,22 +41,6 @@ save it in the directory where this file is stored. Then, run it in a Windows te
 
 using namespace cv;
 int main() {
-    /*
-    // Turning on camera and stream video
-    cv::VideoCapture cap(0); // On my laptop "0" is the built-in camera. 
-    if (!cap.isOpened()) {
-        std::cerr << "Error opening the camera!" << std::endl;
-        return -1;
-    }
-
-    // Capture a picture from video feed
-    cv::Mat frame;
-    cap >> frame;
-    if (frame.empty()) {
-        std::cerr << "No frame captured?" << std::endl;
-        return -1;
-    }
-    */
 
     /////////////// load an image and put it to frame (for troubleshooting without using camera to capture frame) //////////////////////////////
     // std::string image_path = samples::findFile("DEMO_circle_fish_star_01.jpg");
