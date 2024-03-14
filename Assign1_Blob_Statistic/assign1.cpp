@@ -59,11 +59,17 @@ int main() {
         return 1;
     }
     
+    // Resize image
     cv::resize(image, image, cv::Size(1280,720));
+
+    // Increase contrast
+    // double alpha = 1.5; // Adjust for desired contrast level (higher for more contrast)
+    // int beta = 0; // Adjust for brightness (positive for brighter, negative for darker)
+    // cv::convertScaleAbs(image, image, alpha, beta);
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // /*
-    // Using Otsu's Binarization (https://docs.opencv.org/4.x/d7/d4d/tutorial_py_thresholding.html)
+    // [Option 1] Using Otsu's Binarization (https://docs.opencv.org/4.x/d7/d4d/tutorial_py_thresholding.html)
 
     // Convert to Greyscale
     Mat greyImage;
@@ -90,7 +96,7 @@ int main() {
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /*
-    // Using HSV spectrum to obtain binary image, so that it is less dependent on Brightness value    
+    // [Option 2] Using HSV spectrum to obtain binary image, so that it is less dependent on Brightness value    
     Mat hsv_img;
     cv::cvtColor(image,hsv_img,cv::COLOR_BGR2HSV);
 
