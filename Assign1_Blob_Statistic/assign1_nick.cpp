@@ -50,7 +50,7 @@ double compareBlobs(const BlobData& blob1, const BlobData& blob2) {
   double score = 0.0;
 
   // Compare area with a weight of 1
-  double areaWeight = 1.0 / totalWeight;
+  double areaWeight = 1.0/ totalWeight;
   double areaDiff = std::abs(blob1.area - blob2.area);
   double areaNormDiff = areaDiff / (std::max(blob1.area, blob2.area) + 1e-10); // Avoid division by zero
   score += (1.0 - areaNormDiff) * areaWeight;
@@ -77,14 +77,40 @@ double compareBlobs(const BlobData& blob1, const BlobData& blob2) {
   return score;
 }
 
+std::map<int, char> blobToGroup; // Map blob number to group letter
+std::unordered_map<char, int> categoryCounts; // Map category letter to count
 
-int nextClassLabel = 0; // Declare nextClassLabel
+// Function to categorize blobs based on similarity
+void categorizeBlobs( std::vector<BlobData>& blobInfo, double threshold) {
+  char currentGroup = 'A';
+  
 
-char assignUniqueLetterLabel(int& labelCounter) {
-    char label = 'A' + labelCounter % 26;  // Use uppercase letters (wrap around at Z)
-    labelCounter++;
-    return label;
+  for (int i = 0; i < blobInfo.size(); ++i) {
+    for (int j = i+1; j < blobInfo.size(); ++j) {
+      printf("num %d \n",blobInfo[j].blobNumber);
+      if (blobInfo[j].classLabel.empty()){
+        double similarityScore = compareBlobs(blobInfo[i], blobInfo[j]);
+        if (similarityScore > threshold) {
+            if (!blobToGroup.count(blobInfo[i].blobNumber)) {
+                blobInfo[j].blobNumber = blobInfo[i].blobNumber;
+            
+            // blobToGroup[blobInfo[i].blobNumber] = currentGroup;
+            // currentGroup++;
+            // blobToGroup[blobInfo[j].blobNumber] = blobToGroup[blobInfo[i].blobNumber];
+            
+            }
+            // categoryCounts[blobToGroup[blobInfo[i].blobNumber]]++;
+        }
+        
+      }
+      //if not empty, skip it as it has already been assigned
+
     }
+    printf("\n");
+  }
+
+
+}
 
 int main() {
     
@@ -98,7 +124,6 @@ int main() {
     
     cv::Mat frame;
 
-    // while(true){
     // Capture a picture from video feed
     cap >> frame;
     if (frame.empty()) {
@@ -109,15 +134,12 @@ int main() {
     
     cv::namedWindow("Original", cv::WINDOW_NORMAL);
     cv::resizeWindow("Original", 800, 600); 
-    cv::imshow("Original", frame);
-
-    // if ((char)cv::waitKey(0) > 0) break;
-    
+    cv::imshow("Original", frame);    
     */
 
     // cv::Mat frame = cv::imread("DEMO_circle_fish_star_02.jpg",cv::IMREAD_COLOR);
-    // cv::Mat frame = cv::imread("DEMO_components_02.png",cv::IMREAD_COLOR);
-    cv::Mat frame = cv::imread("FYI_components_01.png",cv::IMREAD_COLOR);
+    cv::Mat frame = cv::imread("DEMO_components_02.png",cv::IMREAD_COLOR);
+    // cv::Mat frame = cv::imread("FYI_components_01.png",cv::IMREAD_COLOR);
     // cv::Mat frame = cv::imread("FYI_components_05.png",cv::IMREAD_COLOR);
     // cv::Mat frame = cv::imread("FYI_components_03.png",cv::IMREAD_COLOR);
     if (frame.empty()) {
@@ -181,7 +203,7 @@ int main() {
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Blob analysis
+    // Blob analysis 
     // /*
     std::unordered_map<char, int> classCounts; // Map class label to count
 
@@ -237,6 +259,7 @@ int main() {
         storeBlobData(blobInfo, label, cv::Point2f(centroidX, centroidY), m00, perimeter, circularity, aspectRatio, cv::Point2f(centroidX - 150 * cos(theta), centroidY - 150 * sin(theta)));
         for (const BlobData& blob : blobInfo) {
 
+            /*
         // Number to display (adjust formatting as needed)
         std::string numberText = std::to_string(blob.blobNumber);
 
@@ -255,15 +278,37 @@ int main() {
 
         // Add the text to the image
         cv::putText(coloredImage, numberText, cv::Point(textX, textY), font, fontScale, cv::Scalar(118, 185, 0), fontThickness);
+        */
         }
         
-        // printf("Blob number: %d, Centre of area: [%2f,%2f], Area: %f, Perimeter: %f, Circularity: %f, Aspect ratio: %f, Axis of minimum inertia: [%2f,%2f]\n", label, centroidX, centroidY, m00, perimeter, circularity,aspectRatio, centroidX - 150 * cos(theta), centroidY - 150 * sin(theta));
+        printf("Blob number: %d, Centre of area: [%2f,%2f], Area: %f, Perimeter: %f, Circularity: %f, Aspect ratio: %f, Axis of minimum inertia: [%2f,%2f]\n", label, centroidX, centroidY, m00, perimeter, circularity,aspectRatio, centroidX - 150 * cos(theta), centroidY - 150 * sin(theta));
         
     }
     // */
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    // Set the similarity threshold (0 to 100)
+    double threshold = 70.0;
+
+    // Categorize and print results
+    categorizeBlobs(blobInfo, threshold);
+    // Print categorization results
+
+    printf("Categorization results:\n");
+    for (const auto& [blobNumber, group] : blobToGroup) {
+    printf("  Blob %d - Category %c\n", blobNumber, group);
+    }
+
+    printf("\nCategory Counts:\n");
+    for (const auto& [category, count] : categoryCounts) {
+    printf("  Category %c: %d\n", category, count);
+    }
+    
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Categorize components into groups
+    
+    std::map<int, char> blobToGroup;
     // print similarity table
     if (blobInfo.size() < 2) {
     std::cout << "Not enough blobs found for comparison. Minimum 2 blobs required." << std::endl;
@@ -278,21 +323,38 @@ int main() {
 
     // Print similarity scores
     for (int i = 0; i < blobInfo.size(); ++i) {
-    printf("%-10d", blobInfo[i].blobNumber);  // Print blob number (adjust width as needed)
-    for (int j = 0; j < blobInfo.size(); ++j) {
-        if (i != j) {  // Skip comparing a blob to itself
-        double similarityScore = compareBlobs(blobInfo[i], blobInfo[j]);
-        printf("%6.2f ", similarityScore);  // Print similarity score (adjust width and precision as needed)
-        } else {
-        printf("%6s ", "----");  // Print "----" for self-comparison
+    printf("%-4d  %-6c", i+1, 'A'-1+blobInfo[i].blobNumber);  // Print blob number (adjust width as needed)
+        for (int j = 0; j < blobInfo.size(); ++j) {
+            if (i != j) {  // Skip comparing a blob to itself
+            double similarityScore = compareBlobs(blobInfo[i], blobInfo[j]);
+            printf("%6.2f ", similarityScore);  // Print similarity score (adjust width and precision as needed)
+            } else {
+            printf("%6s ", "----");  // Print "----" for self-comparison
+            }
         }
-    }
     printf("\n");
-    }
-
     
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Add category labels on the image
+    // Number to display (adjust formatting as needed)
+    std::string numberText = std::string(1,'A'-1+blobInfo[i].blobNumber);
 
+    // Get font for text rendering (adjust font settings as needed)
+    cv::HersheyFonts font = cv::FONT_HERSHEY_DUPLEX;  // Choose font type
+    double fontScale = 4.0;  // Text size multiplier
+    int fontThickness = 5;  // Text line thickness
 
+    // Size of the text for vertical placement
+    int baseline = 0;
+    cv::Size textSize = cv::getTextSize(numberText, font, fontScale, fontThickness, &baseline);
+
+    // Position the text underneath the object's centroid
+
+    int textX = blobInfo[i].center.x - textSize.width / 2;
+    int textY = blobInfo[i].center.y + textSize.height + 5 + 100;  // Adjust spacing as needed
+    // Add the text to the image
+    cv::putText(coloredImage, numberText, cv::Point(textX, textY), font, fontScale, cv::Scalar(118, 185, 0), fontThickness);
+    }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //Display image
