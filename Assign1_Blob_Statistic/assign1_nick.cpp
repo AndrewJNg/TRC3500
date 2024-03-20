@@ -39,11 +39,11 @@ struct BlobData {
 
   // Constructor (optional)
   BlobData(int num, cv::Point2f c, double a, double p, double circ, double ar, cv::Point2f axis, double elong, double rect)
-      : blobNumber(num), center(c), area(a), perimeter(p), circularity(circ), aspectRatio(ar), axisOfInertia(axis), elongation(elong), rectangularity(rect) {}
+      : blobNumber(num), classLabel(num), center(c), area(a), perimeter(p), circularity(circ), aspectRatio(ar), axisOfInertia(axis), elongation(elong), rectangularity(rect) {}
 };
 
 // Function to store blob data
-void storeBlobData(std::vector<BlobData> &blobInfo, int blobNumber, cv::Point2f center, double area, double perimeter, double circularity, double aspectRatio, cv::Point2f axisOfInertia, double elongation, double rectangularity) {
+void storeBlobData(std::vector<BlobData> &blobInfo, int blobNumber,int classLabel, cv::Point2f center, double area, double perimeter, double circularity, double aspectRatio, cv::Point2f axisOfInertia, double elongation, double rectangularity) {
   BlobData newBlob(blobNumber, center, area, perimeter, circularity, aspectRatio, axisOfInertia, elongation, rectangularity);
   blobInfo.push_back(newBlob);
 }
@@ -121,9 +121,9 @@ void categorizeBlobs(std::vector<BlobData> &blobInfo, double threshold)
             double similarityScore = compareBlobs(blobInfo[i], blobInfo[j]);
             if (similarityScore > threshold)
             {
-                if (!blobToGroup.count(blobInfo[i].blobNumber))
+                if (!blobToGroup.count(blobInfo[i].classLabel))
                 {
-                    blobInfo[j].blobNumber = blobInfo[i].blobNumber; //TODO
+                    blobInfo[j].classLabel = blobInfo[i].classLabel; //TODO
                 }
             }
         }
@@ -282,13 +282,13 @@ int main()
         // Calculate additional moments if needed (e.g., central moments)
         // Hu moments for shape recognition can also be extracted using moments data
             
-        storeBlobData(blobInfo, i, cv::Point2f(centroidX, centroidY), area, perimeter,
+        storeBlobData(blobInfo, i, i, cv::Point2f(centroidX, centroidY), area, perimeter,
                 circularity, aspectRatio, cv::Point2f(centroidX - 150 * cos(theta), centroidY - 150 * sin(theta)),
                 elongation, rectangularity);
                 
-        printf("num:%d, Centre of area: [%2d,%2d], Area: %f, Perimeter: %f, Circularity: %f, Aspect ratio: %f, Elongation: %f, Rectangularity: %f,  Axis of minimum inertia: [%2f,%2f]\n",
+        printf("num:%d, Centre of area: [%2d,%2d], Area: %f, Perimeter: %f, Circularity: %f, Aspect ratio: %f, Elongation: %f, Rectangularity: %f,  Axis of minimum inertia: [%2f,%2f], theta: %2f\n",
                 i+1, centroidX, centroidY, area, perimeter, circularity, aspectRatio, elongation, rectangularity,
-                centroidX - 150 * sin(theta), centroidY - 150 * cos(theta));
+                centroidX - 150 * sin(theta), centroidY - 150 * cos(theta),theta*180/3.142);
   
         cv::circle(coloredImage, cv::Point(centroidX, centroidY), 20, cv::Scalar(0, 0, 255), -1);
 
@@ -407,7 +407,7 @@ int main()
     // Print similarity scores
     for (int i = 0; i < blobInfo.size(); ++i)
     {
-        printf("%-4d  %-6c", i + 1, 'A'  + blobInfo[i].blobNumber); // Print blob number (adjust width as needed) //TODO
+        printf("%-4d  %-6c", blobInfo[i].blobNumber+1, 'A'  + blobInfo[i].classLabel); // Print blob number (adjust width as needed) //TODO
         // printf("%-4d  %-6c", i + 1, 'A' - 1 + blobInfo[i].blobNumber); // Print blob number (adjust width as needed)
         for (int j = 0; j < blobInfo.size(); ++j)
         {
@@ -426,7 +426,7 @@ int main()
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Add category labels on the image
         // Number to display (adjust formatting as needed)
-        std::string numberText = std::string(1, 'A'  + blobInfo[i].blobNumber); // TODO
+        std::string numberText = std::string(1, 'A'  + blobInfo[i].classLabel); // TODO
         // std::string numberText = std::string(1, 'A' - 1 + blobInfo[i].blobNumber); // TODO
         // std::string numberText = std::string(1, blobInfo[i].blobNumber);
 
