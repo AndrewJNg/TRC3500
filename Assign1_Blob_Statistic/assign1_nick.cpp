@@ -25,7 +25,8 @@ save it in the directory where this file is stored. Then, run it in a Windows te
 
 
 struct BlobData {
-  std::string classLabel;
+//   std::string classLabel;
+  int classLabel;
   int blobNumber;
   cv::Point2f center;
   double area;
@@ -117,15 +118,12 @@ void categorizeBlobs(std::vector<BlobData> &blobInfo, double threshold)
         for (int j = i + 1; j < blobInfo.size(); ++j)
         {
             // printf("num %d \n", blobInfo[j].blobNumber);
-            if (blobInfo[j].classLabel.empty())
+            double similarityScore = compareBlobs(blobInfo[i], blobInfo[j]);
+            if (similarityScore > threshold)
             {
-                double similarityScore = compareBlobs(blobInfo[i], blobInfo[j]);
-                if (similarityScore > threshold)
+                if (!blobToGroup.count(blobInfo[i].blobNumber))
                 {
-                    if (!blobToGroup.count(blobInfo[i].blobNumber))
-                    {
-                        blobInfo[j].blobNumber = blobInfo[i].blobNumber; //TODO
-                    }
+                    blobInfo[j].blobNumber = blobInfo[i].blobNumber; //TODO
                 }
             }
         }
@@ -159,8 +157,9 @@ int main()
     cv::imshow("Original", frame);
     */
 
-    // cv::Mat frame = cv::imread("DEMO_circle_fish_star_02.jpg",cv::IMREAD_COLOR);
-    cv::Mat frame = cv::imread("DEMO_components_02.png", cv::IMREAD_COLOR);
+    // cv::Mat frame = cv::imread("DEMO_circle_fish_star_01.jpg",cv::IMREAD_COLOR);
+    cv::Mat frame = cv::imread("DEMO_circle_fish_star_02.jpg",cv::IMREAD_COLOR);
+    // cv::Mat frame = cv::imread("DEMO_components_02.png", cv::IMREAD_COLOR);
     // cv::Mat frame = cv::imread("FYI_components_01.png",cv::IMREAD_COLOR);
     // cv::Mat frame = cv::imread("FYI_components_05.png",cv::IMREAD_COLOR);
     // cv::Mat frame = cv::imread("FYI_components_03.png",cv::IMREAD_COLOR);
@@ -250,13 +249,6 @@ int main()
 
     for (size_t i = 0; i < contours.size(); i++) {
         // Calculate area, perimeter, etc.
-        cv::RotatedRect rotatedRect = cv::minAreaRect(contours[i]); 
-
-        // Calculate aspect ratio from rotated rectangle
-        double width = rotatedRect.size.width;
-        double height = rotatedRect.size.height;
-        double aspectRatio = width > height ? width / height : height / width;  // Handle both width > height and vice versa
-
         double area = cv::contourArea(contours[i]);
         double perimeter = cv::arcLength(contours[i], true); // Set true for closed contour
         
@@ -270,7 +262,11 @@ int main()
         double varY = moments.m02 / moments.m00;
 
         // Aspect ratio (assuming width > height)
-        // double aspectRatio = sqrt(varX / varY);
+        cv::RotatedRect rotatedRect = cv::minAreaRect(contours[i]); 
+        // Calculate aspect ratio from rotated rectangle
+        double width = rotatedRect.size.width;
+        double height = rotatedRect.size.height;
+        double aspectRatio = width > height ? width / height : height / width;  // Handle both width > height and vice versa
         
         // Compute the axis of rotation
         double theta = 0.5 * atan2(2 * moments.m11, moments.m20 - moments.m02);
@@ -281,17 +277,7 @@ int main()
         double rectangularity=0;
         
         const cv::Scalar color = cv::Scalar(0, 255, 0);  // Green color
-        const int thickness = 2;
-        for (int j = 0; j < 4; j++) {
-        // Access point directly using vector indexing
-        // cv::Point2f pt = vertices[j];
-        // line(coloredImage, pt, vertices[(j + 1) % 4], color, thickness);  // Draw line using vector
-        // ; added here
-        }
-        // cv::Rect boundingRect = cv::boundingRect(contours[i]);
-        // cv::rectangle(coloredImage, rotatedRect, cv::Scalar(0, 255, 0), 2);  // Green box with thickness 2
-
-        
+        const int thickness = 2; 
 
         // Calculate additional moments if needed (e.g., central moments)
         // Hu moments for shape recognition can also be extracted using moments data
@@ -302,13 +288,12 @@ int main()
                 
         printf("num:%d, Centre of area: [%2d,%2d], Area: %f, Perimeter: %f, Circularity: %f, Aspect ratio: %f, Elongation: %f, Rectangularity: %f,  Axis of minimum inertia: [%2f,%2f]\n",
                 i+1, centroidX, centroidY, area, perimeter, circularity, aspectRatio, elongation, rectangularity,
-                centroidX - 150 * cos(theta), centroidY - 150 * sin(theta));
+                centroidX - 150 * sin(theta), centroidY - 150 * cos(theta));
   
-
         cv::circle(coloredImage, cv::Point(centroidX, centroidY), 20, cv::Scalar(0, 0, 255), -1);
 
         // Draw the axis of rotation on the image
-        cv::Point2d axis(centroidX - 150 * cos(theta), centroidY - 150 * sin(theta));
+        cv::Point2d axis(centroidX - 150 * sin(theta), centroidY - 150 * cos(theta));
         cv::line(coloredImage, cv::Point(centroidX, centroidY), axis, cv::Scalar(0, 255, 0), 8);
 
 
@@ -418,6 +403,7 @@ int main()
     }
     printf("\n");
 
+    
     // Print similarity scores
     for (int i = 0; i < blobInfo.size(); ++i)
     {
@@ -464,16 +450,16 @@ int main()
     printf("\n");
     printf("\n");
 
-    for (int i=2;i<4;i++){
-        printf("%-4d  %-6c", i + 1, 'A'  + blobInfo[i].blobNumber); // Print blob number (adjust width as needed) //TODO
-        // double similarityScore = compareBlobs(blobInfo[i], blobInfo[j]);
+    // for (int i=2;i<4;i++){
+    //     printf("%-4d  %-6c", i + 1, 'A'  + blobInfo[i].blobNumber); // Print blob number (adjust width as needed) //TODO
+    //     // double similarityScore = compareBlobs(blobInfo[i], blobInfo[j]);
         
-        printf("Blob number: %d, Centre of area: [%2d,%2d], Area: %f, Perimeter: %f, Circularity: %f, Aspect ratio: %f, Elongation: %f, Rectangularity: %f\n",
-            i+1, blobInfo[i].center.x,blobInfo[i].center.y, blobInfo[i].area, blobInfo[i].perimeter, blobInfo[i].circularity, blobInfo[i].aspectRatio, blobInfo[i].elongation, blobInfo[i].rectangularity);
+    //     printf("Blob number: %d, Centre of area: [%2d,%2d], Area: %f, Perimeter: %f, Circularity: %f, Aspect ratio: %f, Elongation: %f, Rectangularity: %f\n",
+    //         i+1, blobInfo[i].center.x,blobInfo[i].center.y, blobInfo[i].area, blobInfo[i].perimeter, blobInfo[i].circularity, blobInfo[i].aspectRatio, blobInfo[i].elongation, blobInfo[i].rectangularity);
        
-    }
-    double similarityScore = compareBlobs(blobInfo[2], blobInfo[3]);
-    printf("%6.2f ", similarityScore); // Print similarity score (adjust width and precision as needed)
+    // }
+    // double similarityScore = compareBlobs(blobInfo[2], blobInfo[3]);
+    // printf("%6.2f ", similarityScore); // Print similarity score (adjust width and precision as needed)
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
