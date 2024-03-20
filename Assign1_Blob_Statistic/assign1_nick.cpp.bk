@@ -8,6 +8,20 @@
 #include <unordered_map> // for std::unordered_map
 #include <cmath>
 
+/* Ahmet 13-Feb-2024
+
+Sample program for capturing and displaying a frame, and printing the pixel
+values at a given position.
+To compile, copy the following lines into a file, say "compile.bat", and
+save it in the directory where this file is stored. Then, run it in a Windows terminal.
+
+  g++ -o opencv_cam opencv_cam.cpp -std=c++17^
+    -I "C:\msys64\mingw64\include\opencv4"^
+    -L "C:\msys64\mingw64\bin"^
+    -lopencv_core-409 -lopencv_highgui-409 -lopencv_imgcodecs-409^
+    -lopencv_imgproc-409 -lopencv_videoio-409
+*/
+
 
 struct BlobData {
 //   std::string classLabel;
@@ -23,25 +37,19 @@ struct BlobData {
   double rectangularity; // Added field for rectangularity
   double theta;
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Blob data structure
   // Constructor (optional)
   BlobData(int num,double theta_in, cv::Point2f c, double a, double p, double circ, double ar, cv::Point2f axis, double elong, double rect)
       : blobNumber(num), classLabel(num), theta(theta_in), center(c), area(a), perimeter(p), circularity(circ), aspectRatio(ar), axisOfInertia(axis), elongation(elong), rectangularity(rect) {}
 };
 
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Function blocks
-
-// Store data function
+// Function to store blob data
 void storeBlobData(std::vector<BlobData> &blobInfo, int blobNumber,int classLabel, double theta, cv::Point2f center, double area, double perimeter, double circularity, double aspectRatio, cv::Point2f axisOfInertia, double elongation, double rectangularity) {
   BlobData newBlob(blobNumber,theta, center, area, perimeter, circularity, aspectRatio, axisOfInertia, elongation, rectangularity);
   blobInfo.push_back(newBlob);
 }
 
-//////////////////////////////////////////////////
-// Compare data function, outputs a similarity score from 0 to 100 (100 being identical)
+#include <cmath> // for std::abs, std::pow
+
 double compareBlobs(const BlobData &blob1, const BlobData &blob2) {
   double totalWeight = 5.0; // Adjust weights as needed (sum should be 1)
   double score = 0.0;
@@ -102,8 +110,7 @@ double compareBlobs(const BlobData &blob1, const BlobData &blob2) {
 std::map<int, char> blobToGroup;              // Map blob number to group letter
 std::unordered_map<char, int> categoryCounts; // Map category letter to count
 
-//////////////////////////////////////////////////
-// Categorize blobs function based on similarity
+// Function to categorize blobs based on similarity
 void categorizeBlobs(std::vector<BlobData> &blobInfo, double threshold)
 {
     for (int i = 0; i < blobInfo.size(); ++i)
@@ -126,7 +133,7 @@ void categorizeBlobs(std::vector<BlobData> &blobInfo, double threshold)
 
 int main()
 {
-    
+
     /*
     // Turning on camera and stream video
     cv::VideoCapture cap(1); // On my laptop "0" is the built-in camera.
@@ -150,23 +157,25 @@ int main()
     cv::imshow("Original", frame);
     */
 
-    // /*
     // cv::Mat frame = cv::imread("DEMO_circle_fish_star_01.jpg",cv::IMREAD_COLOR);
     // cv::Mat frame = cv::imread("DEMO_circle_fish_star_02.jpg",cv::IMREAD_COLOR);
     cv::Mat frame = cv::imread("DEMO_components_02.png", cv::IMREAD_COLOR);
 
+
+    // cv::Mat frame = cv::imread("FYI_components_01.png",cv::IMREAD_COLOR);
+    // cv::Mat frame = cv::imread("FYI_components_05.png",cv::IMREAD_COLOR);
+    // cv::Mat frame = cv::imread("FYI_components_03.png",cv::IMREAD_COLOR);
     if (frame.empty())
     {
         std::cerr << "Error: Could not open or find the image!\n";
         return -1;
     }
-    // */
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Picture identification (Using Hue, Saturation and Brightness value along with Otsu's Binarization, https://docs.opencv.org/4.x/d7/d4d/tutorial_py_thresholding.html)
+    // Picture identification
+    
     cv::Mat image_blurred_with_3x3_kernel;
     cv::GaussianBlur(frame, image_blurred_with_3x3_kernel, cv::Size(3, 3), 0);
-
     // Convert to HSV
     cv::Mat hsv;
     cv::cvtColor(frame, hsv, cv::COLOR_BGR2HSV);
@@ -205,16 +214,25 @@ int main()
     cv::findContours(frame, contours, hierarchy, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
 
     std::vector<BlobData> blobInfo;
+    
+    // cv::namedWindow("frame", cv::WINDOW_NORMAL);
+    // cv::resizeWindow("frame", 800, 600);
+    // cv::imshow("frame", frame);
+    // cv::waitKey(0);
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Colourise the blobs
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Connected component analysis
+    // /*
     cv::Mat labels, stats, centroids;
     int numComponents = cv::connectedComponentsWithStats(frame, labels, stats, centroids,8);
 
     // Assign random color to each blob
     std::vector<cv::Vec3b> colors(numComponents);
-    for (int i = 0; i < numComponents; ++i)  colors[i] = cv::Vec3b(rand() & 255, rand() & 255, rand() & 255);
-    
+    for (int i = 0; i < numComponents; ++i)
+    {
+        colors[i] = cv::Vec3b(rand() & 255, rand() & 255, rand() & 255);
+    }
+
     // Colorize the blobs
     cv::Mat coloredImage(frame.size(), CV_8UC3, cv::Scalar(255, 255, 255));
     for (int y = 0; y < frame.rows; ++y)
@@ -228,21 +246,26 @@ int main()
             }
         }
     }
+    // */
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Blob analysis, computing each blob's staticstics
 
     for (size_t i = 0; i < contours.size(); i++) {
-        // Calculate area & perimeter
+        // Calculate area, perimeter, etc.
         double area = cv::contourArea(contours[i]);
         double perimeter = cv::arcLength(contours[i], true); // Set true for closed contour
         
-        // Calculate Moments
+        // Moments
         cv::Moments moments = cv::moments(contours[i]);
         int centroidX = moments.m10/moments.m00;
         int centroidY = moments.m01/moments.m00;
         
-        // Calculate Aspect ratio from rotated rectangle (for best fitting)
+        // Variance of x and y coordinates (used for aspect ratio)
+        double varX = moments.m20 / moments.m00;
+        double varY = moments.m02 / moments.m00;
+
+        // Aspect ratio (assuming width > height)
         cv::RotatedRect rotatedRect = cv::minAreaRect(contours[i]); 
+        // Calculate aspect ratio from rotated rectangle
         double width = rotatedRect.size.width;
         double height = rotatedRect.size.height;
         double aspectRatio = width > height ? width / height : height / width;  // Handle both width > height and vice versa
@@ -250,12 +273,17 @@ int main()
         // Compute the axis of rotation
         double theta = 0.5 * atan2(2 * (moments.m00*moments.m11 -moments.m10*moments.m01), (   (moments.m00*moments.m20-moments.m10*moments.m10) - (moments.m00*moments.m02-moments.m01*moments.m01)  ));
 
-        // Compute circularity, elongation and rectangularity
         double circularity = (4.0 * 3.142 * area) / (perimeter * perimeter);
-        double elongation=0; // decided not to use
-        double rectangularity=0; // decided not to use
+        
+        double elongation=0;
+        double rectangularity=0;
+        
+        const cv::Scalar color = cv::Scalar(0, 255, 0);  // Green color
+        const int thickness = 2; 
+
+        // Calculate additional moments if needed (e.g., central moments)
+        // Hu moments for shape recognition can also be extracted using moments data
             
-        // Store blob data into dynamic array    
         storeBlobData(blobInfo, i, i, theta,cv::Point2f(centroidX, centroidY), area, perimeter,
                 circularity, aspectRatio, cv::Point2f(centroidX - 150 * cos(theta), centroidY - 150 * sin(theta)),
                 elongation, rectangularity);
@@ -264,7 +292,6 @@ int main()
         //         i+1, centroidX, centroidY, area, perimeter, circularity, aspectRatio, elongation, rectangularity,
         //         centroidX - 150 * sin(theta), centroidY - 150 * cos(theta),theta*180/3.142);
   
-        // Draw circle on centroid point
         cv::circle(coloredImage, cv::Point(centroidX, centroidY), 20, cv::Scalar(0, 0, 255), -1);
 
         // Draw the axis of rotation on the image
@@ -274,18 +301,141 @@ int main()
 
     }
     
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Blob analysis
+    /*
+    std::unordered_map<char, int> classCounts; // Map class label to count
+
+    // Stat calculations
+    for (int label = 1; label < numComponents; ++label)
+    {
+        int x = stats.at<int>(label, cv::CC_STAT_LEFT);
+        int y = stats.at<int>(label, cv::CC_STAT_TOP);
+        int width = stats.at<int>(label, cv::CC_STAT_WIDTH);
+        int height = stats.at<int>(label, cv::CC_STAT_HEIGHT);
+
+        // Centre of mass
+        double centroidX = centroids.at<double>(label, 0);
+        double centroidY = centroids.at<double>(label, 1);
+
+        cv::circle(coloredImage, cv::Point(centroidX, centroidY), 20, cv::Scalar(0, 0, 255), -1);
+
+        // Moment calculations
+        double m00 = 0.0;            // Area
+        double m10 = 0.0, m01 = 0.0; // For perimeter calculation
+        double m20 = 0.0, m02 = 0.0, m11 = 0.0;
+        for (int y = 0; y < frame.rows; ++y)
+        {
+            for (int x = 0; x < frame.cols; ++x)
+            {
+                if (labels.at<int>(y, x) == label)
+                {
+                    m00++; // Area
+                    m10 += x;
+                    m01 += y;
+                    m20 += (x - centroidX) * (x - centroidX);
+                    m02 += (y - centroidY) * (y - centroidY);
+                    m11 += (x - centroidX) * (y - centroidY);
+                }
+            }
+        }
+
+        // Variance of x and y coordinates (used for aspect ratio)
+        double varX = m20 / m00;
+        double varY = m02 / m00;
+
+        // Aspect ratio (assuming width > height)
+        double aspectRatio = sqrt(varX / varY);
+
+        // Perimeter estimation (replace with more accurate method if needed)
+        double perimeter = 2 * sqrt(3.142 * m00); // Based on object area
+
+        // Circularity (assuming 4 * pi * Area / (Perimeter^2))
+        double circularity = (4.0 * 3.142 * m00) / (perimeter * perimeter);
+
+        // Compute the axis of rotation
+        double theta = 0.5 * atan2(2 * m11, m20 - m02);
+
+        // Draw the axis of rotation on the image
+        cv::Point2d axis(centroidX - 150 * cos(theta), centroidY - 150 * sin(theta));
+        cv::line(coloredImage, cv::Point(centroidX, centroidY), axis, cv::Scalar(0, 255, 0), 8);
+
+         // Elongation
+        double majorAxis = std::max(sqrt(m20), sqrt(m02)); // Assuming major axis is larger
+        double minorAxis = std::min(sqrt(m20), sqrt(m02)); // Assuming minor axis is smaller
+        double elongation = majorAxis / (minorAxis + 1e-10); // Avoid division by zero
+
+        // Rectangularity (assuming bounding rectangle information available)
+        // cv::Rect boundingRect; // Assuming you have access to bounding rectangle data
+        // double width = boundingRect.width;
+        // double height = boundingRect.height;
+        double rectangularity = std::min(float(width) / float(height), float(height) / float(width)); // Ratio of smaller dimension to larger dimension
+
+        storeBlobData(blobInfo, label, cv::Point2f(centroidX, centroidY), m00, perimeter,
+                circularity, aspectRatio, cv::Point2f(centroidX - 150 * cos(theta), centroidY - 150 * sin(theta)),
+                elongation, rectangularity);
+
+        // printf("Blob number: %d, Centre of area: [%2f,%2f], Area: %f, Perimeter: %f, Circularity: %f, Aspect ratio: %f, Elongation: %f, Rectangularity: %f,  Axis of minimum inertia: [%2f,%2f]\n",
+        //         label, centroidX, centroidY, m00, perimeter, circularity, aspectRatio, elongation, rectangularity,
+        //         centroidX - 150 * cos(theta), centroidY - 150 * sin(theta));
+    }
+    */
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // apply similarity threshold to group blobs together
+
+    
     double threshold = 80.0; // Set the similarity threshold (0 to 100)
+
+    // Categorize and print results
     categorizeBlobs(blobInfo, threshold);
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Print blob categories on image
+    // Print similarity table and add category labels to image 
 
     std::map<int, char> blobToGroup;
+    // if (blobInfo.size() < 2)
+    // {
+    //     std::cout << "Not enough blobs found for comparison. Minimum 2 blobs required." << std::endl;
+    //     return 0;
+    // }
+    // // Print table header
+    // printf("%-10s", "Blob"); // Blob number header (adjust width as needed)
+    // for (int i = 0; i < blobInfo.size(); ++i)
+    // {
+    //     printf("%6d ", i + 1); // Column headers for each blob (adjust width as needed)
+    // }
+    // printf("\n");
+
+    
+    // Print similarity scores
     for (int i = 0; i < blobInfo.size(); ++i)
     {
-        std::string blobText = std::string(1, 'A'  + blobInfo[i].classLabel); 
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Similarity table
+        /*
+        printf("%-4d  %-6c", blobInfo[i].blobNumber+1, 'A'  + blobInfo[i].classLabel); // Print blob number (adjust width as needed) //TODO
+        // printf("%-4d  %-6c", i + 1, 'A' - 1 + blobInfo[i].blobNumber); // Print blob number (adjust width as needed)
+        for (int j = 0; j < blobInfo.size(); ++j)   
+        {
+            if (i != j)
+            { // Skip comparing a blob to itself
+                double similarityScore = compareBlobs(blobInfo[i], blobInfo[j]);
+                printf("%6.2f ", similarityScore); // Print similarity score (adjust width and precision as needed)
+            }
+            else
+            {
+                printf("%6s ", "----"); // Print "----" for self-comparison
+            }
+        }
+        printf("\n");
+        */
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Add category labels on the image
+        // Number to display (adjust formatting as needed)
+        std::string numberText = std::string(1, 'A'  + blobInfo[i].classLabel); // TODO
+        // std::string numberText = std::string(1, 'A' - 1 + blobInfo[i].blobNumber); // TODO
+        // std::string numberText = std::string(1, blobInfo[i].blobNumber);
 
         // Get font for text rendering (adjust font settings as needed)
         cv::HersheyFonts font = cv::FONT_HERSHEY_DUPLEX; // Choose font type
@@ -294,27 +444,30 @@ int main()
 
         // Size of the text for vertical placement
         int baseline = 0;
-        cv::Size textSize = cv::getTextSize(blobText, font, fontScale, fontThickness, &baseline);
+        cv::Size textSize = cv::getTextSize(numberText, font, fontScale, fontThickness, &baseline);
 
         // Position the text underneath the object's centroid
         int textX = blobInfo[i].center.x - textSize.width / 2;
         int textY = blobInfo[i].center.y + textSize.height + 5 + 100; // Adjust spacing as needed
 
-        // Add blob labels
-        cv::putText(coloredImage, blobText, cv::Point(textX, textY), font, fontScale, cv::Scalar(118, 185, 0), fontThickness);
+        // Add the text to the image
+        cv::putText(coloredImage, numberText, cv::Point(textX, textY), font, fontScale, cv::Scalar(118, 185, 0), fontThickness);
     }
+    
     printf("\n");
     printf("\n");
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Print blob classes and stats
 
     // // Use a map to store category and its count
+    // unordered_map<string, int> categoryCounts;
+
+    
+
+
     for (int i = 0; i < blobInfo.size(); ++i){
         printf("%-4d  %-6c", blobInfo[i].blobNumber+1, 'A'  + blobInfo[i].classLabel); // Print blob number (adjust width as needed) //TODO
         
         // printf("Centre of area: [%2d,%2d], Area: %f, Perimeter: %f, Circularity: %f, Aspect ratio: %f, Elongation: %f, Rectangularity: %f\n",
-        //      blobInfo[i].center.x,`blobInfo[i].center.y, blobInfo[i].area, blobInfo[i].perimeter, blobInfo[i].circularity, blobInfo[i].aspectRatio, blobInfo[i].elongation, blobInfo[i].rectangularity);
+        //      blobInfo[i].center.x,blobInfo[i].center.y, blobInfo[i].area, blobInfo[i].perimeter, blobInfo[i].circularity, blobInfo[i].aspectRatio, blobInfo[i].elongation, blobInfo[i].rectangularity);
              
         printf("Centre of area: [%2.0f,%2.0f], \t Axis of minimum moment of inertia: %f \n",
              blobInfo[i].center.x,blobInfo[i].center.y,blobInfo[i].theta*180/3.142);
@@ -324,8 +477,6 @@ int main()
         categoryCounts['A'  + blobInfo[i].classLabel]++;
     }
     
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Print final categories and count
     printf("\n");
     printf("\nCategory Counts:\n");
     for (const auto& [category, count] : categoryCounts) {
