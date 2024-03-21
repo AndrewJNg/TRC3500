@@ -6,9 +6,10 @@ def nothing(x):
     pass
 
 # Load image
-image = cv2.imread("FYI_components_01.png")
-image = cv2.imread("DEMO_components_02.png")
-image = cv2.resize(image, (1920,1080))
+# image = cv2.imread("FYI_components_01.png")
+# image = cv2.imread("DEMO_components_02.png")
+image = cv2.imread("pic2.jpg")
+# image = cv2.resize(image, (1920,1080))
 
 # Create a window
 cv2.namedWindow('image')

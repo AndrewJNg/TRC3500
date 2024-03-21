@@ -126,54 +126,72 @@ void categorizeBlobs(std::vector<BlobData> &blobInfo, double threshold)
 
 int main()
 {
-    
-    /*
-    // Turning on camera and stream video
-    cv::VideoCapture cap(1); // On my laptop "0" is the built-in camera.
+  // /*
+    cv::VideoCapture cap(1);  // Replace with "0" for built-in camera if needed
     if (!cap.isOpened()) {
         std::cerr << "Error opening the camera!" << std::endl;
         return -1;
     }
 
     cv::Mat frame;
+    bool updateFrame = false;  // Flag to control frame update
 
-    // Capture a picture from video feed
-    cap >> frame;
-    if (frame.empty()) {
-        std::cerr << "No frame captured?" << std::endl;
-        return -1;
-    }
-
-
+    // Create a window to display the video
     cv::namedWindow("Original", cv::WINDOW_NORMAL);
     cv::resizeWindow("Original", 800, 600);
-    cv::imshow("Original", frame);
-    */
 
-    // /*
+    while (true) {
+        // Capture a frame from the video feed
+        cap >> frame;
+        if (frame.empty()) {
+            std::cerr << "No frame captured?" << std::endl;
+            return -1;
+        }
+
+        // Check for 't' key press
+        int key = cv::waitKey(1);  // Wait for 1 millisecond for key input
+        if (key == 't') {
+          updateFrame = true;
+        }
+
+        // Update the displayed frame only when 't' is pressed
+        if (updateFrame) {
+            cv::imshow("Original", frame);
+            updateFrame = false;  // Reset flag for next frame update
+        }
+
+        // Exit if any button is pressed
+        if (key == 'q') {
+            printf("Picture taken \n");
+            break;
+        }
+    }
+    // */
+    
+    
+
+    /*
     // cv::Mat frame = cv::imread("DEMO_circle_fish_star_01.jpg",cv::IMREAD_COLOR);
     // cv::Mat frame = cv::imread("DEMO_circle_fish_star_02.jpg",cv::IMREAD_COLOR);
-    cv::Mat frame = cv::imread("DEMO_components_02.png", cv::IMREAD_COLOR);
+    // cv::Mat frame = cv::imread("DEMO_components_02.png", cv::IMREAD_COLOR);
+    cv::Mat frame = cv::imread("pic.jpg", cv::IMREAD_COLOR);
 
     if (frame.empty())
     {
         std::cerr << "Error: Could not open or find the image!\n";
         return -1;
     }
-    // */
+    */
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Picture identification (Using Hue, Saturation and Brightness value along with Otsu's Binarization, https://docs.opencv.org/4.x/d7/d4d/tutorial_py_thresholding.html)
-    cv::Mat image_blurred_with_3x3_kernel;
-    cv::GaussianBlur(frame, image_blurred_with_3x3_kernel, cv::Size(3, 3), 0);
-
     // Convert to HSV
     cv::Mat hsv;
     cv::cvtColor(frame, hsv, cv::COLOR_BGR2HSV);
 
     // Define lower and upper bounds for the color range
     cv::Scalar lower(0, 0, 0);      // Lower bound (Hue, Saturation, Value)
-    cv::Scalar upper(179, 50, 255); // Upper bound (Hue, Saturation, Value)
+    cv::Scalar upper(179, 30, 255); // Upper bound (Hue, Saturation, Value)
 
     // Threshold the HSV image to get only specified colors
     cv::Mat mask;
@@ -192,12 +210,13 @@ int main()
     cv::bitwise_not(frame, frame);
 
     // Remove tiny blobs
-    cv::Mat kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(25, 25));
+    cv::Mat kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(15,15)); // for fish 
+    // cv::Mat kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(5,5)); // for components
     cv::morphologyEx(frame, frame, cv::MORPH_OPEN, kernel);
 
     //////////////////////////////////////////
     // Join blobs that are close together
-    kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(30, 30));
+    kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(5, 5));
     cv::morphologyEx(frame, frame, cv::MORPH_CLOSE, kernel);
     
     std::vector<std::vector<cv::Point>> contours;
@@ -265,19 +284,20 @@ int main()
         //         centroidX - 150 * sin(theta), centroidY - 150 * cos(theta),theta*180/3.142);
   
         // Draw circle on centroid point
-        cv::circle(coloredImage, cv::Point(centroidX, centroidY), 20, cv::Scalar(0, 0, 255), -1);
+        cv::circle(coloredImage, cv::Point(centroidX, centroidY), 5, cv::Scalar(0, 0, 255), -1);
 
         // Draw the axis of rotation on the image
         cv::Point2d axis(centroidX - 150 * cos(theta), centroidY - 150 * sin(theta));
-        cv::line(coloredImage, cv::Point(centroidX, centroidY), axis, cv::Scalar(0, 255, 0), 8);
+        cv::line(coloredImage, cv::Point(centroidX, centroidY), axis, cv::Scalar(0, 255, 0), 3);
 
 
     }
     
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // apply similarity threshold to group blobs together
-    double threshold = 80.0; // Set the similarity threshold (0 to 100)
+    double threshold = 70.0; // Set the similarity threshold (0 to 100)
     categorizeBlobs(blobInfo, threshold);
+
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Print blob categories on image
@@ -285,12 +305,31 @@ int main()
     std::map<int, char> blobToGroup;
     for (int i = 0; i < blobInfo.size(); ++i)
     {
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Similarity table
+        // /*
+        printf("%-4d  %-6c", blobInfo[i].blobNumber+1, 'A'  + blobInfo[i].classLabel); // Print blob number (adjust width as needed) //TODO
+        // printf("%-4d  %-6c", i + 1, 'A' - 1 + blobInfo[i].blobNumber); // Print blob number (adjust width as needed)
+        for (int j = 0; j < blobInfo.size(); ++j)   
+        {
+            if (i != j)
+            { // Skip comparing a blob to itself
+                double similarityScore = compareBlobs(blobInfo[i], blobInfo[j]);
+                printf("%6.2f ", similarityScore); // Print similarity score (adjust width and precision as needed)
+            }
+            else
+            {
+                printf("%6s ", "----"); // Print "----" for self-comparison
+            }
+        }
+        printf("\n");
+        // */
         std::string blobText = std::string(1, 'A'  + blobInfo[i].classLabel); 
 
         // Get font for text rendering (adjust font settings as needed)
         cv::HersheyFonts font = cv::FONT_HERSHEY_DUPLEX; // Choose font type
-        double fontScale = 4.0;                          // Text size multiplier
-        int fontThickness = 5;                           // Text line thickness
+        double fontScale = 1.0;                          // Text size multiplier
+        int fontThickness = 1;                           // Text line thickness
 
         // Size of the text for vertical placement
         int baseline = 0;
@@ -298,7 +337,7 @@ int main()
 
         // Position the text underneath the object's centroid
         int textX = blobInfo[i].center.x - textSize.width / 2;
-        int textY = blobInfo[i].center.y + textSize.height + 5 + 100; // Adjust spacing as needed
+        int textY = blobInfo[i].center.y + textSize.height + 5 + 10; // Adjust spacing as needed
 
         // Add blob labels
         cv::putText(coloredImage, blobText, cv::Point(textX, textY), font, fontScale, cv::Scalar(118, 185, 0), fontThickness);
