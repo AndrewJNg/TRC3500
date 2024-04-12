@@ -136,7 +136,8 @@ def left_digit(list):
         return -1
 
 
-img = cv.imread("IMG_20240227_0004.jpg", cv.IMREAD_GRAYSCALE)
+# img = cv.imread("IMG_20240227_0004.jpg", cv.IMREAD_GRAYSCALE)
+img = cv.imread("IMG_20240227_0009.jpg", cv.IMREAD_GRAYSCALE)
 assert img is not None, "file could not be read, check with os.path.exists()"
 
 blur = cv.GaussianBlur(img, (5, 5), 0)
