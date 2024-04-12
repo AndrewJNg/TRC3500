@@ -4,9 +4,11 @@
 #include <opencv2/core/mat.hpp>
 #include <opencv2/imgcodecs.hpp>
 
-  #include <opencv2/highgui/highgui.hpp>
- #include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/objdetect.hpp>
+#include <unordered_map>
+#include <list>
 
 /* Ahmet 13-Feb-2024
 
@@ -22,162 +24,337 @@ save it in the directory where this file is stored. Then, run it in a Windows te
     -lopencv_imgproc-409 -lopencv_videoio-409
 */
 
+std::string ink_decoder(double T1, double T2, double T4, double T);
+int inkSpreading(double val);
+void analyse(const std::vector<int>& consecutive_counts, int i, bool dir_left, std::vector<char>& output);
+std::vector<int> analyze_consecutive_occurrences(const std::vector<int>& data);
+int isGuardBit(std::vector<int>& consecutive_counts, int i);
+int left_digit(std::list<std::vector<char>>& list);
+void printOutputList(const std::list<std::vector<char>>& output_list);
+
+
+
 using namespace cv;
 int main() {
 
-    cv::Mat frame = cv::imread("IMG_20240227_0002b.jpg",cv::IMREAD_COLOR);
-    // cv::Mat frame = cv::imread("IMG_20240227_0003.jpg",cv::IMREAD_COLOR);
-    // cv::Mat frame = cv::imread("IMG_20240227_0004.jpg",cv::IMREAD_COLOR);
+    // cv::Mat frame = cv::imread("IMG_20240227_0002b.jpg",cv::IMREAD_COLOR);
+    // cv::Mat img = cv::imread("IMG_20240227_0003.jpg",cv::IMREAD_COLOR);
+    cv::Mat img = cv::imread("IMG_20240227_0004.jpg",cv::IMREAD_COLOR);
 
-    if (frame.empty())
+    if (img.empty())
     {
         std::cerr << "Error: Could not open or find the image!\n";
         return -1;
     }
+    cv::Mat gray_img;
+    cv::cvtColor(img, gray_img, cv::COLOR_BGR2GRAY);
 
-    // ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // [Option 1] Using Otsu's Binarization (https://docs.opencv.org/4.x/d7/d4d/tutorial_py_thresholding.html)
-    // Mat greyImage;
-    // Mat binaryImage1;
-
-    // cv::cvtColor(frame, greyImage, cv::COLOR_BGR2GRAY);
-
-    // int threshold_type =  cv::THRESH_BINARY + cv::THRESH_OTSU;
-    // cv::threshold(greyImage, frame, 0, 255, threshold_type);
-    // // // cv::bitwise_not(binaryImage1, binaryImage1); 
-    // cv::imshow("Grey", frame);
-
-
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // /*
-    // Picture identification (Using Hue, Saturation and Brightness value along with Otsu's Binarization, https://docs.opencv.org/4.x/d7/d4d/tutorial_py_thresholding.html)
-    // Convert to HSV
-    cv::Mat hsv;
-    cv::cvtColor(frame, hsv, cv::COLOR_BGR2HSV);
-
-    // Define lower and upper bounds for the color range
-    cv::Scalar lower(0, 0, 0);      // Lower bound (Hue, Saturation, Value)
-    cv::Scalar upper(179, 30, 255); // Upper bound (Hue, Saturation, Value)
-
-    // Threshold the HSV image to get only specified colors
-    cv::Mat mask;
-    cv::inRange(hsv, lower, upper, mask);
-
-    // Apply the mask to the original image
-    cv::Mat result;
-    cv::bitwise_and(frame, frame, result, mask);
-
-    // Convert the result back to grayscale
-    cv::cvtColor(result, frame, cv::COLOR_BGR2GRAY);
-    // */
-
-    // Apply thresholding to obtain binary image
-    // int threshold_type = cv::THRESH_BINARY + cv::THRESH_OTSU;
-    // cv::threshold(frame, frame, 0, 255, threshold_type);
-    // cv::bitwise_not(frame, frame);
-
-    // Remove tiny blobs
-    // cv::Mat kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(1,1)); 
-    // cv::morphologyEx(frame, frame, cv::MORPH_OPEN, kernel);
-
-    //////////////////////////////////////////
-    // Join blobs that are close together
-    // kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(5, 5));
-    // cv::morphologyEx(frame, frame, cv::MORPH_CLOSE, kernel);
     
-    std::vector<std::vector<cv::Point>> contours;
-    std::vector<cv::Vec4i> hierarchy;
-    cv::findContours(frame, contours, hierarchy, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
+    cv::Mat blur;
+    cv::GaussianBlur(gray_img, blur, cv::Size(5, 5), 0);
+
+    cv::Mat th3;
+    int threshold_type = cv::THRESH_BINARY + cv::THRESH_OTSU;
+    cv::threshold(blur, th3, 0, 255, threshold_type);
+    // cv::imshow("image", th3);
+
+    th3 = (255 - th3) / 255;
+    for (int row_count = 0; row_count < th3.rows; row_count++) {
+        cv::Mat row_pixels = th3.row(row_count);
+        cv::Mat row_pixels_rev = row_pixels.clone();
+        cv::flip(row_pixels, row_pixels_rev, 1);
+
+        std::vector<int> consecutive_counts = analyze_consecutive_occurrences(row_pixels);
+
+        // Print out the consecutive_counts vector
+        // std::cout << "Consecutive Counts: ";
+        // for (int count : consecutive_counts) {
+        //     std::cout << count << " ";
+        // }
+        // std::cout << std::endl;
 
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Colourise the blobs
-    cv::Mat labels, stats, centroids;
-    int numComponents = cv::connectedComponentsWithStats(frame, labels, stats, centroids,8);
+        if (consecutive_counts.size() >= (6 * 4 + 34)) {
+            std::list<std::vector<char>> output_list;
+            for (int i = 0; i < consecutive_counts.size() - 55; i++) {
+                std::vector<int> count = {i, 26 + i, 27 + i, 28 + i, 29 + i, 56 + i};
+                int guardSum = 0;
 
-    // Assign random color to each blob
-    std::vector<cv::Vec3b> colors(numComponents);
-    for (int i = 0; i < numComponents; ++i)  colors[i] = cv::Vec3b(rand() & 255, rand() & 255, rand() & 255);
-    
-    // Colorize the blobs
-    cv::Mat coloredImage(frame.size(), CV_8UC3, cv::Scalar(255, 255, 255));
-    for (int y = 0; y < frame.rows; ++y)
-    {
-        for (int x = 0; x < frame.cols; ++x)
-        {
-            int label = labels.at<int>(y, x);
-            if (label > 0)
-            {
-                coloredImage.at<cv::Vec3b>(y, x) = colors[label];
+                for (int j : count) {
+                    if (j < (6 * 4 + 33)) {
+                        guardSum += isGuardBit(consecutive_counts, j);
+                    }
+                }
+
+                if (guardSum >= 2) {
+                    for (int j = i + 3; j < 6 * 4 + i; j += 4) {
+                        std::vector<char> char_vector_result;
+                        analyse(consecutive_counts, j, true, char_vector_result);
+                         // Print the result
+                        // std::cout << "Result: ";
+                        // for (char c : char_vector_result) {
+                        //     std::cout << c;
+                        // }
+                        // std::cout << std::endl;
+                        output_list.push_back(std::move(char_vector_result));
+                    }
+
+                    for (int j = i + 32; j < 6 * 4 + i + 32; j += 4) {
+                        std::vector<char> char_vector_result;
+                        analyse(consecutive_counts, j, false, char_vector_result);
+                        output_list.push_back(std::move(char_vector_result));
+                    }
+                    break;
+                }
+                // printf("I: %d\n", i);
+            }
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////
+            // Print out the contents of output_list in a list format
+            // printOutputList(output_list);
+
+        ///////////////////////////////////////////////////////////////////////////////////////////
+            int first_digit = left_digit(output_list);
+            printf("%d\n",first_digit);
+            if (first_digit != -1) {
+                std::vector<char> first_digit_vector = {static_cast<char>('0' + first_digit)};
+                output_list.push_front(first_digit_vector);
+
+            //     int odd_sum = 0;
+            //     int index = 0;
+            //     for (const auto& vec : output_list) {
+            //         if (std::find(std::begin({1, 3, 5, 7, 9, 11}), std::end({1, 3, 5, 7, 9, 11}), index) != std::end({1, 3, 5, 7, 9, 11})) {
+            //             odd_sum += vec[1] - '0';
+            //         }
+            //         index++;
+            //     }
+
+            //     int even_sum = output_list.front()[1] - '0';
+            //     index = 0;
+            //     for (const auto& vec : output_list) {
+            //         if (std::find(std::begin({2, 4, 6, 8, 10}), std::end({2, 4, 6, 8, 10}), index) != std::end({2, 4, 6, 8, 10})) {
+            //             even_sum += vec[1] - '0';
+            //         }
+            //         index++;
+            //     }
+
+            //     int parity =  ((odd_sum * 3 + even_sum) % 10 != 0) ? 10 - ((odd_sum * 3 + even_sum) % 10) : 0;
+
+                
+            //     printf("%d, %d, %d\n", odd_sum,even_sum,parity);
+
+
+
+
+
+                // if (parity == output_list.back()[1] - '0') {
+                //     std::cout << "row " << row_count << "   " << output_list << std::endl;
+                // }
+            //     printf("row %d   ", row_count);
+            //     for (const auto& vec : output_list) {
+            //         for (char c : vec) {
+            //             printf("%c", c);
+            //         }
+            //     }
+            //     printf("\n");
+            // }
+
+
+                // int odd_sum = 0;
+                // for (int i : {1, 3, 5, 7, 9, 11}) {
+                //     odd_sum += output_list[i][1] - '0';
+                // }
+
+                // int even_sum = output_list[0][1] - '0';
+                // for (int i : {2, 4, 6, 8, 10}) {
+                //     even_sum += output_list[i][1] - '0';
+                // }
+
+                // int parity = ((odd_sum * 3 + even_sum) % 10 != 0) ? 10 - ((odd_sum * 3 + even_sum) % 10) : 0;
+
+                // if (parity == output_list[12][1] - '0') {
+                //     std::cout << "row " << row_count << "   " << output_list << std::endl;
+                // }
             }
         }
     }
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     
-    double max_area =0;
-    
-    // cv::Rect boundingRect;  // Store the rectangle coordinates
-    cv::RotatedRect rotatedRect;
 
 
-    for (size_t i = 0; i < contours.size(); i++) {
-        // Calculate area & perimeter
-        double area = cv::contourArea(contours[i]);
-        if (area > max_area) 
-        {
-            max_area = area;
-            // boundingRect = cv::boundingRect(contours[i]); 
-            rotatedRect = cv::minAreaRect(contours[i]);
-        }
-    }
-    
-    // cv::rectangle(coloredImage, boundingRect, cv::Scalar(0, 255, 0), 2);  // Green rectangle with thickness 2    
-    printf("max area: %f \n", max_area);
-    
-    // Get points of the rotated rectangle
-    cv::Point2f vertices[4];
-    rotatedRect.points(vertices);
-    // Find the top-left and bottom-right corners
-    float x_min = vertices[0].x, y_min = vertices[0].y;
-    float x_max = vertices[0].x, y_max = vertices[0].y;
-    for (int i = 1; i < 4; i++) {
-        x_min = std::min(x_min, vertices[i].x);
-        y_min = std::min(y_min, vertices[i].y);
-        x_max = std::max(x_max, vertices[i].x);
-        y_max = std::max(y_max, vertices[i].y);
-        
-    }
 
-     // Clamp bounding box coordinates
-    x_min = std::max(0.0f, x_min);
-    y_min = std::max(0.0f, y_min);
-    x_max = std::min(frame.cols - 1.0f, x_max);
-    y_max = std::min(frame.rows - 1.0f, y_max);
 
-    // Define the bounding box
-    cv::Rect boundingBox(cv::Point(std::round(x_min), std::round(y_min)),
-                         cv::Size(std::round(x_max - x_min), std::round(y_max - y_min)));
 
-    // Crop the original image using the bounding box
-    cv::Mat croppedImage = frame(boundingBox);
-    cv::rectangle(coloredImage, boundingBox, cv::Scalar(0, 255, 0), 2);  // Green rectangle with thickness 2  
-
-    // Display the cropped image (optional)
-    cv::imshow("Cropped Image", croppedImage);
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    // Display image
-    // cv::namedWindow("image", cv::WINDOW_NORMAL);
-    // cv::resizeWindow("image", 1280,720);
-    cv::imshow("image", coloredImage);
-    // cv::imshow("image", binaryImage1);
-    // cv::imshow("image", frame);
     cv::waitKey(0);
     cv::destroyAllWindows();
 
     return 0;
 
+}
+
+std::string ink_decoder(double T1, double T2, double T4, double T) {
+    std::vector<std::vector<std::vector<std::string>>> table = {
+        {{"e6","e6","e6"}, {"o0","o0","o0"}, {"e4","e4","e4"}, {"o3","o3","o3"}},
+        {{"o9","o9","o9"}, {"","e2","e8"}, {"o7","o1",""}, {"e5","e5","e5"}},
+        {{"e9","e9","e9"}, {"o8","o2",""}, {"e1","e7",""}, {"o5","o5","o5"}},
+        {{"o6","o6","o6"}, {"e0","e0","e0"}, {"o4","o4","o4"}, {"e3","e3","e3"}}
+    };
+    // printf("\nT1: %f,T2:  %f,T4:  %f\n",T1,T2,T4);
+
+    int T1_bar = inkSpreading(T1 / T);
+    int T2_bar = inkSpreading(T2 / T);
+    int T4_bar = inkSpreading(T4 / T);
+    // printf("S5\n");
+    
+    if (T1_bar < 2) {
+        T1_bar = 2;
+    }
+    if (T2_bar < 2) {
+        T2_bar = 2;
+    }
+    if (T4_bar > 3) {
+        T4_bar = 3;
+    }
+    // printf("S6\n");
+    // printf("\n%d, %d, %d",T1_bar,T2_bar,T4_bar);
+    // printf("\n%d, %d, %d",T1_bar - 2,T2_bar - 2,T4_bar - 1);
+
+    return table[T1_bar - 2][T2_bar - 2][T4_bar - 1];
+}
+
+int inkSpreading(double val) {
+    int mod = 0;
+    
+    if (val <= 1.5 / 7) {
+        mod = 1;
+    } else if (val >= 1.5 / 7 && val < 2.5 / 7) {
+        mod = 2;
+    } else if (val >= 2.5 / 7 && val < 3.5 / 7) {
+        mod = 3;
+    } else if (val >= 3.5 / 7 && val < 4.5 / 7) {
+        mod = 4;
+    } else if (val >= 4.5 / 7) {
+        mod = 5;
+    }
+
+    return mod;
+}
+
+void analyse(const std::vector<int>& consecutive_counts, int i, bool dir_left, std::vector<char>& output) {
+    double T1, T2, T4;
+
+    if (dir_left) {
+        T4 = consecutive_counts[i];
+        T2 = consecutive_counts[i + 1] + consecutive_counts[i + 2];
+        T1 = consecutive_counts[i + 2] + consecutive_counts[i + 3];
+    } else {
+        T1 = consecutive_counts[i] + consecutive_counts[i + 1];
+        T2 = consecutive_counts[i + 1] + consecutive_counts[i + 2];
+        T4 = consecutive_counts[i + 3];
+    }
+
+    double T = consecutive_counts[i] + consecutive_counts[i + 1] + consecutive_counts[i + 2] + consecutive_counts[i + 3];
+
+    // Call ink_decoder and assign the result to the output vector
+    std::string result = ink_decoder(T1, T2, T4, T);
+    
+    output.assign(result.begin(), result.end());
+    
+}
+
+std::vector<int> analyze_consecutive_occurrences(const std::vector<int>& data) {
+    std::vector<int> consecutive_counts;
+    int current_value = -1;
+    int current_count = 0;
+
+    for (int value : data) {
+        if (value != current_value) {
+            // New value encountered, update counts
+            if (current_value != -1) {
+                consecutive_counts.push_back(current_count);
+            }
+            current_value = value;
+            current_count = 1;
+        } else {
+            // Same value encountered, increment count
+            current_count++;
+        }
+    }
+
+    // Add the count for the last value
+    if (current_value != -1) {
+        consecutive_counts.push_back(current_count);
+    }
+
+    return consecutive_counts;
+}
+
+int isGuardBit(std::vector<int>& consecutive_counts, int i) {
+    int T1 = consecutive_counts[i] + consecutive_counts[i + 1];
+    int T2 = consecutive_counts[i + 1] + consecutive_counts[i + 2];
+    int T4 = consecutive_counts[i + 2];
+    int T = consecutive_counts[i] + consecutive_counts[i + 1] + consecutive_counts[i + 2];
+
+    int sum = 0;
+    sum += (T1 == T2);
+    sum += (T1 == 2 * T4);
+    sum += (T2 == 2 * T4);
+    sum += (T == T1 + T4);
+    sum += (T == T2 + T4);
+
+    if (sum >= 3) {
+       return 1;
+    } else {
+       return 0;
+    }
+}
+
+int left_digit(std::list<std::vector<char>>& list) {
+    std::unordered_map<std::string, int> table = {
+        {"oooooo", 0},
+        {"ooeoee", 1},
+        {"ooeeoe", 2},
+        {"ooeeeo", 3},
+        {"oeooee", 4},
+        {"oeeooe", 5},
+        {"oeeeoo", 6},
+        {"oeoeoe", 7},
+        {"oeoeeo", 8},
+        {"oeeoeo", 9}
+    };
+
+    std::string sum = "";
+    int count = 0;
+    for (const std::vector<char>& vec : list) {
+        sum += vec[0];
+        count++;
+        if (count == 6) {
+            break;
+        }
+    }
+
+    if (table.find(sum) != table.end()) {
+        return table[sum];
+    } else {
+        return -1;
+    }
+}
+
+void printOutputList(const std::list<std::vector<char>>& output_list) {
+    std::cout << "[";
+    for (auto it = output_list.begin(); it != output_list.end(); ++it) {
+        if (it != output_list.begin()) {
+            std::cout << ",";
+        }
+        std::cout << "[";
+        for (auto char_it = it->begin(); char_it != it->end(); ++char_it) {
+            if (char_it != it->begin()) {
+                std::cout << ",";
+            }
+            std::cout << *char_it;
+        }
+        std::cout << "]";
+    }
+    std::cout << "]" << std::endl;
 }

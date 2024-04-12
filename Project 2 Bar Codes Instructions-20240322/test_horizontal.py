@@ -3,43 +3,6 @@ import numpy as np
 from matplotlib import pyplot as plt
 import math
  
-def EAN_13_decode(inputCode):
-  table = {
-      '0001101': 0,
-      '0011001': 1,
-      '0010011': 2,
-      '0111101': 3,
-      '0100011': 4,
-      '0110001': 5,
-      '0101111': 6,
-      '0111011': 7,
-      '0110111': 8,
-      '0001011': 9,
-      
-      '0100111': 0,
-      '0110011': 1,
-      '0011011': 2,
-      '0100001': 3,
-      '0011101': 4,
-      '0111001': 5,
-      '0000101': 6,
-      '0010001': 7,
-      '0001001': 8,
-      '0010111': 9,
-      
-      '1110010': 0,
-      '1100110': 1,
-      '1101100': 2,
-      '1000010': 3,
-      '1011100': 4,
-      '1001110': 5,
-      '1010000': 6,
-      '1000100': 7,
-      '1001000': 8,
-      '1110100': 9
-  }
-  inputCode = str(inputCode)
-  return table[inputCode]
 
 def inkSpreading(T1_val):
     mod = 0
@@ -53,18 +16,6 @@ def inkSpreading(T1_val):
         mod = 4
     elif(T1_val >= 4.5/7  ):
         mod = 5
-        
-    # if(T1_val <= 1.5/7):
-    #     mod = 1
-    # elif(T1_val >= 1.5/7 and T1_val < 2.5/7 ):
-    #     mod = 2
-    # elif(T1_val >= 2.5/7 and T1_val < 3.5/7 ):
-    #     mod = 3
-    # elif(T1_val >= 3.5/7 and T1_val < 4.8/7 ):
-    #     mod = 4
-    # elif(T1_val >= 4.8/7  ):
-    #     mod = 5
-
 
     return mod
 
@@ -105,47 +56,6 @@ def analyse(consecutive_counts,i,dir_left):
     # print(str(T1)+"  " + str(T2)+"  "  + str(T4)+"  "  + str(T))
     # print(str(inkSpreading(T1/T))+"  " + str(inkSpreading(T2/T))+"  "  + str(inkSpreading(T4/T)))
     return ink_decoder(T1,T2,T4, T)
-
-def extract_middle_bits(row_pixels):
-    """
-    Extracts the middle section of pixels from a row, assuming a 1,0,1 pattern
-    at the beginning and end, and removes any leading and trailing zeros.
-
-    Args:
-        row_pixels (list[int]): The modified row of pixels with 1,0,1 pattern (any length).
-
-    Returns:
-        list[int]: The middle section of the pixels (excluding the 1,0,1 patterns).
-
-    Raises:
-        ValueError: If the input list does not contain a valid 1,0,1 pattern.
-    """
-
-    if len(row_pixels) < 5:
-        raise ValueError("Input list must have at least 5 elements to extract a middle section.")
-
-    # Find the starting index of the non-zero elements (excluding trailing zeros)
-    start_index = 0
-    while start_index < len(row_pixels) and row_pixels[start_index] == 0:
-        start_index += 1
-
-    # Find the ending index of the non-zero elements (excluding leading zeros)
-    end_index = len(row_pixels) - 1
-    while end_index >= 0 and row_pixels[end_index] == 0:
-        end_index -= 1
-
-    # Check if a valid pattern exists (at least 5 non-zero elements)
-    if end_index - start_index + 1 < 5:
-        raise ValueError("Input list does not contain a valid 1,0,1 pattern.")
-
-    # Check for valid pattern at the beginning and end (considering start_index and end_index)
-    if row_pixels[start_index : start_index + 3] != [1, 0, 1] or row_pixels[end_index - 2 : end_index + 1] != [1, 0, 1]:
-        raise ValueError("Input list does not have the expected 1,0,1 pattern at the beginning and end.")
-
-    # Extract the middle section (excluding the first and last three elements)
-    middle_bits = row_pixels[start_index + 3 : end_index - 2]
-
-    return middle_bits
 
 def analyze_consecutive_occurrences(data):
   """
@@ -193,8 +103,6 @@ def isGuardBit(consecutive_counts,i):
     sum= (T2 == 2*T4) +sum
     sum= (T == T1+T4) +sum
     sum= (T == T2+T4) +sum
-
-
     # print(sum)
 
     if(sum>=3):
@@ -226,12 +134,12 @@ def left_digit(list):
         return table[str(sum)]  # Convert sum to string for dictionary lookup
     else:
         return -1
-    # return table[sum]
 
 
 
 # img = cv.imread("9319133331372.png", cv.IMREAD_GRAYSCALE)
 # img = cv.imread("IMG_20240227_0002b.jpg", cv.IMREAD_GRAYSCALE)
+# img = cv.imread("IMG_20240227_0002c.jpg", cv.IMREAD_GRAYSCALE)
 # img = cv.imread("IMG_20240227_0003.jpg", cv.IMREAD_GRAYSCALE)
 img = cv.imread("IMG_20240227_0004.jpg", cv.IMREAD_GRAYSCALE)
 # img = cv.imread("IMG_20240227_0010.jpg", cv.IMREAD_GRAYSCALE)
@@ -247,7 +155,7 @@ th3 = (255-th3)/255
 # print(len(th3))
 
 for row_count in range(len(th3)):
-# for row_count in [467]:
+# for row_count in [336]:
     row_pixels = th3[row_count, :]
     row_pixels_rev = th3[row_count, :]
     row_pixels_rev = row_pixels_rev[::-1]
@@ -261,9 +169,8 @@ for row_count in range(len(th3)):
 
 
     # row_5_pixels = np.insert(th3[4, :], 0, 0) # start with a 0, then add in the rest of the numbers, this ensures the barcode is decoded properly
-    # print("Pixel values in row 5:", row_5_pixels)
-    # extracted_bits = extract_middle_bits(row_5_pixels)
-    # print(extracted_bits)
+    # print("Pixel values in row:", row_pixels)
+    
 
     ######################################################################
     # Consecutive counter for that row
@@ -477,7 +384,6 @@ for row_count in range(len(th3)):
     # print(ink_decoder(2,2,1, 4))
 
 
-    # print(EAN_13_decode("0000101"))
 
 
 
