@@ -9,6 +9,9 @@
 #include <opencv2/objdetect.hpp>
 #include <unordered_map>
 #include <list>
+#include <vector>
+#include <algorithm>
+
 
 /* Ahmet 13-Feb-2024
 
@@ -31,40 +34,19 @@ std::vector<int> analyze_consecutive_occurrences(const std::vector<int>& data);
 int isGuardBit(std::vector<int>& consecutive_counts, int i);
 int left_digit(std::list<std::vector<char>>& list);
 void printOutputList(const std::list<std::vector<char>>& output_list);
+void print_list_of_output_lists(const std::list<std::list<std::vector<char>>>& list_of_output_lists);
 
-
-
-using namespace cv;
-int main() {
-
-    // cv::Mat frame = cv::imread("IMG_20240227_0002b.jpg",cv::IMREAD_COLOR);
-    // cv::Mat img = cv::imread("IMG_20240227_0003.jpg",cv::IMREAD_COLOR);
-    cv::Mat img = cv::imread("IMG_20240227_0004.jpg",cv::IMREAD_COLOR);
-
-    if (img.empty())
-    {
-        std::cerr << "Error: Could not open or find the image!\n";
-        return -1;
-    }
-    cv::Mat gray_img;
-    cv::cvtColor(img, gray_img, cv::COLOR_BGR2GRAY);
-
+std::list<std::vector<char>> scan_barcode(cv::Mat img){
     
-    cv::Mat blur;
-    cv::GaussianBlur(gray_img, blur, cv::Size(5, 5), 0);
-
-    cv::Mat th3;
-    int threshold_type = cv::THRESH_BINARY + cv::THRESH_OTSU;
-    cv::threshold(blur, th3, 0, 255, threshold_type);
-    // cv::imshow("image", th3);
-
-    th3 = (255 - th3) / 255;
-    for (int row_count = 0; row_count < th3.rows; row_count++) {
-        cv::Mat row_pixels = th3.row(row_count);
+    std::list<std::list<std::vector<char>>> list_of_output_lists;
+    std::list<std::vector<char>> max_output_list;
+    
+   for (int row_count = 0; row_count < img.rows; row_count++) {
+        cv::Mat row_pixels = img.row(row_count);
         cv::Mat row_pixels_rev = row_pixels.clone();
         cv::flip(row_pixels, row_pixels_rev, 1);
 
-        std::vector<int> consecutive_counts = analyze_consecutive_occurrences(row_pixels);
+        std::vector<int> consecutive_counts = analyze_consecutive_occurrences(row_pixels_rev);
 
         // Print out the consecutive_counts vector
         // std::cout << "Consecutive Counts: ";
@@ -73,7 +55,7 @@ int main() {
         // }
         // std::cout << std::endl;
 
-
+        
         if (consecutive_counts.size() >= (6 * 4 + 34)) {
             std::list<std::vector<char>> output_list;
             for (int i = 0; i < consecutive_counts.size() - 55; i++) {
@@ -90,12 +72,6 @@ int main() {
                     for (int j = i + 3; j < 6 * 4 + i; j += 4) {
                         std::vector<char> char_vector_result;
                         analyse(consecutive_counts, j, true, char_vector_result);
-                         // Print the result
-                        // std::cout << "Result: ";
-                        // for (char c : char_vector_result) {
-                        //     std::cout << c;
-                        // }
-                        // std::cout << std::endl;
                         output_list.push_back(std::move(char_vector_result));
                     }
 
@@ -106,79 +82,202 @@ int main() {
                     }
                     break;
                 }
-                // printf("I: %d\n", i);
             }
 
-
-        ///////////////////////////////////////////////////////////////////////////////////////////
-            // Print out the contents of output_list in a list format
-            // printOutputList(output_list);
-
-        ///////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////#include <unordered_set>//////////////
             int first_digit = left_digit(output_list);
-            printf("%d\n",first_digit);
             if (first_digit != -1) {
                 std::vector<char> first_digit_vector = {static_cast<char>('0' + first_digit)};
                 output_list.push_front(first_digit_vector);
 
-            //     int odd_sum = 0;
-            //     int index = 0;
-            //     for (const auto& vec : output_list) {
-            //         if (std::find(std::begin({1, 3, 5, 7, 9, 11}), std::end({1, 3, 5, 7, 9, 11}), index) != std::end({1, 3, 5, 7, 9, 11})) {
-            //             odd_sum += vec[1] - '0';
-            //         }
-            //         index++;
-            //     }
+                int odd_sum = 0;
+                int even_sum = 0;
+                
+                /////////////////////////////////////////////////
+                // Calculate odd_sum
+                for (auto it = std::next(output_list.begin(), 1); it != output_list.end(); std::advance(it, 2)) {
+                    odd_sum += (*it)[1] - '0'; // Convert char to int
+                }
+                
+                // Calculate even_sum
+                even_sum += first_digit;
+                for (auto it = std::next(output_list.begin(), 2); std::distance(it, output_list.end()) > 2; std::advance(it, 2)) {
+                    even_sum += (*it)[1] - '0'; // Convert char to int
+                }
 
-            //     int even_sum = output_list.front()[1] - '0';
-            //     index = 0;
-            //     for (const auto& vec : output_list) {
-            //         if (std::find(std::begin({2, 4, 6, 8, 10}), std::end({2, 4, 6, 8, 10}), index) != std::end({2, 4, 6, 8, 10})) {
-            //             even_sum += vec[1] - '0';
-            //         }
-            //         index++;
-            //     }
-
-            //     int parity =  ((odd_sum * 3 + even_sum) % 10 != 0) ? 10 - ((odd_sum * 3 + even_sum) % 10) : 0;
+                // Calculate parity
+                int parity =  ((odd_sum * 3 + even_sum) % 10 != 0) ? 10 - ((odd_sum * 3 + even_sum) % 10) : 0;
+                // printf("%d, %d, %d\n", odd_sum,even_sum,parity);
 
                 
-            //     printf("%d, %d, %d\n", odd_sum,even_sum,parity);
+                if (parity == output_list.back()[1] - '0') {
+                    // printOutputList(output_list);
+                    list_of_output_lists.push_back(output_list);
+                }
 
 
 
-
-
-                // if (parity == output_list.back()[1] - '0') {
-                //     std::cout << "row " << row_count << "   " << output_list << std::endl;
-                // }
-            //     printf("row %d   ", row_count);
-            //     for (const auto& vec : output_list) {
-            //         for (char c : vec) {
-            //             printf("%c", c);
-            //         }
-            //     }
-            //     printf("\n");
-            // }
-
-
-                // int odd_sum = 0;
-                // for (int i : {1, 3, 5, 7, 9, 11}) {
-                //     odd_sum += output_list[i][1] - '0';
-                // }
-
-                // int even_sum = output_list[0][1] - '0';
-                // for (int i : {2, 4, 6, 8, 10}) {
-                //     even_sum += output_list[i][1] - '0';
-                // }
-
-                // int parity = ((odd_sum * 3 + even_sum) % 10 != 0) ? 10 - ((odd_sum * 3 + even_sum) % 10) : 0;
-
-                // if (parity == output_list[12][1] - '0') {
-                //     std::cout << "row " << row_count << "   " << output_list << std::endl;
-                // }
+                    
+                
             }
-        }
+        ///////////////////////////////////////////////////////////////////////////////////////////   
+        }   
     }
+
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    // Find max occurance barcode sequence from every row   
+    // print_list_of_output_lists(list_of_output_lists);
+    int max_occurrence = 0;
+    for (const auto& outer_list : list_of_output_lists) {
+    int current_row_occurrence = outer_list.size(); // Count elements in the current row
+
+    // Update max_occurrence and max_output_list if needed
+    if (current_row_occurrence > max_occurrence) {
+      max_occurrence = current_row_occurrence;
+      max_output_list = outer_list; // Copy the entire outer list for the maximum row
+    }   
+    }
+
+    // Print barcode signal 
+    // printOutputList(max_output_list);
+    return max_output_list;
+}
+
+using namespace cv;
+int main() {
+
+    // cv::Mat img = cv::imread("IMG_20240227_0002b.jpg",cv::IMREAD_COLOR);
+    cv::Mat img = cv::imread("IMG_20240227_0003.jpg",cv::IMREAD_COLOR);
+    // cv::Mat img = cv::imread("IMG_20240227_0004.jpg",cv::IMREAD_COLOR);
+
+    if (img.empty())
+    {
+        std::cerr << "Error: Could not open or find the image!\n";
+        return -1;
+    }
+
+
+    cv::Mat gray_img;
+    cv::cvtColor(img, gray_img, cv::COLOR_BGR2GRAY);
+
+    cv::Mat blur;
+    cv::GaussianBlur(gray_img, blur, cv::Size(5, 5), 0);
+
+    cv::Mat th3;
+    int threshold_type = cv::THRESH_BINARY + cv::THRESH_OTSU;
+    cv::threshold(blur, th3, 0, 255, threshold_type);
+    th3 = (255 - th3) / 255;
+    // cv::imshow("image", th3);
+    std::list<std::list<std::vector<char>>> list_of_output_lists;
+    std::list<std::vector<char>> max_output_list;
+
+
+
+    /*
+    for (int row_count = 0; row_count < th3.rows; row_count++) {
+        cv::Mat row_pixels = th3.row(row_count);
+        cv::Mat row_pixels_rev = row_pixels.clone();
+        cv::flip(row_pixels, row_pixels_rev, 1);
+
+        std::vector<int> consecutive_counts = analyze_consecutive_occurrences(row_pixels_rev);
+
+        // Print out the consecutive_counts vector
+        // std::cout << "Consecutive Counts: ";
+        // for (int count : consecutive_counts) {
+        //     std::cout << count << " ";
+        // }
+        // std::cout << std::endl;
+
+        
+        if (consecutive_counts.size() >= (6 * 4 + 34)) {
+            std::list<std::vector<char>> output_list;
+            for (int i = 0; i < consecutive_counts.size() - 55; i++) {
+                std::vector<int> count = {i, 26 + i, 27 + i, 28 + i, 29 + i, 56 + i};
+                int guardSum = 0;
+
+                for (int j : count) {
+                    if (j < (6 * 4 + 33)) {
+                        guardSum += isGuardBit(consecutive_counts, j);
+                    }
+                }
+
+                if (guardSum >= 2) {
+                    for (int j = i + 3; j < 6 * 4 + i; j += 4) {
+                        std::vector<char> char_vector_result;
+                        analyse(consecutive_counts, j, true, char_vector_result);
+                        output_list.push_back(std::move(char_vector_result));
+                    }
+
+                    for (int j = i + 32; j < 6 * 4 + i + 32; j += 4) {
+                        std::vector<char> char_vector_result;
+                        analyse(consecutive_counts, j, false, char_vector_result);
+                        output_list.push_back(std::move(char_vector_result));
+                    }
+                    break;
+                }
+            }
+
+        /////////////////////////////////////////////////////////////////////////////#include <unordered_set>//////////////
+            int first_digit = left_digit(output_list);
+            if (first_digit != -1) {
+                std::vector<char> first_digit_vector = {static_cast<char>('0' + first_digit)};
+                output_list.push_front(first_digit_vector);
+
+                int odd_sum = 0;
+                int even_sum = 0;
+                
+                /////////////////////////////////////////////////
+                // Calculate odd_sum
+                for (auto it = std::next(output_list.begin(), 1); it != output_list.end(); std::advance(it, 2)) {
+                    odd_sum += (*it)[1] - '0'; // Convert char to int
+                }
+                
+                // Calculate even_sum
+                even_sum += first_digit;
+                for (auto it = std::next(output_list.begin(), 2); std::distance(it, output_list.end()) > 2; std::advance(it, 2)) {
+                    even_sum += (*it)[1] - '0'; // Convert char to int
+                }
+
+                // Calculate parity
+                int parity =  ((odd_sum * 3 + even_sum) % 10 != 0) ? 10 - ((odd_sum * 3 + even_sum) % 10) : 0;
+                // printf("%d, %d, %d\n", odd_sum,even_sum,parity);
+
+                
+                if (parity == output_list.back()[1] - '0') {
+                    // printOutputList(output_list);
+                    list_of_output_lists.push_back(output_list);
+                }
+
+
+
+                    
+                
+            }
+        ///////////////////////////////////////////////////////////////////////////////////////////   
+        }   
+    }
+
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    // Find max occurance barcode sequence from every row   
+    // print_list_of_output_lists(list_of_output_lists);
+    int max_occurrence = 0;
+    for (const auto& outer_list : list_of_output_lists) {
+    int current_row_occurrence = outer_list.size(); // Count elements in the current row
+
+    // Update max_occurrence and max_output_list if needed
+    if (current_row_occurrence > max_occurrence) {
+      max_occurrence = current_row_occurrence;
+      max_output_list = outer_list; // Copy the entire outer list for the maximum row
+    }   
+    }
+
+    // Print barcode signal 
+    printOutputList(max_output_list);
+    */
+   printOutputList(scan_barcode(th3));
+
 
     
 
@@ -357,4 +456,50 @@ void printOutputList(const std::list<std::vector<char>>& output_list) {
         std::cout << "]";
     }
     std::cout << "]" << std::endl;
+}
+
+
+void print_list_of_output_lists(const std::list<std::list<std::vector<char>>>& list_of_output_lists) {
+  std::cout << "[";
+
+  // Iterate over each outer list (representing a row)
+  bool first_row = true;
+  for (const auto& outer_list : list_of_output_lists) {
+    if (!first_row) {
+      std::cout << std::endl; // Add newline after the first row
+    }
+    first_row = false;
+
+    std::cout << "[";
+
+    // Iterate over each inner list (representing a decoded sequence)
+    bool first_inner_list = true;
+    for (const auto& inner_list : outer_list) {
+      if (!first_inner_list) {
+        std::cout << ","; // Separate inner lists with commas
+      }
+      first_inner_list = false;
+
+      // Print each character in the inner list
+      std::cout << "[";
+      bool first_char = true;
+      for (char c : inner_list) {
+        if (!first_char) {
+          std::cout << ",";
+        }
+        first_char = false;
+        std::cout << "'" << c << "'"; // Enclose characters in single quotes
+      }
+      std::cout << "]";
+    }
+
+    std::cout << "]"; // Close the inner list bracket for the current row
+  }
+
+  // Remove the trailing comma (if any)
+  if (!list_of_output_lists.empty()) {
+    std::cout << "\b"; // Backspace to remove the last comma
+  }
+
+  std::cout << "]" << std::endl;
 }

@@ -2,6 +2,7 @@ import cv2 as cv
 import numpy as np
 from matplotlib import pyplot as plt
 import math
+from collections import defaultdict
  
 
 def inkSpreading(T1_val):
@@ -141,6 +142,9 @@ assert img is not None, "file could not be read, check with os.path.exists()"
 blur = cv.GaussianBlur(img, (5, 5), 0)
 ret3, th3 = cv.threshold(blur, 0, 255, cv.THRESH_BINARY + cv.THRESH_OTSU)
 th3 = (255 - th3) / 255
+# output_types = []
+# counter_list = []
+count_dict = defaultdict(int)
 
 for row_count in range(len(th3)):
     row_pixels = th3[row_count, :]
@@ -178,10 +182,16 @@ for row_count in range(len(th3)):
             odd_sum = sum(int(output_list[i][1]) for i in [1, 3, 5, 7, 9, 11])
             even_sum = int(output_list[0]) + sum(int(output_list[i][1]) for i in [2, 4, 6, 8, 10])            
             parity = 10 - ((odd_sum * 3 + even_sum) % 10) if ((odd_sum * 3 + even_sum) % 10 != 0) else 0
-            print(str(odd_sum) +'  '+ str(even_sum)+'  '+str(parity))
+            # print(str(odd_sum) +'  '+ str(even_sum)+'  '+str(parity))
             if parity == int(output_list[12][1]):
-                print("row " + str(row_count) + "   " + str(output_list))
-    
+                # print("row " + str(row_count) + "   " + str(output_list))
+                
+                count_dict[tuple(output_list)]+=1
+
+print(count_dict)
+max_key = max(count_dict, key=count_dict.get)
+print("Key with the maximum value:", max_key)
+
 
 
 
