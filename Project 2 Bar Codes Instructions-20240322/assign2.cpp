@@ -36,7 +36,8 @@ int isGuardBit(std::vector<int>& consecutive_counts, int i);
 int left_digit(std::list<std::vector<char>>& list);
 void printOutputList(const std::list<std::vector<char>>& output_list);
 void print_list_of_output_lists(const std::list<std::list<std::vector<char>>>& list_of_output_lists);
-std::list<std::pair<std::list<std::vector<char>>, int>>  scan_barcode(cv::Mat img);
+std::list<std::pair<std::list<std::vector<char>>, int>>  decode_barcode(cv::Mat img);
+cv::Mat scan_barcode(cv::Mat img);
 
 
 double FindImageAngle(const cv::Mat& image) {
@@ -159,6 +160,10 @@ int main() {
             if (updateimg) {
                 cv::imshow("Original", img);
                 updateimg = false;  // Reset flag for next img update
+                
+                cv::Mat return_img = scan_barcode(img);
+                cv::imshow("image",return_img);
+                cv::waitKey(0);
             }
 
             // Exit if any button is pressed
@@ -168,9 +173,19 @@ int main() {
             }
         }
         
+
+
+    // cv::imshow("image",binary_img);
+    // cv::waitKey(0);
+
+    cv::destroyAllWindows();
+    return 0;
+}
+cv::Mat scan_barcode(cv::Mat img){
+
     // calculate image and rotate 
     double angle = FindImageAngle(img);
-    cv::imshow("ori",img);
+    // cv::imshow("ori",img);
     img = rotateImage(img, angle);
     // cv::imshow("after",img);
     printf("angle: %f\n", angle);
@@ -190,8 +205,8 @@ int main() {
     cv::Mat binary_img_flip;
     flip(binary_img, binary_img_flip, 1); // 1: Flip horizontally
 
-    std::list<std::pair<std::list<std::vector<char>>, int>> result = scan_barcode(binary_img);
-    std::list<std::pair<std::list<std::vector<char>>, int>> result_flip = scan_barcode(binary_img_flip);
+    std::list<std::pair<std::list<std::vector<char>>, int>> result = decode_barcode(binary_img);
+    std::list<std::pair<std::list<std::vector<char>>, int>> result_flip = decode_barcode(binary_img_flip);
     
     int count_ori = 0;
     int count_flip = 0;
@@ -211,16 +226,11 @@ int main() {
     if(count_ori > count_flip) printOutputList(max_count_ori);
     else printOutputList(max_count_flip);
 
-
-    cv::imshow("image",binary_img);
-    cv::waitKey(0);
-
-    cv::destroyAllWindows();
-    return 0;
+    return binary_img;
 }
 
 
-std::list<std::pair<std::list<std::vector<char>>, int>>  scan_barcode(cv::Mat img){
+std::list<std::pair<std::list<std::vector<char>>, int>>  decode_barcode(cv::Mat img){
     
     std::list<std::list<std::vector<char>>> list_of_output_lists;
     std::list<std::vector<char>> max_output_list;
