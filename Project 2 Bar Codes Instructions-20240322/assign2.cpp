@@ -39,11 +39,80 @@ void print_list_of_output_lists(const std::list<std::list<std::vector<char>>>& l
 std::list<std::pair<std::list<std::vector<char>>, int>>  scan_barcode(cv::Mat img);
 
 
+double FindImageAngle(const cv::Mat& image) {
+    if (image.empty()) {
+        std::cerr << "Image is empty\n";
+        return -1; // Return a special value indicating an error
+    }
+ 
+    // Convert the image to grayscale if it is not already
+    cv::Mat grayImage;
+    if (image.channels() == 3) {
+        cvtColor(image, grayImage, cv::COLOR_BGR2GRAY);
+    } else {
+        grayImage = image;
+    }
+ 
+    // Threshold to create a binary image
+    cv::Mat thresholdedImage;
+    threshold(grayImage, thresholdedImage, 128, 255, cv::THRESH_BINARY);
+ 
+    // Find contours
+    std::vector<std::vector<cv::Point>> contours;
+    findContours(thresholdedImage, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
+ 
+    double maxArea = 0;
+    std::vector<cv::Point> largestContour;
+    for (const auto& contour : contours) {
+        double area = cv::contourArea(contour);
+        if (area > maxArea) {
+            maxArea = area;
+            largestContour = contour;
+        }
+    }
+ 
+    // Calculate the moments and the angle of the minimum moment of inertia
+    if (!largestContour.empty()) {
+        cv::Moments m = moments(largestContour);
+        if (m.m00 != 0) {
+            double angle = 0.5 * atan2(2 * m.mu11, m.mu20 - m.mu02) * 180 / CV_PI;
+            return angle; // Return the calculated angle
+        }
+    } else {
+        std::cout << "No significant blobs found\n";
+        return 0; // Return zero if no blob is processed
+    }
+ 
+    return 0; // Return zero or another special value if no blob is processed
+}
+
+cv::Mat rotateImage(const cv::Mat& src, double angle) {
+    // Get the center of the image
+    cv::Point2f center(src.cols / 2.0, src.rows / 2.0);
+ 
+    // Get the rotation matrix with the center, the angle in degrees, and a scale factor
+    cv::Mat rot = cv::getRotationMatrix2D(center, angle, 1.0);
+ 
+    // Determine the bounding rectangle for the rotated image
+    cv::Rect2f bbox = cv::RotatedRect(cv::Point2f(), src.size(), angle).boundingRect2f();
+ 
+    // Adjust the rotation matrix to take into account the translation
+    rot.at<double>(0, 2) += bbox.width / 2.0 - center.x;
+    rot.at<double>(1, 2) += bbox.height / 2.0 - center.y;
+ 
+    // Perform the affine transformation
+    cv::Mat dst;
+    warpAffine(src, dst, rot, bbox.size());
+ 
+    return dst; // Return the rotated image
+}
+
+
 using namespace cv;
 int main() {
 
     // cv::Mat img = cv::imread("IMG_20240227_0002b.jpg",cv::IMREAD_COLOR);
-    cv::Mat img = cv::imread("IMG_20240227_0003.jpg",cv::IMREAD_COLOR);
+    // cv::Mat img = cv::imread("IMG_20240227_0003.jpg",cv::IMREAD_COLOR);
     // cv::Mat img = cv::imread("IMG_20240227_0004.jpg",cv::IMREAD_COLOR);
     // cv::Mat img = cv::imread("IMG_20240227_0005.jpg",cv::IMREAD_COLOR); 
     // cv::Mat img = cv::imread("IMG_20240227_0006.jpg",cv::IMREAD_COLOR);
@@ -52,11 +121,61 @@ int main() {
     // cv::Mat img = cv::imread("IMG_20240227_0009.jpg",cv::IMREAD_COLOR);
     // cv::Mat img = cv::imread("IMG_20240227_0010.jpg",cv::IMREAD_COLOR);
 
-    if (img.empty())
-    {
-        std::cerr << "Error: Could not open or find the image!\n";
-        return -1;
-    }
+        // if (img.empty())
+        // {
+        //     std::cerr << "Error: Could not open or find the image!\n";
+        //     return -1;
+        // }
+
+        
+        cv::VideoCapture cap(1);  // Replace with "0" for built-in camera if needed
+        if (!cap.isOpened()) {
+            std::cerr << "Error opening the camera!" << std::endl;
+            return -1;
+        }
+
+        cv::Mat img;
+        bool updateimg = false;  // Flag to control img update
+
+        // Create a window to display the video
+        cv::namedWindow("Original", cv::WINDOW_NORMAL);
+        // cv::resizeWindow("Original", 800, 600);
+
+        while (true) {
+            // Capture a img from the video feed
+            cap >> img;
+            if (img.empty()) {
+                std::cerr << "No img captured?" << std::endl;
+                return -1;
+            }
+
+            // Check for 't' key press
+            int key = cv::waitKey(1);  // Wait for 1 millisecond for key input
+            if (key == 't') {
+            updateimg = true;
+            }
+
+            // Update the displayed img only when 't' is pressed
+            if (updateimg) {
+                cv::imshow("Original", img);
+                updateimg = false;  // Reset flag for next img update
+            }
+
+            // Exit if any button is pressed
+            if (key == 'q') {
+                printf("Picture taken \n");
+                break;
+            }
+        }
+        
+    // calculate image and rotate 
+    double angle = FindImageAngle(img);
+    cv::imshow("ori",img);
+    img = rotateImage(img, angle);
+    // cv::imshow("after",img);
+    printf("angle: %f\n", angle);
+
+
 
     cv::Mat gray_img;
     cv::cvtColor(img, gray_img, cv::COLOR_BGR2GRAY);
@@ -74,13 +193,13 @@ int main() {
     std::list<std::pair<std::list<std::vector<char>>, int>> result = scan_barcode(binary_img);
     std::list<std::pair<std::list<std::vector<char>>, int>> result_flip = scan_barcode(binary_img_flip);
     
-    int count = 0;
+    int count_ori = 0;
     int count_flip = 0;
     std::list<std::vector<char>>  max_count_ori;
     std::list<std::vector<char>>  max_count_flip;
 
     for (const auto& count_pair : result){
-        count = count_pair.second;
+        count_ori = count_pair.second;
         max_count_ori = count_pair.first;
     }
     for (const auto& count_pair : result_flip){
@@ -89,16 +208,15 @@ int main() {
     }
 
     // Print decoded barcode signal that occurs the most
-    if(count > count_flip) printOutputList(max_count_ori);
+    if(count_ori > count_flip) printOutputList(max_count_ori);
     else printOutputList(max_count_flip);
 
 
     cv::imshow("image",binary_img);
     cv::waitKey(0);
+
     cv::destroyAllWindows();
-
     return 0;
-
 }
 
 
