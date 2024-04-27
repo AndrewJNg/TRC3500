@@ -1,0 +1,6 @@
+D:/Monash_Apps/PSoC\ Creator/4.4/PSoC\ Creator/warp/lib/ieee/work/stdlogic.vif : 
+
+D:/Monash_Apps/PSoC\ Creator/4.4/PSoC\ Creator/warp/lib/common/stdlogic/mod_genv.vif : 
+
+D:/Monash_Apps/PSoC\ Creator/4.4/PSoC\ Creator/warp/lib/common/stdlogic/rtlpkg.vif : 
+
