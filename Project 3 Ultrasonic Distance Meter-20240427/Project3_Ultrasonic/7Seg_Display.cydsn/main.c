@@ -84,87 +84,19 @@ void display_num(double value)
         Dis_D3_Write(1);
         Dis_D4_Write(1);
         
+        // Update new value to display
         draw_7Seg(charLookup[D[i]],dp[3-i]);
         
-           
+        // Only show on specified section
         if     (i==0)Dis_D1_Write(0);
         else if(i==1)Dis_D2_Write(0);
         else if(i==2)Dis_D3_Write(0);
         else if(i==3)Dis_D4_Write(0);
+        
+        // Short delay to reduce flicker
         CyDelay(delayTime);
         }
-         /*
         
-        // Turn off all digits
-        Dis_D1_Write(1);
-        Dis_D2_Write(1);
-        Dis_D3_Write(1);
-        Dis_D4_Write(1);
-        
-        
-        // Display the needed value
-        draw_7Seg(charLookup[d1],dp[3]);
-        
-        // Turn on needed digit
-        Dis_D1_Write(0);
-        Dis_D2_Write(1);
-        Dis_D3_Write(1);
-        Dis_D4_Write(1);
-        
-        CyDelay(delayTime);
-        
-        //////////////////////////////////
-        // Turn off all digits
-        Dis_D1_Write(1);
-        Dis_D2_Write(1);
-        Dis_D3_Write(1);
-        Dis_D4_Write(1);
-
-        // Display the needed value
-        draw_7Seg(charLookup[d2],dp[2]);
-        
-        // Turn on needed digit
-        Dis_D1_Write(1);
-        Dis_D2_Write(0);
-        Dis_D3_Write(1);
-        Dis_D4_Write(1);
-        
-        CyDelay(delayTime);
-        //////////////////////////////////
-        // Turn off all digits
-        Dis_D1_Write(1);
-        Dis_D2_Write(1);
-        Dis_D3_Write(1);
-        Dis_D4_Write(1);
-
-        // Display the needed value
-        draw_7Seg(charLookup[d3],dp[1]);
-        
-        // Turn on needed digit
-        Dis_D1_Write(1);
-        Dis_D2_Write(1);
-        Dis_D3_Write(0);
-        Dis_D4_Write(1);
-        
-        CyDelay(delayTime);
-        //////////////////////////////////
-        // Turn off all digits
-        Dis_D1_Write(1);
-        Dis_D2_Write(1);
-        Dis_D3_Write(1);
-        Dis_D4_Write(1);
-
-        // Display the needed value
-        draw_7Seg(charLookup[d4],dp[0]);
-        
-        // Turn on needed digit
-        Dis_D1_Write(1);
-        Dis_D2_Write(1);
-        Dis_D3_Write(1);
-        Dis_D4_Write(0);
-        
-        CyDelay(delayTime);
-        */
         
 }
 
@@ -172,6 +104,7 @@ void display_num(double value)
 int segmentPattern_array[7];  // Array to store the converted 1s and 0s (7 elements for 7 segments)
 void draw_7Seg(const char* segmentPattern,int dp)
 {
+    // Convert string to integer
     for (int i = 0; i < 7; i++) {
         segmentPattern_array[i] = segmentPattern[i]-'0';
     }
