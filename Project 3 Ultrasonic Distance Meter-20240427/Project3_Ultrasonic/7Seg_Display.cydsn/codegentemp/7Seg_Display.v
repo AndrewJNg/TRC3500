@@ -1,6 +1,6 @@
 // ======================================================================
 // 7Seg_Display.v generated from TopDesign.cysch
-// 04/27/2024 at 16:13
+// 05/01/2024 at 22:45
 // This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 // ======================================================================
 
@@ -147,6 +147,10 @@
 // top
 module top ;
 
+          wire  Net_90;
+          wire  Net_83;
+          wire  Net_96;
+          wire  Net_92;
     electrical  Net_33;
     electrical  Net_34;
     electrical  Net_35;
@@ -1071,6 +1075,44 @@ module top ;
 		  .out_reset({1'b0}));
 
 	assign tmpOE__Dis_D4_net = (`CYDEV_CHIP_MEMBER_USED == `CYDEV_CHIP_MEMBER_3A && `CYDEV_CHIP_REVISION_USED < `CYDEV_CHIP_REVISION_3A_ES3) ? ~{1'b1} : {1'b1};
+
+
+	cy_clock_v1_0
+		#(.id("fecf2043-6d49-42fd-8232-fd8ca109feba"),
+		  .source_clock_id(""),
+		  .divisor(0),
+		  .period("100000000000000"),
+		  .is_direct(0),
+		  .is_digital(1))
+		Clock_2
+		 (.clock_out(Net_92));
+
+
+
+	cy_isr_v1_0
+		#(.int_type(2'b10))
+		isr_2
+		 (.int_signal(Net_92));
+
+
+
+	cy_isr_v1_0
+		#(.int_type(2'b10))
+		isr_7Seg
+		 (.int_signal(Net_83));
+
+
+
+	cy_clock_v1_0
+		#(.id("1a9e21c4-d47e-451d-8868-4a4bb48ad8b7"),
+		  .source_clock_id(""),
+		  .divisor(0),
+		  .period("5000000000000"),
+		  .is_direct(0),
+		  .is_digital(1))
+		Display_Clk
+		 (.clock_out(Net_83));
+
 
 
 

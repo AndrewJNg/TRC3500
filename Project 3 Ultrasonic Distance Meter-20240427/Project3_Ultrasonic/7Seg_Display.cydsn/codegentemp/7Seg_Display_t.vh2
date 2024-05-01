@@ -1,5 +1,5 @@
 -- Project:   D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\7Seg_Display.cyprj
--- Generated: 04/27/2024 16:13:43
+-- Generated: 05/01/2024 22:45:22
 -- PSoC Creator  4.4
 
 ENTITY \7Seg_Display\ IS
@@ -51,6 +51,12 @@ ARCHITECTURE __DEFAULT__ OF \7Seg_Display\ IS
     SIGNAL Dis_E(0)__PA : bit;
     SIGNAL Dis_F(0)__PA : bit;
     SIGNAL Dis_G(0)__PA : bit;
+    SIGNAL Net_83 : bit;
+    ATTRIBUTE global_signal OF Net_83 : SIGNAL IS true;
+    SIGNAL Net_83_local : bit;
+    SIGNAL Net_92 : bit;
+    ATTRIBUTE global_signal OF Net_92 : SIGNAL IS true;
+    SIGNAL Net_92_local : bit;
     SIGNAL __ONE__ : bit;
     ATTRIBUTE POWER OF __ONE__ : SIGNAL IS true;
     SIGNAL __ZERO__ : bit;
@@ -84,6 +90,8 @@ ARCHITECTURE __DEFAULT__ OF \7Seg_Display\ IS
     ATTRIBUTE Location OF Dis_D3(0) : LABEL IS "P1[6]";
     ATTRIBUTE lib_model OF Dis_D4(0) : LABEL IS "iocell12";
     ATTRIBUTE Location OF Dis_D4(0) : LABEL IS "P1[4]";
+    ATTRIBUTE Location OF isr_2 : LABEL IS "[IntrContainer=(0)][IntrId=(0)]";
+    ATTRIBUTE Location OF isr_7Seg : LABEL IS "[IntrContainer=(0)][IntrId=(1)]";
     COMPONENT clockblockcell
         PORT (
             dclk_0 : OUT std_ulogic;
@@ -164,6 +172,11 @@ ARCHITECTURE __DEFAULT__ OF \7Seg_Display\ IS
             dclk_glb_ff_6 : OUT std_ulogic;
             dclk_glb_ff_7 : OUT std_ulogic);
     END COMPONENT;
+    COMPONENT interrupt
+        PORT (
+            interrupt : IN std_ulogic;
+            clock : IN std_ulogic);
+    END COMPONENT;
     COMPONENT iocell
         PORT (
             oe : IN std_ulogic;
@@ -208,7 +221,11 @@ BEGIN
             clk_bus_glb => ClockBlock_BUS_CLK,
             clk_bus => ClockBlock_BUS_CLK_local,
             dsi_clkin_div => open,
-            dsi_glb_div => open);
+            dsi_glb_div => open,
+            dclk_glb_0 => Net_83,
+            dclk_0 => Net_83_local,
+            dclk_glb_1 => Net_92,
+            dclk_1 => Net_92_local);
 
     Dis_A:logicalport
         GENERIC MAP(
@@ -1289,5 +1306,21 @@ BEGIN
             out_clock => open,
             out_clock_en => '1',
             out_reset => '0');
+
+    isr_2:interrupt
+        GENERIC MAP(
+            int_type => "10",
+            is_nmi => 0)
+        PORT MAP(
+            interrupt => Net_92_local,
+            clock => ClockBlock_BUS_CLK);
+
+    isr_7Seg:interrupt
+        GENERIC MAP(
+            int_type => "10",
+            is_nmi => 0)
+        PORT MAP(
+            interrupt => Net_83_local,
+            clock => ClockBlock_BUS_CLK);
 
 END __DEFAULT__;

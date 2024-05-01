@@ -1,5 +1,5 @@
 # 7Seg_Display
-# 2024-04-27 06:13:42Z
+# 2024-05-01 12:45:21Z
 
 # IO_0@[IOP=(1)][IoId=(0)] is reserved: SWDDebugEnabled
 dont_use_io iocell 1 0
@@ -20,3 +20,5 @@ set_io "Dis_D1(0)" iocell 1 7
 set_io "Dis_D2(0)" iocell 1 5
 set_io "Dis_D3(0)" iocell 1 6
 set_io "Dis_D4(0)" iocell 1 4
+set_location "isr_2" interrupt -1 -1 0
+set_location "isr_7Seg" interrupt -1 -1 1

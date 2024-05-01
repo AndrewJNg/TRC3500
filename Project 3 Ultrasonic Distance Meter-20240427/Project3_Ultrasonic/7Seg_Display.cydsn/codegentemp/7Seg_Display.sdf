@@ -1,6 +1,6 @@
 (DELAYFILE
  (SDFVERSION "IEEE 1497 4.0")
- (DATE "2024-04-27T06:13:43Z")
+ (DATE "2024-05-01T12:45:22Z")
  (DESIGN "7Seg_Display")
  (VENDOR "Cypress Semiconductor")
  (PROGRAM "PSoC Creator")
@@ -12,6 +12,10 @@
   (INSTANCE *)
   (DELAY
    (ABSOLUTE
+    (INTERCONNECT ClockBlock.clk_bus_glb isr_2.clock (0.000:0.000:0.000))
+    (INTERCONNECT ClockBlock.clk_bus_glb isr_7Seg.clock (0.000:0.000:0.000))
+    (INTERCONNECT ClockBlock.dclk_0 isr_7Seg.interrupt (4.914:4.914:4.914))
+    (INTERCONNECT ClockBlock.dclk_1 isr_2.interrupt (6.544:6.544:6.544))
     (INTERCONNECT Dis_A\(0\)_PAD Dis_A\(0\).pad_in (0.000:0.000:0.000))
     (INTERCONNECT Dis_B\(0\)_PAD Dis_B\(0\).pad_in (0.000:0.000:0.000))
     (INTERCONNECT Dis_C\(0\)_PAD Dis_C\(0\).pad_in (0.000:0.000:0.000))

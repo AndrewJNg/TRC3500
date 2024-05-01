@@ -257,6 +257,16 @@
 #define Dis_G__SHIFT 3u
 #define Dis_G__SLW CYREG_PRT2_SLW
 
+/* isr_2 */
+#define isr_2__INTC_CLR_EN_REG CYREG_NVIC_CLRENA0
+#define isr_2__INTC_CLR_PD_REG CYREG_NVIC_CLRPEND0
+#define isr_2__INTC_MASK 0x01u
+#define isr_2__INTC_NUMBER 0u
+#define isr_2__INTC_PRIOR_NUM 7u
+#define isr_2__INTC_PRIOR_REG CYREG_NVIC_PRI_0
+#define isr_2__INTC_SET_EN_REG CYREG_NVIC_SETENA0
+#define isr_2__INTC_SET_PD_REG CYREG_NVIC_SETPEND0
+
 /* Dis_D1 */
 #define Dis_D1__0__INTTYPE CYREG_PICU1_INTTYPE7
 #define Dis_D1__0__MASK 0x80u
@@ -427,6 +437,38 @@
 #define Dis_DP__SHIFT 5u
 #define Dis_DP__SLW CYREG_PRT2_SLW
 
+/* Clock_2 */
+#define Clock_2__CFG0 CYREG_CLKDIST_DCFG1_CFG0
+#define Clock_2__CFG1 CYREG_CLKDIST_DCFG1_CFG1
+#define Clock_2__CFG2 CYREG_CLKDIST_DCFG1_CFG2
+#define Clock_2__CFG2_SRC_SEL_MASK 0x07u
+#define Clock_2__INDEX 0x01u
+#define Clock_2__PM_ACT_CFG CYREG_PM_ACT_CFG2
+#define Clock_2__PM_ACT_MSK 0x02u
+#define Clock_2__PM_STBY_CFG CYREG_PM_STBY_CFG2
+#define Clock_2__PM_STBY_MSK 0x02u
+
+/* isr_7Seg */
+#define isr_7Seg__INTC_CLR_EN_REG CYREG_NVIC_CLRENA0
+#define isr_7Seg__INTC_CLR_PD_REG CYREG_NVIC_CLRPEND0
+#define isr_7Seg__INTC_MASK 0x02u
+#define isr_7Seg__INTC_NUMBER 1u
+#define isr_7Seg__INTC_PRIOR_NUM 6u
+#define isr_7Seg__INTC_PRIOR_REG CYREG_NVIC_PRI_1
+#define isr_7Seg__INTC_SET_EN_REG CYREG_NVIC_SETENA0
+#define isr_7Seg__INTC_SET_PD_REG CYREG_NVIC_SETPEND0
+
+/* Display_Clk */
+#define Display_Clk__CFG0 CYREG_CLKDIST_DCFG0_CFG0
+#define Display_Clk__CFG1 CYREG_CLKDIST_DCFG0_CFG1
+#define Display_Clk__CFG2 CYREG_CLKDIST_DCFG0_CFG2
+#define Display_Clk__CFG2_SRC_SEL_MASK 0x07u
+#define Display_Clk__INDEX 0x00u
+#define Display_Clk__PM_ACT_CFG CYREG_PM_ACT_CFG2
+#define Display_Clk__PM_ACT_MSK 0x01u
+#define Display_Clk__PM_STBY_CFG CYREG_PM_STBY_CFG2
+#define Display_Clk__PM_STBY_MSK 0x01u
+
 /* Miscellaneous */
 #define BCLK__BUS_CLK__HZ 24000000U
 #define BCLK__BUS_CLK__KHZ 24000U
@@ -586,7 +628,7 @@
 #define CYDEV_ECC_ENABLE 0
 #define CYDEV_HEAP_SIZE 0x80
 #define CYDEV_INSTRUCT_CACHE_ENABLED 1
-#define CYDEV_INTR_RISING 0x00000000u
+#define CYDEV_INTR_RISING 0x00000003u
 #define CYDEV_IS_EXPORTING_CODE 0
 #define CYDEV_IS_IMPORTING_CODE 0
 #define CYDEV_PROJ_TYPE 0
