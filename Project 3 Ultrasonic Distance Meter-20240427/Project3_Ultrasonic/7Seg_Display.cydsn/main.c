@@ -25,6 +25,18 @@ double counter = 0;
 CY_ISR(MyCustomISR2) // Interrupt counter
 {
     counter +=0.001;
+    //Count7_1_Stop(); 
+    //Count7_1_WriteCounter(10) ; 
+    //Count7_1_Enable(); 
+}
+CY_ISR(MyCustomISR3) // Interrupt counter
+{
+    //counter +=0.001;
+    //Count7_1_Stop(); 
+    //Count7_1_WriteCounter(10) ; 
+    //Count7_1_Enable(); 
+    Control_Reg_1_Write(1); // Yes so reset counter to do more pulses
+    Control_Reg_1_Write(0);
 }
 
 int main(void)
@@ -35,18 +47,29 @@ int main(void)
     
     // Clear any existing interrupts
     isr_7Seg_ClearPending(); 
+    isr_1_ClearPending(); 
     isr_2_ClearPending(); 
 
     // Enable the interrupt service routine
     isr_7Seg_StartEx(ISR);  
+    isr_1_StartEx(MyCustomISR3);  // Temp just to update counter
     isr_2_StartEx(MyCustomISR2);  // Temp just to update counter
     
     
     // Ultrasonic setup
     PGA_1_Start();
     Opamp_1_Start();
+    Comp_1_Start();
+    VDAC8_1_Start();
+    Count7_1_Start(); 
     
-
+    // Setup EEPROM
+    EEPROM_1_Start(); 
+    //EEPROM_1_Enable();
+    
+    Control_Reg_1_Write(1); // Yes so reset counter to do more pulses
+    Control_Reg_1_Write(0);
+    
     for(;;)
     {
         // High level 7 segment display code

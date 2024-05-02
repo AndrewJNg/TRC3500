@@ -8,7 +8,11 @@
 		3.2::Clock to Out
 		3.3::Pad to Pad
 	4::Path Details for Clock Frequency Summary
+		4.1::Critical Path Report for CyBUS_CLK
+		4.2::Critical Path Report for timer_clock_1
 	5::Path Details for Clock Relationship Summary
+		5.1::Critical Path Report for (CyBUS_CLK:R vs. timer_clock_1:R)
+		5.2::Critical Path Report for (timer_clock_1:R vs. timer_clock_1:R)
 ===================================================================== 
                     End of Table of Contents
 ##################################################################### 
@@ -16,18 +20,22 @@
 ##################################################################### 
                     1::Clock Frequency Summary
 ===================================================================== 
-Number of clocks: 11
-Clock: Clock_1              | N/A  | Target: 0.04 MHz   | 
-Clock: Clock_1(routed)      | N/A  | Target: 0.04 MHz   | 
-Clock: Clock_2              | N/A  | Target: 0.00 MHz   | 
-Clock: Clock_2(routed)      | N/A  | Target: 0.00 MHz   | 
-Clock: CyBUS_CLK            | N/A  | Target: 24.00 MHz  | 
-Clock: CyILO                | N/A  | Target: 0.00 MHz   | 
-Clock: CyIMO                | N/A  | Target: 3.00 MHz   | 
-Clock: CyMASTER_CLK         | N/A  | Target: 24.00 MHz  | 
-Clock: CyPLL_OUT            | N/A  | Target: 24.00 MHz  | 
-Clock: Display_Clk          | N/A  | Target: 0.00 MHz   | 
-Clock: Display_Clk(routed)  | N/A  | Target: 0.00 MHz   | 
+Number of clocks: 15
+Clock: Clock_1                      | N/A                    | Target: 0.04 MHz   | 
+Clock: Clock_1(routed)              | N/A                    | Target: 0.04 MHz   | 
+Clock: Clock_2                      | N/A                    | Target: 0.00 MHz   | 
+Clock: Clock_2(routed)              | N/A                    | Target: 0.00 MHz   | 
+Clock: CyBUS_CLK                    | Frequency: 229.98 MHz  | Target: 24.00 MHz  | 
+Clock: CyILO                        | N/A                    | Target: 0.00 MHz   | 
+Clock: CyIMO                        | N/A                    | Target: 3.00 MHz   | 
+Clock: CyMASTER_CLK                 | N/A                    | Target: 24.00 MHz  | 
+Clock: CyPLL_OUT                    | N/A                    | Target: 24.00 MHz  | 
+Clock: Display_Clk                  | N/A                    | Target: 0.00 MHz   | 
+Clock: Display_Clk(routed)          | N/A                    | Target: 0.00 MHz   | 
+Clock: timer_clock                  | N/A                    | Target: 0.10 MHz   | 
+Clock: timer_clock(fixed-function)  | N/A                    | Target: 0.10 MHz   | 
+Clock: timer_clock_1                | Frequency: 59.34 MHz   | Target: 0.00 MHz   | 
+Clock: timer_clock_1(routed)        | N/A                    | Target: 0.00 MHz   | 
 
  =====================================================================
                     End of Clock Frequency Summary
@@ -38,7 +46,10 @@ Clock: Display_Clk(routed)  | N/A  | Target: 0.00 MHz   |
                     2::Clock Relationship Summary
  =====================================================================
 
-Launch Clock  Capture Clock  Constraint(R-R)  Slack(R-R)  Constraint(R-F)  Slack(R-F)  Constraint(F-F)  Slack(F-F)  Constraint(F-R)  Slack(F-R)  
+Launch Clock   Capture Clock  Constraint(R-R)  Slack(R-R)   Constraint(R-F)  Slack(R-F)  Constraint(F-F)  Slack(F-F)  Constraint(F-R)  Slack(F-R)  
+-------------  -------------  ---------------  -----------  ---------------  ----------  ---------------  ----------  ---------------  ----------  
+CyBUS_CLK      timer_clock_1  41666.7          37318        N/A              N/A         N/A              N/A         N/A              N/A         
+timer_clock_1  timer_clock_1  1e+011           -2147483648  N/A              N/A         N/A              N/A         N/A              N/A         
 
  =====================================================================
                     End of Clock Relationship Summary
@@ -61,46 +72,310 @@ Port Name  Setup to Clk  Clock Name:Phase
 -----------------------3.2::Clock to Out
 ----------------------------------------
 
-Port Name   Clock to Out  Clock Name:Phase   
-----------  ------------  -----------------  
-TX1(0)_PAD  25623         Clock_1(routed):R  
-TX1(0)_PAD  25623         Clock_1(routed):F  
-TX2(0)_PAD  35147         Clock_1(routed):R  
-TX2(0)_PAD  35147         Clock_1(routed):F  
+Port Name          Clock to Out  Clock Name:Phase         
+-----------------  ------------  -----------------------  
+LED1_Red(0)_PAD    25342         timer_clock_1:R          
+LED3_Green(0)_PAD  30877         timer_clock_1:R          
+LED3_Green(0)_PAD  30744         timer_clock_1(routed):R  
+LED3_Green(0)_PAD  30744         timer_clock_1(routed):F  
+TX1(0)_PAD         33281         timer_clock_1:R          
+TX1(0)_PAD         33046         Clock_1(routed):R        
+TX1(0)_PAD         33046         Clock_1(routed):F        
+TX2(0)_PAD         32716         timer_clock_1:R          
+TX2(0)_PAD         32444         Clock_1(routed):R        
+TX2(0)_PAD         32444         Clock_1(routed):F        
 
 
                          3.3::Pad to Pad
                          ---------------
 
-Port Name (Source)       Port Name (Destination)  Delay  
------------------------  -----------------------  -----  
-Button_S4_Right(0)_PAD   LED1_Red(0)_PAD          28571  
-Button_S2_Left(0)_PAD    LED2_Yellow(0)_PAD       28411  
-Button_S5_Select(0)_PAD  LED3_Green(0)_PAD        24725  
+Port Name (Source)     Port Name (Destination)  Delay  
+---------------------  -----------------------  -----  
+Button_S2_Left(0)_PAD  LED2_Yellow(0)_PAD       28411  
 
  =====================================================================
                     End of Datasheet Report
  #####################################################################
  #####################################################################
                     4::Path Details for Clock Frequency Summary
-
  =====================================================================
+4.1::Critical Path Report for CyBUS_CLK
+***************************************
+Clock: CyBUS_CLK
+Frequency: 229.98 MHz | Target: 24.00 MHz
+
+ ++++Path 1  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Path Begin     : \Control_Reg_1:Sync:ctrl_reg\/control_0
+Path End       : \Count7_1:Counter7\/reset
+Capture Clock  : \Count7_1:Counter7\/clock
+Path slack     : 37318p
+
+Capture Clock Arrival Time                                       0
++ Clock path delay                                               0
++ Cycle adjust (CyBUS_CLK:R#2400000 vs. timer_clock_1:R#2)   41667
+- Recovery time                                                  0
+----------------------------------------------------------   ----- 
+End-of-path required time (ps)                               41667
+
+Launch Clock Arrival Time                      0
++ Clock path delay                         0
++ Data path delay                       4348
+-------------------------------------   ---- 
+End-of-path arrival time (ps)           4348
+ 
+Launch Clock Path
+pin name                                                    model name      delay     AT  edge  Fanout
+----------------------------------------------------------  --------------  -----  -----  ----  ------
+ClockBlock/clk_bus_glb                                      clockblockcell      0      0  RISE       1
+\Control_Reg_1:Sync:ctrl_reg\/busclk                        controlcell1        0      0  RISE       1
+
+Data path
+pin name                                 model name    delay     AT  slack  edge  Fanout
+---------------------------------------  ------------  -----  -----  -----  ----  ------
+\Control_Reg_1:Sync:ctrl_reg\/control_0  controlcell1   2050   2050  37318  RISE       1
+\Count7_1:Counter7\/reset                count7cell     2298   4348  37318  RISE       1
+
+Capture Clock Path
+pin name                                                   model name      delay     AT  edge  Fanout
+---------------------------------------------------------  --------------  -----  -----  ----  ------
+ClockBlock/dclk_glb_3                                      clockblockcell      0      0  RISE       1
+\Count7_1:Counter7\/clock                                  count7cell          0      0  RISE       1
+
+
+===================================================================== 
+4.2::Critical Path Report for timer_clock_1
+*******************************************
+Clock: timer_clock_1
+Frequency: 59.34 MHz | Target: 0.00 MHz
+
+++++ Path 1 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+
+Path Begin     : \Count7_1:Counter7\/tc
+Path End       : \Count7_1:Counter7\/enable
+Capture Clock  : \Count7_1:Counter7\/clock
+Path slack     : 99999983148p
+
+Capture Clock Arrival Time                                            0
++ Clock path delay                                                    0
++ Cycle adjust (timer_clock_1:R#1 vs. timer_clock_1:R#2)   100000000000
+- Setup time                                                      -4060
+--------------------------------------------------------   ------------ 
+End-of-path required time (ps)                              99999995940
+
+Launch Clock Arrival Time                       0
++ Clock path delay                          0
++ Data path delay                       12792
+-------------------------------------   ----- 
+End-of-path arrival time (ps)           12792
+ 
+Launch Clock Path
+pin name                                                   model name      delay     AT  edge  Fanout
+---------------------------------------------------------  --------------  -----  -----  ----  ------
+ClockBlock/dclk_glb_3                                      clockblockcell      0      0  RISE       1
+\Count7_1:Counter7\/clock                                  count7cell          0      0  RISE       1
+
+Data path
+pin name                    model name   delay     AT        slack  edge  Fanout
+--------------------------  -----------  -----  -----  -----------  ----  ------
+\Count7_1:Counter7\/tc      count7cell    2050   2050  99999983148  RISE       1
+Net_282/main_0              macrocell3    3221   5271  99999983148  RISE       1
+Net_282/q                   macrocell3    3350   8621  99999983148  RISE       1
+\Count7_1:Counter7\/enable  count7cell    4171  12792  99999983148  RISE       1
+
+Capture Clock Path
+pin name                                                   model name      delay     AT  edge  Fanout
+---------------------------------------------------------  --------------  -----  -----  ----  ------
+ClockBlock/dclk_glb_3                                      clockblockcell      0      0  RISE       1
+\Count7_1:Counter7\/clock                                  count7cell          0      0  RISE       1
+
+
+
+===================================================================== 
                     End of Path Details for Clock Frequency Summary
- #####################################################################
+##################################################################### 
 
 
- #####################################################################
+##################################################################### 
                     5::Path Details for Clock Relationship Summary
- =====================================================================
+===================================================================== 
+
+5.1::Critical Path Report for (CyBUS_CLK:R vs. timer_clock_1:R)
+***************************************************************
+
+++++ Path 1 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+
+Path Begin     : \Control_Reg_1:Sync:ctrl_reg\/control_0
+Path End       : \Count7_1:Counter7\/reset
+Capture Clock  : \Count7_1:Counter7\/clock
+Path slack     : 37318p
+
+Capture Clock Arrival Time                                       0
++ Clock path delay                                               0
++ Cycle adjust (CyBUS_CLK:R#2400000 vs. timer_clock_1:R#2)   41667
+- Recovery time                                                  0
+----------------------------------------------------------   ----- 
+End-of-path required time (ps)                               41667
+
+Launch Clock Arrival Time                      0
++ Clock path delay                         0
++ Data path delay                       4348
+-------------------------------------   ---- 
+End-of-path arrival time (ps)           4348
+ 
+Launch Clock Path
+pin name                                                    model name      delay     AT  edge  Fanout
+----------------------------------------------------------  --------------  -----  -----  ----  ------
+ClockBlock/clk_bus_glb                                      clockblockcell      0      0  RISE       1
+\Control_Reg_1:Sync:ctrl_reg\/busclk                        controlcell1        0      0  RISE       1
+
+Data path
+pin name                                 model name    delay     AT  slack  edge  Fanout
+---------------------------------------  ------------  -----  -----  -----  ----  ------
+\Control_Reg_1:Sync:ctrl_reg\/control_0  controlcell1   2050   2050  37318  RISE       1
+\Count7_1:Counter7\/reset                count7cell     2298   4348  37318  RISE       1
+
+Capture Clock Path
+pin name                                                   model name      delay     AT  edge  Fanout
+---------------------------------------------------------  --------------  -----  -----  ----  ------
+ClockBlock/dclk_glb_3                                      clockblockcell      0      0  RISE       1
+\Count7_1:Counter7\/clock                                  count7cell          0      0  RISE       1
 
 
- =====================================================================
+5.2::Critical Path Report for (timer_clock_1:R vs. timer_clock_1:R)
+*******************************************************************
+
+++++ Path 2 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+
+Path Begin     : \Count7_1:Counter7\/tc
+Path End       : \Count7_1:Counter7\/enable
+Capture Clock  : \Count7_1:Counter7\/clock
+Path slack     : 99999983148p
+
+Capture Clock Arrival Time                                            0
++ Clock path delay                                                    0
++ Cycle adjust (timer_clock_1:R#1 vs. timer_clock_1:R#2)   100000000000
+- Setup time                                                      -4060
+--------------------------------------------------------   ------------ 
+End-of-path required time (ps)                              99999995940
+
+Launch Clock Arrival Time                       0
++ Clock path delay                          0
++ Data path delay                       12792
+-------------------------------------   ----- 
+End-of-path arrival time (ps)           12792
+ 
+Launch Clock Path
+pin name                                                   model name      delay     AT  edge  Fanout
+---------------------------------------------------------  --------------  -----  -----  ----  ------
+ClockBlock/dclk_glb_3                                      clockblockcell      0      0  RISE       1
+\Count7_1:Counter7\/clock                                  count7cell          0      0  RISE       1
+
+Data path
+pin name                    model name   delay     AT        slack  edge  Fanout
+--------------------------  -----------  -----  -----  -----------  ----  ------
+\Count7_1:Counter7\/tc      count7cell    2050   2050  99999983148  RISE       1
+Net_282/main_0              macrocell3    3221   5271  99999983148  RISE       1
+Net_282/q                   macrocell3    3350   8621  99999983148  RISE       1
+\Count7_1:Counter7\/enable  count7cell    4171  12792  99999983148  RISE       1
+
+Capture Clock Path
+pin name                                                   model name      delay     AT  edge  Fanout
+---------------------------------------------------------  --------------  -----  -----  ----  ------
+ClockBlock/dclk_glb_3                                      clockblockcell      0      0  RISE       1
+\Count7_1:Counter7\/clock                                  count7cell          0      0  RISE       1
+
+
+
+===================================================================== 
                     End of Path Details for Clock Relationship Summary
- #####################################################################
+##################################################################### 
 
 ##################################################################### 
                     Detailed Report for all timing paths 
 ===================================================================== 
+
+++++ Path 1 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+
+Path Begin     : \Control_Reg_1:Sync:ctrl_reg\/control_0
+Path End       : \Count7_1:Counter7\/reset
+Capture Clock  : \Count7_1:Counter7\/clock
+Path slack     : 37318p
+
+Capture Clock Arrival Time                                       0
++ Clock path delay                                               0
++ Cycle adjust (CyBUS_CLK:R#2400000 vs. timer_clock_1:R#2)   41667
+- Recovery time                                                  0
+----------------------------------------------------------   ----- 
+End-of-path required time (ps)                               41667
+
+Launch Clock Arrival Time                      0
++ Clock path delay                         0
++ Data path delay                       4348
+-------------------------------------   ---- 
+End-of-path arrival time (ps)           4348
+ 
+Launch Clock Path
+pin name                                                    model name      delay     AT  edge  Fanout
+----------------------------------------------------------  --------------  -----  -----  ----  ------
+ClockBlock/clk_bus_glb                                      clockblockcell      0      0  RISE       1
+\Control_Reg_1:Sync:ctrl_reg\/busclk                        controlcell1        0      0  RISE       1
+
+Data path
+pin name                                 model name    delay     AT  slack  edge  Fanout
+---------------------------------------  ------------  -----  -----  -----  ----  ------
+\Control_Reg_1:Sync:ctrl_reg\/control_0  controlcell1   2050   2050  37318  RISE       1
+\Count7_1:Counter7\/reset                count7cell     2298   4348  37318  RISE       1
+
+Capture Clock Path
+pin name                                                   model name      delay     AT  edge  Fanout
+---------------------------------------------------------  --------------  -----  -----  ----  ------
+ClockBlock/dclk_glb_3                                      clockblockcell      0      0  RISE       1
+\Count7_1:Counter7\/clock                                  count7cell          0      0  RISE       1
+
+
+
+++++ Path 2 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+
+Path Begin     : \Count7_1:Counter7\/tc
+Path End       : \Count7_1:Counter7\/enable
+Capture Clock  : \Count7_1:Counter7\/clock
+Path slack     : 99999983148p
+
+Capture Clock Arrival Time                                            0
++ Clock path delay                                                    0
++ Cycle adjust (timer_clock_1:R#1 vs. timer_clock_1:R#2)   100000000000
+- Setup time                                                      -4060
+--------------------------------------------------------   ------------ 
+End-of-path required time (ps)                              99999995940
+
+Launch Clock Arrival Time                       0
++ Clock path delay                          0
++ Data path delay                       12792
+-------------------------------------   ----- 
+End-of-path arrival time (ps)           12792
+ 
+Launch Clock Path
+pin name                                                   model name      delay     AT  edge  Fanout
+---------------------------------------------------------  --------------  -----  -----  ----  ------
+ClockBlock/dclk_glb_3                                      clockblockcell      0      0  RISE       1
+\Count7_1:Counter7\/clock                                  count7cell          0      0  RISE       1
+
+Data path
+pin name                    model name   delay     AT        slack  edge  Fanout
+--------------------------  -----------  -----  -----  -----------  ----  ------
+\Count7_1:Counter7\/tc      count7cell    2050   2050  99999983148  RISE       1
+Net_282/main_0              macrocell3    3221   5271  99999983148  RISE       1
+Net_282/q                   macrocell3    3350   8621  99999983148  RISE       1
+\Count7_1:Counter7\/enable  count7cell    4171  12792  99999983148  RISE       1
+
+Capture Clock Path
+pin name                                                   model name      delay     AT  edge  Fanout
+---------------------------------------------------------  --------------  -----  -----  ----  ------
+ClockBlock/dclk_glb_3                                      clockblockcell      0      0  RISE       1
+\Count7_1:Counter7\/clock                                  count7cell          0      0  RISE       1
+
+
 ===================================================================== 
                     End of Detailed Report for all timing paths 
 ##################################################################### 

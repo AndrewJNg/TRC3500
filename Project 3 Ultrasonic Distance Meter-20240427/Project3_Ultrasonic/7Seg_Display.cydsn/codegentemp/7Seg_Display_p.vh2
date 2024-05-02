@@ -1,5 +1,5 @@
 -- Project:   7Seg_Display
--- Generated: 05/02/2024 01:03:10
+-- Generated: 05/02/2024 17:24:48
 -- PSoC Creator  4.4
 
 ENTITY \7Seg_Display\ IS
@@ -25,7 +25,8 @@ ENTITY \7Seg_Display\ IS
         Button_S1_Bottom(0)_PAD : IN std_ulogic;
         Button_S3_Top(0)_PAD : IN std_ulogic;
         TX1(0)_PAD : OUT std_ulogic;
-        TX2(0)_PAD : OUT std_ulogic);
+        TX2(0)_PAD : OUT std_ulogic;
+        OP_Out_1(0)_PAD : OUT std_ulogic);
     ATTRIBUTE voltage_VDDABUF OF __DEFAULT__ : ENTITY IS 5e0;
     ATTRIBUTE voltage_VDDA OF __DEFAULT__ : ENTITY IS 5e0;
     ATTRIBUTE voltage_VUSB OF __DEFAULT__ : ENTITY IS 5e0;
@@ -70,25 +71,54 @@ ARCHITECTURE __DEFAULT__ OF \7Seg_Display\ IS
     SIGNAL LED1_Red(0)__PA : bit;
     SIGNAL LED2_Yellow(0)__PA : bit;
     SIGNAL LED3_Green(0)__PA : bit;
+    SIGNAL Net_10 : bit;
+    ATTRIBUTE global_signal OF Net_10 : SIGNAL IS true;
     SIGNAL Net_103 : bit;
-    SIGNAL Net_12 : bit;
-    ATTRIBUTE global_signal OF Net_12 : SIGNAL IS true;
+    SIGNAL Net_10_local : bit;
     SIGNAL Net_120 : bit;
-    SIGNAL Net_12_local : bit;
-    SIGNAL Net_15 : bit;
+    SIGNAL Net_138 : bit;
+    SIGNAL Net_197 : bit;
+    ATTRIBUTE global_signal OF Net_197 : SIGNAL IS true;
+    SIGNAL Net_197_local : bit;
+    SIGNAL Net_205 : bit;
+    SIGNAL Net_211 : bit;
+    SIGNAL Net_233 : bit;
+    ATTRIBUTE global_signal OF Net_233 : SIGNAL IS true;
+    SIGNAL Net_233_local : bit;
+    SIGNAL Net_248_0 : bit;
+    SIGNAL Net_248_1 : bit;
+    SIGNAL Net_248_2 : bit;
+    SIGNAL Net_248_3 : bit;
+    SIGNAL Net_248_4 : bit;
+    SIGNAL Net_248_5 : bit;
+    SIGNAL Net_248_6 : bit;
+    SIGNAL Net_251 : bit;
+    SIGNAL Net_260 : bit;
+    SIGNAL Net_282 : bit;
+    SIGNAL Net_297 : bit;
     SIGNAL Net_83 : bit;
     ATTRIBUTE global_signal OF Net_83 : SIGNAL IS true;
     SIGNAL Net_83_local : bit;
     SIGNAL Net_92 : bit;
     ATTRIBUTE global_signal OF Net_92 : SIGNAL IS true;
     SIGNAL Net_92_local : bit;
-    SIGNAL Net_99 : bit;
     SIGNAL OP_Out(0)__PA : bit;
+    SIGNAL OP_Out_1(0)__PA : bit;
     SIGNAL Rec1(0)__PA : bit;
     SIGNAL Rec2(0)__PA : bit;
     SIGNAL TX1(0)__PA : bit;
     SIGNAL TX2(0)__PA : bit;
+    SIGNAL \Control_Reg_1:control_1\ : bit;
+    SIGNAL \Control_Reg_1:control_2\ : bit;
+    SIGNAL \Control_Reg_1:control_3\ : bit;
+    SIGNAL \Control_Reg_1:control_4\ : bit;
+    SIGNAL \Control_Reg_1:control_5\ : bit;
+    SIGNAL \Control_Reg_1:control_6\ : bit;
+    SIGNAL \Control_Reg_1:control_7\ : bit;
     SIGNAL \PGA_1:Net_41\ : bit;
+    SIGNAL \Timer_1:Net_261\ : bit;
+    SIGNAL \Timer_1:Net_51\ : bit;
+    SIGNAL \Timer_1:Net_57\ : bit;
     SIGNAL __ONE__ : bit;
     ATTRIBUTE POWER OF __ONE__ : SIGNAL IS true;
     SIGNAL __ZERO__ : bit;
@@ -97,6 +127,7 @@ ARCHITECTURE __DEFAULT__ OF \7Seg_Display\ IS
     ATTRIBUTE POWER OF tmpOE__Dis_A_net_0 : SIGNAL IS true;
     SIGNAL zero : bit;
     ATTRIBUTE GROUND OF zero : SIGNAL IS true;
+    SIGNAL \ClockBlock.dclk_glb_ff_0__sig\ : bit;
     ATTRIBUTE lib_model OF Dedicated_Output : LABEL IS "iocell1";
     ATTRIBUTE Location OF Dedicated_Output : LABEL IS "P0[0]";
     ATTRIBUTE lib_model OF Dis_A(0) : LABEL IS "iocell2";
@@ -149,9 +180,18 @@ ARCHITECTURE __DEFAULT__ OF \7Seg_Display\ IS
     ATTRIBUTE Location OF TX1(0) : LABEL IS "P12[4]";
     ATTRIBUTE lib_model OF TX2(0) : LABEL IS "iocell26";
     ATTRIBUTE Location OF TX2(0) : LABEL IS "P12[5]";
-    ATTRIBUTE lib_model OF Net_15 : LABEL IS "macrocell1";
-    ATTRIBUTE Location OF \PGA_1:SC\ : LABEL IS "F(SC,0)";
+    ATTRIBUTE lib_model OF OP_Out_1(0) : LABEL IS "iocell27";
+    ATTRIBUTE Location OF OP_Out_1(0) : LABEL IS "P3[1]";
+    ATTRIBUTE lib_model OF Net_211 : LABEL IS "macrocell1";
+    ATTRIBUTE lib_model OF Net_205 : LABEL IS "macrocell2";
+    ATTRIBUTE lib_model OF Net_282 : LABEL IS "macrocell3";
+    ATTRIBUTE lib_model OF Net_297 : LABEL IS "macrocell4";
+    ATTRIBUTE Location OF \PGA_1:SC\ : LABEL IS "F(SC,2)";
     ATTRIBUTE Location OF \Opamp_1:ABuf\ : LABEL IS "F(OpAmp,2)";
+    ATTRIBUTE Location OF \Comp_1:ctComp\ : LABEL IS "F(Comparator,0)";
+    ATTRIBUTE Location OF \VDAC8_1:viDAC8\ : LABEL IS "F(VIDAC,0)";
+    ATTRIBUTE lib_model OF __ONE__ : LABEL IS "macrocell5";
+    ATTRIBUTE lib_model OF \Control_Reg_1:Sync:ctrl_reg\ : LABEL IS "controlcell1";
     COMPONENT abufcell
     END COMPONENT;
     COMPONENT clockblockcell
@@ -234,6 +274,52 @@ ARCHITECTURE __DEFAULT__ OF \7Seg_Display\ IS
             dclk_glb_ff_6 : OUT std_ulogic;
             dclk_glb_ff_7 : OUT std_ulogic);
     END COMPONENT;
+    COMPONENT comparatorcell
+        PORT (
+            out : OUT std_ulogic;
+            clk_udb : IN std_ulogic;
+            clock : IN std_ulogic);
+    END COMPONENT;
+    COMPONENT controlcell
+        PORT (
+            control_0 : OUT std_ulogic;
+            control_1 : OUT std_ulogic;
+            control_2 : OUT std_ulogic;
+            control_3 : OUT std_ulogic;
+            control_4 : OUT std_ulogic;
+            control_5 : OUT std_ulogic;
+            control_6 : OUT std_ulogic;
+            control_7 : OUT std_ulogic;
+            clock : IN std_ulogic;
+            reset : IN std_ulogic;
+            clk_en : IN std_ulogic;
+            busclk : IN std_ulogic);
+    END COMPONENT;
+    ATTRIBUTE udb_clk OF controlcell : COMPONENT IS "clock";
+    ATTRIBUTE udb_clken OF controlcell : COMPONENT IS "clk_en";
+    ATTRIBUTE udb_reset OF controlcell : COMPONENT IS "reset";
+    COMPONENT count7cell
+        PORT (
+            clock : IN std_ulogic;
+            reset : IN std_ulogic;
+            load : IN std_ulogic;
+            enable : IN std_ulogic;
+            clk_en : IN std_ulogic;
+            count_0 : OUT std_ulogic;
+            count_1 : OUT std_ulogic;
+            count_2 : OUT std_ulogic;
+            count_3 : OUT std_ulogic;
+            count_4 : OUT std_ulogic;
+            count_5 : OUT std_ulogic;
+            count_6 : OUT std_ulogic;
+            tc : OUT std_ulogic;
+            clock_n : IN std_ulogic;
+            extclk : IN std_ulogic;
+            extclk_n : IN std_ulogic);
+    END COMPONENT;
+    ATTRIBUTE udb_clk OF count7cell : COMPONENT IS "clock,clock_n,extclk,extclk_n";
+    ATTRIBUTE udb_clken OF count7cell : COMPONENT IS "clk_en";
+    ATTRIBUTE udb_reset OF count7cell : COMPONENT IS "reset";
     COMPONENT interrupt
         PORT (
             interrupt : IN std_ulogic;
@@ -329,6 +415,33 @@ ARCHITECTURE __DEFAULT__ OF \7Seg_Display\ IS
             modout : OUT std_ulogic;
             dyn_cntl_udb : IN std_ulogic);
     END COMPONENT;
+    COMPONENT timercell
+        PORT (
+            clock : IN std_ulogic;
+            kill : IN std_ulogic;
+            enable : IN std_ulogic;
+            capture : IN std_ulogic;
+            timer_reset : IN std_ulogic;
+            tc : OUT std_ulogic;
+            cmp : OUT std_ulogic;
+            irq : OUT std_ulogic);
+    END COMPONENT;
+    COMPONENT vidaccell
+        PORT (
+            data_0 : IN std_ulogic;
+            data_1 : IN std_ulogic;
+            data_2 : IN std_ulogic;
+            data_3 : IN std_ulogic;
+            data_4 : IN std_ulogic;
+            data_5 : IN std_ulogic;
+            data_6 : IN std_ulogic;
+            data_7 : IN std_ulogic;
+            strobe : IN std_ulogic;
+            strobe_udb : IN std_ulogic;
+            reset : IN std_ulogic;
+            idir : IN std_ulogic;
+            ioff : IN std_ulogic);
+    END COMPONENT;
 BEGIN
 
     Dedicated_Output:iocell
@@ -361,12 +474,17 @@ BEGIN
             clk_bus => ClockBlock_BUS_CLK_local,
             dsi_clkin_div => open,
             dsi_glb_div => open,
-            dclk_glb_0 => Net_12,
-            dclk_0 => Net_12_local,
-            dclk_glb_1 => Net_83,
-            dclk_1 => Net_83_local,
-            dclk_glb_2 => Net_92,
-            dclk_2 => Net_92_local);
+            dclk_glb_0 => Net_10,
+            dclk_0 => Net_10_local,
+            dclk_glb_1 => Net_197,
+            dclk_1 => Net_197_local,
+            dclk_glb_2 => Net_83,
+            dclk_2 => Net_83_local,
+            dclk_glb_3 => Net_233,
+            dclk_3 => Net_233_local,
+            dclk_glb_4 => Net_92,
+            dclk_4 => Net_92_local,
+            dclk_glb_ff_0 => \ClockBlock.dclk_glb_ff_0__sig\);
 
     Dis_A:logicalport
         GENERIC MAP(
@@ -1530,7 +1648,7 @@ BEGIN
         PORT MAP(
             pa_out => LED1_Red(0)__PA,
             oe => open,
-            pin_input => Net_99,
+            pin_input => Net_260,
             pad_out => LED1_Red(0)_PAD,
             pad_in => LED1_Red(0)_PAD,
             in_clock => open,
@@ -1622,7 +1740,7 @@ BEGIN
         PORT MAP(
             pa_out => LED3_Green(0)__PA,
             oe => open,
-            pin_input => Net_103,
+            pin_input => Net_297,
             pad_out => LED3_Green(0)_PAD,
             pad_in => LED3_Green(0)_PAD,
             in_clock => open,
@@ -1710,11 +1828,10 @@ BEGIN
             oe_sync_mode => 0,
             logicalport => "Button_S4_Right",
             logicalport_pin_id => 0,
-            io_capabilities => "0000000000000000000000000000000000000000000000000000000000000101")
+            io_capabilities => "0000000000000000000000000000000000000000000000000000000000000001")
         PORT MAP(
             pa_out => Button_S4_Right(0)__PA,
             oe => open,
-            fb => Net_99,
             pad_in => Button_S4_Right(0)_PAD,
             in_clock => open,
             in_clock_en => '1',
@@ -2526,7 +2643,7 @@ BEGIN
         PORT MAP(
             pa_out => TX1(0)__PA,
             oe => open,
-            pin_input => Net_12_local,
+            pin_input => Net_211,
             pad_out => TX1(0)_PAD,
             pad_in => TX1(0)_PAD,
             in_clock => open,
@@ -2618,7 +2735,7 @@ BEGIN
         PORT MAP(
             pa_out => TX2(0)__PA,
             oe => open,
-            pin_input => Net_15,
+            pin_input => Net_205,
             pad_out => TX2(0)_PAD,
             pad_in => TX2(0)_PAD,
             in_clock => open,
@@ -2628,14 +2745,136 @@ BEGIN
             out_clock_en => '1',
             out_reset => '0');
 
-    Net_15:macrocell
+    OP_Out_1:logicalport
+        GENERIC MAP(
+            drive_mode => "110",
+            ibuf_enabled => "1",
+            id => "d492611a-d288-47f3-acc3-5e0956c2af71",
+            init_dr_st => "0",
+            input_buffer_sel => "00",
+            input_clk_en => 0,
+            input_sync => "1",
+            input_sync_mode => "0",
+            intr_mode => "00",
+            invert_in_clock => 0,
+            invert_in_clock_en => 0,
+            invert_in_reset => 0,
+            invert_out_clock => 0,
+            invert_out_clock_en => 0,
+            invert_out_reset => 0,
+            io_voltage => "",
+            layout_mode => "CONTIGUOUS",
+            oe_conn => "0",
+            oe_reset => 0,
+            oe_sync => "0",
+            output_clk_en => 0,
+            output_clock_mode => "0",
+            output_conn => "1",
+            output_mode => "0",
+            output_reset => 0,
+            output_sync => "0",
+            ovt_hyst_trim => "0",
+            ovt_needed => "0",
+            ovt_slew_control => "00",
+            pa_in_clock => -1,
+            pa_in_clock_en => -1,
+            pa_in_reset => -1,
+            pa_out_clock => -1,
+            pa_out_clock_en => -1,
+            pa_out_reset => -1,
+            pin_aliases => "",
+            pin_mode => "O",
+            por_state => 4,
+            port_alias_group => "",
+            port_alias_required => 0,
+            sio_group_cnt => 0,
+            sio_hifreq => "00000000",
+            sio_hyst => "1",
+            sio_ibuf => "00000000",
+            sio_info => "00",
+            sio_obuf => "00000000",
+            sio_refsel => "00000000",
+            sio_vohsel => "00000000",
+            sio_vtrip => "00000000",
+            slew_rate => "0",
+            spanning => 0,
+            sw_only => 0,
+            use_annotation => "0",
+            vtrip => "10",
+            width => 1,
+            in_clk_inv => 0,
+            in_clken_inv => 0,
+            in_clken_mode => 1,
+            in_rst_inv => 0,
+            out_clk_inv => 0,
+            out_clken_inv => 0,
+            out_clken_mode => 1,
+            out_rst_inv => 0)
+        PORT MAP(
+            in_clock_en => open,
+            in_reset => open,
+            out_clock_en => open,
+            out_reset => open);
+
+    OP_Out_1(0):iocell
+        GENERIC MAP(
+            in_sync_mode => 0,
+            out_sync_mode => 0,
+            oe_sync_mode => 0,
+            logicalport => "OP_Out_1",
+            logicalport_pin_id => 0,
+            io_capabilities => "0000000000000000000000000000000000000000000000000000000000000101")
+        PORT MAP(
+            pa_out => OP_Out_1(0)__PA,
+            oe => open,
+            pin_input => Net_138,
+            pad_out => OP_Out_1(0)_PAD,
+            pad_in => OP_Out_1(0)_PAD,
+            in_clock => open,
+            in_clock_en => '1',
+            in_reset => '0',
+            out_clock => open,
+            out_clock_en => '1',
+            out_reset => '0');
+
+    Net_211:macrocell
+        GENERIC MAP(
+            eqn_main => "(!main_0 * main_1)",
+            regmode => 0,
+            clken_mode => 1)
+        PORT MAP(
+            q => Net_211,
+            main_0 => Net_260,
+            main_1 => Net_197_local);
+
+    Net_205:macrocell
+        GENERIC MAP(
+            eqn_main => "(!main_0 * main_1)",
+            regmode => 0,
+            clken_mode => 1)
+        PORT MAP(
+            q => Net_205,
+            main_0 => Net_260,
+            main_1 => Net_197_local);
+
+    Net_282:macrocell
         GENERIC MAP(
             eqn_main => "(!main_0)",
             regmode => 0,
             clken_mode => 1)
         PORT MAP(
-            q => Net_15,
-            main_0 => Net_12_local);
+            q => Net_282,
+            main_0 => Net_260);
+
+    Net_297:macrocell
+        GENERIC MAP(
+            eqn_main => "(!main_0 * main_1)",
+            regmode => 0,
+            clken_mode => 1)
+        PORT MAP(
+            q => Net_297,
+            main_0 => Net_260,
+            main_1 => Net_233_local);
 
     isr_2:interrupt
         GENERIC MAP(
@@ -2663,5 +2902,93 @@ BEGIN
     \Opamp_1:ABuf\:abufcell
         GENERIC MAP(
             cy_registers => "");
+
+    \Comp_1:ctComp\:comparatorcell
+        GENERIC MAP(
+            cy_registers => "")
+        PORT MAP(
+            out => Net_138);
+
+    \VDAC8_1:viDAC8\:vidaccell
+        GENERIC MAP(
+            cy_registers => "",
+            is_all_if_any => 0,
+            reg_data => 0)
+        PORT MAP(
+            reset => open,
+            idir => open,
+            ioff => open);
+
+    \Timer_1:TimerHW\:timercell
+        GENERIC MAP(
+            cy_registers => "")
+        PORT MAP(
+            clock => \ClockBlock.dclk_glb_ff_0__sig\,
+            kill => open,
+            enable => __ONE__,
+            capture => open,
+            timer_reset => open,
+            tc => \Timer_1:Net_51\,
+            cmp => \Timer_1:Net_261\,
+            irq => \Timer_1:Net_57\);
+
+    __ONE__:macrocell
+        GENERIC MAP(
+            eqn_main => "1'b0",
+            regmode => 0,
+            clken_mode => 1)
+        PORT MAP(
+            q => __ONE__);
+
+    \Count7_1:Counter7\:count7cell
+        GENERIC MAP(
+            cy_alt_mode => 0,
+            cy_init_value => "0000000",
+            cy_period => "1111111",
+            cy_route_en => 1,
+            cy_route_ld => 0,
+            clk_inv => '0',
+            clken_mode => 1,
+            reset_inv => '0')
+        PORT MAP(
+            clock => Net_233,
+            reset => Net_251,
+            load => open,
+            enable => Net_282,
+            count_6 => Net_248_6,
+            count_5 => Net_248_5,
+            count_4 => Net_248_4,
+            count_3 => Net_248_3,
+            count_2 => Net_248_2,
+            count_1 => Net_248_1,
+            count_0 => Net_248_0,
+            tc => Net_260);
+
+    \Control_Reg_1:Sync:ctrl_reg\:controlcell
+        GENERIC MAP(
+            cy_ctrl_mode_0 => "00000000",
+            cy_ctrl_mode_1 => "00000000",
+            cy_ext_reset => 0,
+            cy_force_order => 1,
+            cy_init_value => "00000000",
+            clken_mode => 1)
+        PORT MAP(
+            control_7 => \Control_Reg_1:control_7\,
+            control_6 => \Control_Reg_1:control_6\,
+            control_5 => \Control_Reg_1:control_5\,
+            control_4 => \Control_Reg_1:control_4\,
+            control_3 => \Control_Reg_1:control_3\,
+            control_2 => \Control_Reg_1:control_2\,
+            control_1 => \Control_Reg_1:control_1\,
+            control_0 => Net_251,
+            busclk => ClockBlock_BUS_CLK);
+
+    isr_1:interrupt
+        GENERIC MAP(
+            int_type => "10",
+            is_nmi => 0)
+        PORT MAP(
+            interrupt => Net_103,
+            clock => ClockBlock_BUS_CLK);
 
 END __DEFAULT__;

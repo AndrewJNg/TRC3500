@@ -1,6 +1,7 @@
-D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\7Seg_Display.cyprj|675fd295-34db-4a38-9bb5-39cec1990eff
-D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|98ae7542-195e-4c63-8f28-9640cbd20601
-C:\Users\AndrewJNg_Legion\OneDrive - Monash University\Documents\PSoC Creator\4.4\Downloads ( 4.4).cylib\Downloads ( 4.4).cyprj|ec81f076-2d23-45cb-9bea-d47c8cd9a299
-D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|b2c53787-2826-400b-85cb-efbb717441d3
-D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|9cb29b66-933c-495f-849b-543404211302
-D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|82f802b8-3582-41fa-8e82-90117c23a0bd
+D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\7Seg_Display.cyprj|de3c5593-7aa2-4243-ad07-16dbbbae1c24
+D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|79de403e-d1a1-4163-9a34-c2fab1008fa7
+C:\Users\AndrewJNg_Legion\OneDrive - Monash University\Documents\PSoC Creator\4.4\Downloads ( 4.4).cylib\Downloads ( 4.4).cyprj|74829e3f-2ab2-40e5-bd68-2e8a3669cd09
+D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|9ed1909b-fc6c-4845-9878-09435c3987b5
+D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|43714189-f6c6-4888-a92b-b7a00cad9eca
+D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|a7af9a20-bc35-499c-b4f5-8983b35e9534
+D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\dev\psoc3\AnalogDevice\PSoC35AnalogDevice.cylib\PSoC35AnalogDevice.cyprj|8a774818-e11d-4098-b246-27c0dc93a600

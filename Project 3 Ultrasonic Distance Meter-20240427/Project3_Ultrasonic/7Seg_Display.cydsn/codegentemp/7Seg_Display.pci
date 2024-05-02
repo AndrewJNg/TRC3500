@@ -1,5 +1,5 @@
 # 7Seg_Display
-# 2024-05-01 15:03:10Z
+# 2024-05-02 07:24:48Z
 
 # IO_0@[IOP=(1)][IoId=(0)] is reserved: SWDDebugEnabled
 dont_use_io iocell 1 0
@@ -33,5 +33,8 @@ set_io "Rec1(0)" iocell 0 6
 set_io "OP_Out(0)" iocell 3 0
 set_io "TX1(0)" iocell 12 4
 set_io "TX2(0)" iocell 12 5
-set_location "\PGA_1:SC\" sccell -1 -1 0
+set_io "OP_Out_1(0)" iocell 3 1
+set_location "\PGA_1:SC\" sccell -1 -1 2
 set_location "\Opamp_1:ABuf\" abufcell -1 -1 2
+set_location "\Comp_1:ctComp\" comparatorcell -1 -1 0
+set_location "\VDAC8_1:viDAC8\" vidaccell -1 -1 0
