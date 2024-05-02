@@ -127,6 +127,8 @@
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\cycodeshareimport.ld</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\cycodeshareexport.ld</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\cycodeshareimport.scat</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Clock_1.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Clock_1.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Clock_2.c</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Clock_2.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\isr_2.c</File>
@@ -135,6 +137,51 @@
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\isr_7Seg.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Display_Clk.c</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Display_Clk.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\LED1_Red_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\LED1_Red.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\LED1_Red.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\LED3_Green_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\LED3_Green.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\LED3_Green.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Button_S4_Right_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Button_S4_Right.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Button_S4_Right.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Button_S5_Select_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Button_S5_Select.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Button_S5_Select.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\LED2_Yellow_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\LED2_Yellow.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\LED2_Yellow.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Button_S1_Bottom_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Button_S1_Bottom.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Button_S1_Bottom.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Button_S2_Left_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Button_S2_Left.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Button_S2_Left.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Button_S3_Top_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Button_S3_Top.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Button_S3_Top.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\PGA_1.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\PGA_1.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\PGA_1_PM.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Opamp_1.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Opamp_1.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Opamp_1_PM.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Rec2_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Rec2.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Rec2.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Rec1_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Rec1.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\Rec1.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\OP_Out_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\OP_Out.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\OP_Out.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\TX1_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\TX1.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\TX1.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\TX2_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\TX2.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC5\TX2.h</File>
         </Files>
       </Folder>
       <Folder BuildType="STRICT" Path="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\Export\ARM_GCC_Generic">
