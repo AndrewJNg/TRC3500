@@ -892,15 +892,15 @@
 #define LED3_Green__SLW CYREG_PRT3_SLW
 
 /* Display_Clk */
-#define Display_Clk__CFG0 CYREG_CLKDIST_DCFG2_CFG0
-#define Display_Clk__CFG1 CYREG_CLKDIST_DCFG2_CFG1
-#define Display_Clk__CFG2 CYREG_CLKDIST_DCFG2_CFG2
+#define Display_Clk__CFG0 CYREG_CLKDIST_DCFG3_CFG0
+#define Display_Clk__CFG1 CYREG_CLKDIST_DCFG3_CFG1
+#define Display_Clk__CFG2 CYREG_CLKDIST_DCFG3_CFG2
 #define Display_Clk__CFG2_SRC_SEL_MASK 0x07u
-#define Display_Clk__INDEX 0x02u
+#define Display_Clk__INDEX 0x03u
 #define Display_Clk__PM_ACT_CFG CYREG_PM_ACT_CFG2
-#define Display_Clk__PM_ACT_MSK 0x04u
+#define Display_Clk__PM_ACT_MSK 0x08u
 #define Display_Clk__PM_STBY_CFG CYREG_PM_STBY_CFG2
-#define Display_Clk__PM_STBY_MSK 0x04u
+#define Display_Clk__PM_STBY_MSK 0x08u
 
 /* LED2_Yellow */
 #define LED2_Yellow__0__INTTYPE CYREG_PICU3_INTTYPE6
@@ -946,15 +946,24 @@
 #define timer_clock__PM_ACT_MSK 0x01u
 #define timer_clock__PM_STBY_CFG CYREG_PM_STBY_CFG2
 #define timer_clock__PM_STBY_MSK 0x01u
-#define timer_clock_1__CFG0 CYREG_CLKDIST_DCFG3_CFG0
-#define timer_clock_1__CFG1 CYREG_CLKDIST_DCFG3_CFG1
-#define timer_clock_1__CFG2 CYREG_CLKDIST_DCFG3_CFG2
+#define timer_clock_1__CFG0 CYREG_CLKDIST_DCFG5_CFG0
+#define timer_clock_1__CFG1 CYREG_CLKDIST_DCFG5_CFG1
+#define timer_clock_1__CFG2 CYREG_CLKDIST_DCFG5_CFG2
 #define timer_clock_1__CFG2_SRC_SEL_MASK 0x07u
-#define timer_clock_1__INDEX 0x03u
+#define timer_clock_1__INDEX 0x05u
 #define timer_clock_1__PM_ACT_CFG CYREG_PM_ACT_CFG2
-#define timer_clock_1__PM_ACT_MSK 0x08u
+#define timer_clock_1__PM_ACT_MSK 0x20u
 #define timer_clock_1__PM_STBY_CFG CYREG_PM_STBY_CFG2
-#define timer_clock_1__PM_STBY_MSK 0x08u
+#define timer_clock_1__PM_STBY_MSK 0x20u
+#define timer_clock_2__CFG0 CYREG_CLKDIST_DCFG2_CFG0
+#define timer_clock_2__CFG1 CYREG_CLKDIST_DCFG2_CFG1
+#define timer_clock_2__CFG2 CYREG_CLKDIST_DCFG2_CFG2
+#define timer_clock_2__CFG2_SRC_SEL_MASK 0x07u
+#define timer_clock_2__INDEX 0x02u
+#define timer_clock_2__PM_ACT_CFG CYREG_PM_ACT_CFG2
+#define timer_clock_2__PM_ACT_MSK 0x04u
+#define timer_clock_2__PM_STBY_CFG CYREG_PM_STBY_CFG2
+#define timer_clock_2__PM_STBY_MSK 0x04u
 
 /* Button_S3_Top */
 #define Button_S3_Top__0__INTTYPE CYREG_PICU0_INTTYPE3

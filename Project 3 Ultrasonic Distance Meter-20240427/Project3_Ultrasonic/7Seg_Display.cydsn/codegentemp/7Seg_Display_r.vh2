@@ -1,5 +1,5 @@
 -- Project:   7Seg_Display
--- Generated: 05/02/2024 17:24:48
+-- Generated: 05/03/2024 11:01:29
 -- PSoC Creator  4.4
 
 ENTITY \7Seg_Display\ IS
@@ -77,29 +77,28 @@ ARCHITECTURE __DEFAULT__ OF \7Seg_Display\ IS
     SIGNAL Net_10_local : bit;
     SIGNAL Net_120 : bit;
     SIGNAL Net_138 : bit;
-    SIGNAL Net_197 : bit;
-    ATTRIBUTE global_signal OF Net_197 : SIGNAL IS true;
-    SIGNAL Net_197_local : bit;
-    SIGNAL Net_205 : bit;
-    ATTRIBUTE placement_force OF Net_205 : SIGNAL IS "U(2,1,A)0";
-    SIGNAL Net_211 : bit;
-    ATTRIBUTE placement_force OF Net_211 : SIGNAL IS "U(2,1,B)1";
     SIGNAL Net_233 : bit;
     ATTRIBUTE global_signal OF Net_233 : SIGNAL IS true;
     SIGNAL Net_233_local : bit;
-    SIGNAL Net_248_0 : bit;
-    SIGNAL Net_248_1 : bit;
-    SIGNAL Net_248_2 : bit;
-    SIGNAL Net_248_3 : bit;
-    SIGNAL Net_248_4 : bit;
-    SIGNAL Net_248_5 : bit;
-    SIGNAL Net_248_6 : bit;
     SIGNAL Net_251 : bit;
     SIGNAL Net_260 : bit;
-    SIGNAL Net_282 : bit;
-    ATTRIBUTE placement_force OF Net_282 : SIGNAL IS "U(3,1,B)0";
     SIGNAL Net_297 : bit;
-    ATTRIBUTE placement_force OF Net_297 : SIGNAL IS "U(3,1,A)0";
+    ATTRIBUTE placement_force OF Net_297 : SIGNAL IS "U(2,1,A)0";
+    SIGNAL Net_349 : bit;
+    ATTRIBUTE global_signal OF Net_349 : SIGNAL IS true;
+    SIGNAL Net_349_local : bit;
+    SIGNAL Net_357 : bit;
+    ATTRIBUTE global_signal OF Net_357 : SIGNAL IS true;
+    SIGNAL Net_357_local : bit;
+    SIGNAL Net_362_0 : bit;
+    SIGNAL Net_362_1 : bit;
+    SIGNAL Net_362_2 : bit;
+    SIGNAL Net_362_3 : bit;
+    SIGNAL Net_362_4 : bit;
+    SIGNAL Net_362_5 : bit;
+    SIGNAL Net_362_6 : bit;
+    SIGNAL Net_364 : bit;
+    ATTRIBUTE placement_force OF Net_364 : SIGNAL IS "U(3,1,A)3";
     SIGNAL Net_83 : bit;
     ATTRIBUTE global_signal OF Net_83 : SIGNAL IS true;
     SIGNAL Net_83_local : bit;
@@ -112,6 +111,8 @@ ARCHITECTURE __DEFAULT__ OF \7Seg_Display\ IS
     SIGNAL Rec2(0)__PA : bit;
     SIGNAL TX1(0)__PA : bit;
     SIGNAL TX2(0)__PA : bit;
+    SIGNAL Ultrasonic_EN : bit;
+    ATTRIBUTE placement_force OF Ultrasonic_EN : SIGNAL IS "U(2,1,B)0";
     SIGNAL \Control_Reg_1:control_1\ : bit;
     SIGNAL \Control_Reg_1:control_2\ : bit;
     SIGNAL \Control_Reg_1:control_3\ : bit;
@@ -124,7 +125,7 @@ ARCHITECTURE __DEFAULT__ OF \7Seg_Display\ IS
     SIGNAL \Timer_1:Net_51\ : bit;
     SIGNAL \Timer_1:Net_57\ : bit;
     SIGNAL __ONE__ : bit;
-    ATTRIBUTE placement_force OF __ONE__ : SIGNAL IS "U(1,1,A)0";
+    ATTRIBUTE placement_force OF __ONE__ : SIGNAL IS "U(0,1,A)3";
     ATTRIBUTE POWER OF __ONE__ : SIGNAL IS true;
     SIGNAL __ZERO__ : bit;
     ATTRIBUTE GROUND OF __ZERO__ : SIGNAL IS true;
@@ -188,14 +189,12 @@ ARCHITECTURE __DEFAULT__ OF \7Seg_Display\ IS
     ATTRIBUTE Location OF TX2(0) : LABEL IS "P12[5]";
     ATTRIBUTE lib_model OF OP_Out_1(0) : LABEL IS "iocell27";
     ATTRIBUTE Location OF OP_Out_1(0) : LABEL IS "P3[1]";
-    ATTRIBUTE lib_model OF Net_211 : LABEL IS "macrocell1";
-    ATTRIBUTE Location OF Net_211 : LABEL IS "U(2,1)";
-    ATTRIBUTE lib_model OF Net_205 : LABEL IS "macrocell2";
-    ATTRIBUTE Location OF Net_205 : LABEL IS "U(2,1)";
-    ATTRIBUTE lib_model OF Net_282 : LABEL IS "macrocell3";
-    ATTRIBUTE Location OF Net_282 : LABEL IS "U(3,1)";
-    ATTRIBUTE lib_model OF Net_297 : LABEL IS "macrocell4";
-    ATTRIBUTE Location OF Net_297 : LABEL IS "U(3,1)";
+    ATTRIBUTE lib_model OF Ultrasonic_EN : LABEL IS "macrocell1";
+    ATTRIBUTE Location OF Ultrasonic_EN : LABEL IS "U(2,1)";
+    ATTRIBUTE lib_model OF Net_364 : LABEL IS "macrocell2";
+    ATTRIBUTE Location OF Net_364 : LABEL IS "U(3,1)";
+    ATTRIBUTE lib_model OF Net_297 : LABEL IS "macrocell3";
+    ATTRIBUTE Location OF Net_297 : LABEL IS "U(2,1)";
     ATTRIBUTE Location OF isr_2 : LABEL IS "[IntrContainer=(0)][IntrId=(1)]";
     ATTRIBUTE Location OF isr_7Seg : LABEL IS "[IntrContainer=(0)][IntrId=(2)]";
     ATTRIBUTE Location OF \PGA_1:SC\ : LABEL IS "F(SC,2)";
@@ -203,8 +202,8 @@ ARCHITECTURE __DEFAULT__ OF \7Seg_Display\ IS
     ATTRIBUTE Location OF \Comp_1:ctComp\ : LABEL IS "F(Comparator,0)";
     ATTRIBUTE Location OF \VDAC8_1:viDAC8\ : LABEL IS "F(VIDAC,0)";
     ATTRIBUTE Location OF \Timer_1:TimerHW\ : LABEL IS "F(Timer,0)";
-    ATTRIBUTE lib_model OF __ONE__ : LABEL IS "macrocell5";
-    ATTRIBUTE Location OF __ONE__ : LABEL IS "U(1,1)";
+    ATTRIBUTE lib_model OF __ONE__ : LABEL IS "macrocell4";
+    ATTRIBUTE Location OF __ONE__ : LABEL IS "U(0,1)";
     ATTRIBUTE Location OF \Count7_1:Counter7\ : LABEL IS "U(3,1)";
     ATTRIBUTE lib_model OF \Control_Reg_1:Sync:ctrl_reg\ : LABEL IS "controlcell1";
     ATTRIBUTE Location OF \Control_Reg_1:Sync:ctrl_reg\ : LABEL IS "U(2,1)";
@@ -480,14 +479,16 @@ BEGIN
             dsi_glb_div => open,
             dclk_glb_0 => Net_10,
             dclk_0 => Net_10_local,
-            dclk_glb_1 => Net_197,
-            dclk_1 => Net_197_local,
-            dclk_glb_2 => Net_83,
-            dclk_2 => Net_83_local,
-            dclk_glb_3 => Net_233,
-            dclk_3 => Net_233_local,
+            dclk_glb_1 => Net_233,
+            dclk_1 => Net_233_local,
+            dclk_glb_2 => Net_357,
+            dclk_2 => Net_357_local,
+            dclk_glb_3 => Net_83,
+            dclk_3 => Net_83_local,
             dclk_glb_4 => Net_92,
             dclk_4 => Net_92_local,
+            dclk_glb_5 => Net_349,
+            dclk_5 => Net_349_local,
             dclk_glb_ff_0 => \ClockBlock.dclk_glb_ff_0__sig\);
 
     Dis_A:logicalport
@@ -2647,7 +2648,7 @@ BEGIN
         PORT MAP(
             pa_out => TX1(0)__PA,
             oe => open,
-            pin_input => Net_211,
+            pin_input => Net_297,
             pad_out => TX1(0)_PAD,
             pad_in => TX1(0)_PAD,
             in_clock => open,
@@ -2739,7 +2740,7 @@ BEGIN
         PORT MAP(
             pa_out => TX2(0)__PA,
             oe => open,
-            pin_input => Net_205,
+            pin_input => Ultrasonic_EN,
             pad_out => TX2(0)_PAD,
             pad_in => TX2(0)_PAD,
             in_clock => open,
@@ -2841,33 +2842,23 @@ BEGIN
             out_clock_en => '1',
             out_reset => '0');
 
-    Net_211:macrocell
+    Ultrasonic_EN:macrocell
         GENERIC MAP(
             eqn_main => "(!main_0 * main_1)",
             regmode => 0,
             clken_mode => 1)
         PORT MAP(
-            q => Net_211,
+            q => Ultrasonic_EN,
             main_0 => Net_260,
-            main_1 => Net_197_local);
+            main_1 => Net_233_local);
 
-    Net_205:macrocell
-        GENERIC MAP(
-            eqn_main => "(!main_0 * main_1)",
-            regmode => 0,
-            clken_mode => 1)
-        PORT MAP(
-            q => Net_205,
-            main_0 => Net_260,
-            main_1 => Net_197_local);
-
-    Net_282:macrocell
+    Net_364:macrocell
         GENERIC MAP(
             eqn_main => "(!main_0)",
             regmode => 0,
             clken_mode => 1)
         PORT MAP(
-            q => Net_282,
+            q => Net_364,
             main_0 => Net_260);
 
     Net_297:macrocell
@@ -2930,8 +2921,8 @@ BEGIN
             clock => \ClockBlock.dclk_glb_ff_0__sig\,
             kill => open,
             enable => __ONE__,
-            capture => open,
-            timer_reset => open,
+            capture => Net_138,
+            timer_reset => Net_364,
             tc => \Timer_1:Net_51\,
             cmp => \Timer_1:Net_261\,
             irq => \Timer_1:Net_57\);
@@ -2958,14 +2949,14 @@ BEGIN
             clock => Net_233,
             reset => Net_251,
             load => open,
-            enable => Net_282,
-            count_6 => Net_248_6,
-            count_5 => Net_248_5,
-            count_4 => Net_248_4,
-            count_3 => Net_248_3,
-            count_2 => Net_248_2,
-            count_1 => Net_248_1,
-            count_0 => Net_248_0,
+            enable => Net_364,
+            count_6 => Net_362_6,
+            count_5 => Net_362_5,
+            count_4 => Net_362_4,
+            count_3 => Net_362_3,
+            count_2 => Net_362_2,
+            count_1 => Net_362_1,
+            count_0 => Net_362_0,
             tc => Net_260);
 
     \Control_Reg_1:Sync:ctrl_reg\:controlcell

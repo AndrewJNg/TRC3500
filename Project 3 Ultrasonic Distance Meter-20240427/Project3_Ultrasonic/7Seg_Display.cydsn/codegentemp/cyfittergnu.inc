@@ -892,15 +892,15 @@
 .set LED3_Green__SLW, CYREG_PRT3_SLW
 
 /* Display_Clk */
-.set Display_Clk__CFG0, CYREG_CLKDIST_DCFG2_CFG0
-.set Display_Clk__CFG1, CYREG_CLKDIST_DCFG2_CFG1
-.set Display_Clk__CFG2, CYREG_CLKDIST_DCFG2_CFG2
+.set Display_Clk__CFG0, CYREG_CLKDIST_DCFG3_CFG0
+.set Display_Clk__CFG1, CYREG_CLKDIST_DCFG3_CFG1
+.set Display_Clk__CFG2, CYREG_CLKDIST_DCFG3_CFG2
 .set Display_Clk__CFG2_SRC_SEL_MASK, 0x07
-.set Display_Clk__INDEX, 0x02
+.set Display_Clk__INDEX, 0x03
 .set Display_Clk__PM_ACT_CFG, CYREG_PM_ACT_CFG2
-.set Display_Clk__PM_ACT_MSK, 0x04
+.set Display_Clk__PM_ACT_MSK, 0x08
 .set Display_Clk__PM_STBY_CFG, CYREG_PM_STBY_CFG2
-.set Display_Clk__PM_STBY_MSK, 0x04
+.set Display_Clk__PM_STBY_MSK, 0x08
 
 /* LED2_Yellow */
 .set LED2_Yellow__0__INTTYPE, CYREG_PICU3_INTTYPE6
@@ -946,15 +946,24 @@
 .set timer_clock__PM_ACT_MSK, 0x01
 .set timer_clock__PM_STBY_CFG, CYREG_PM_STBY_CFG2
 .set timer_clock__PM_STBY_MSK, 0x01
-.set timer_clock_1__CFG0, CYREG_CLKDIST_DCFG3_CFG0
-.set timer_clock_1__CFG1, CYREG_CLKDIST_DCFG3_CFG1
-.set timer_clock_1__CFG2, CYREG_CLKDIST_DCFG3_CFG2
+.set timer_clock_1__CFG0, CYREG_CLKDIST_DCFG5_CFG0
+.set timer_clock_1__CFG1, CYREG_CLKDIST_DCFG5_CFG1
+.set timer_clock_1__CFG2, CYREG_CLKDIST_DCFG5_CFG2
 .set timer_clock_1__CFG2_SRC_SEL_MASK, 0x07
-.set timer_clock_1__INDEX, 0x03
+.set timer_clock_1__INDEX, 0x05
 .set timer_clock_1__PM_ACT_CFG, CYREG_PM_ACT_CFG2
-.set timer_clock_1__PM_ACT_MSK, 0x08
+.set timer_clock_1__PM_ACT_MSK, 0x20
 .set timer_clock_1__PM_STBY_CFG, CYREG_PM_STBY_CFG2
-.set timer_clock_1__PM_STBY_MSK, 0x08
+.set timer_clock_1__PM_STBY_MSK, 0x20
+.set timer_clock_2__CFG0, CYREG_CLKDIST_DCFG2_CFG0
+.set timer_clock_2__CFG1, CYREG_CLKDIST_DCFG2_CFG1
+.set timer_clock_2__CFG2, CYREG_CLKDIST_DCFG2_CFG2
+.set timer_clock_2__CFG2_SRC_SEL_MASK, 0x07
+.set timer_clock_2__INDEX, 0x02
+.set timer_clock_2__PM_ACT_CFG, CYREG_PM_ACT_CFG2
+.set timer_clock_2__PM_ACT_MSK, 0x04
+.set timer_clock_2__PM_STBY_CFG, CYREG_PM_STBY_CFG2
+.set timer_clock_2__PM_STBY_MSK, 0x04
 
 /* Button_S3_Top */
 .set Button_S3_Top__0__INTTYPE, CYREG_PICU0_INTTYPE3

@@ -87,6 +87,7 @@
 #include "Count7_1.h"
 #include "Control_Reg_1.h"
 #include "isr_1.h"
+#include "timer_clock_2.h"
 #include "core_cm3_psoc5.h"
 #include "CyDmac.h"
 #include "CyFlash.h"

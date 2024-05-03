@@ -2,7 +2,7 @@
 --	Conversion of 7Seg_Display.v to vh2:
 --
 --	Cypress Semiconductor - WARP Version 6.3 IR 41
---	Thu May 02 17:24:47 2024
+--	Fri May 03 11:01:27 2024
 --
 
 USE cypress.cypress.all;
@@ -164,13 +164,12 @@ SIGNAL tmpIO_0__TX1_net_0 : bit;
 TERMINAL tmpSIOVREF__TX1_net_0 : bit;
 SIGNAL tmpINTERRUPT_0__TX1_net_0 : bit;
 SIGNAL tmpOE__TX2_net_0 : bit;
-SIGNAL Net_205 : bit;
+SIGNAL Ultrasonic_EN : bit;
 SIGNAL tmpFB_0__TX2_net_0 : bit;
 SIGNAL tmpIO_0__TX2_net_0 : bit;
 TERMINAL tmpSIOVREF__TX2_net_0 : bit;
 SIGNAL tmpINTERRUPT_0__TX2_net_0 : bit;
-SIGNAL Net_197 : bit;
-SIGNAL Net_162 : bit;
+SIGNAL Net_233 : bit;
 SIGNAL Net_10 : bit;
 TERMINAL Net_139 : bit;
 SIGNAL \Comp_1:clock\ : bit;
@@ -188,23 +187,22 @@ TERMINAL tmpSIOVREF__OP_Out_1_net_0 : bit;
 SIGNAL tmpINTERRUPT_0__OP_Out_1_net_0 : bit;
 SIGNAL \Timer_1:Net_260\ : bit;
 SIGNAL \Timer_1:Net_266\ : bit;
+SIGNAL Net_364 : bit;
 SIGNAL \Timer_1:Net_51\ : bit;
 SIGNAL \Timer_1:Net_261\ : bit;
 SIGNAL \Timer_1:Net_57\ : bit;
 SIGNAL Net_315 : bit;
-SIGNAL Net_316 : bit;
+SIGNAL Net_366 : bit;
 SIGNAL \Timer_1:Net_102\ : bit;
-SIGNAL Net_263 : bit;
-SIGNAL Net_282 : bit;
-SIGNAL Net_233 : bit;
+SIGNAL Net_349 : bit;
 SIGNAL Net_251 : bit;
-SIGNAL Net_248_6 : bit;
-SIGNAL Net_248_5 : bit;
-SIGNAL Net_248_4 : bit;
-SIGNAL Net_248_3 : bit;
-SIGNAL Net_248_2 : bit;
-SIGNAL Net_248_1 : bit;
-SIGNAL Net_248_0 : bit;
+SIGNAL Net_362_6 : bit;
+SIGNAL Net_362_5 : bit;
+SIGNAL Net_362_4 : bit;
+SIGNAL Net_362_3 : bit;
+SIGNAL Net_362_2 : bit;
+SIGNAL Net_362_1 : bit;
+SIGNAL Net_362_0 : bit;
 SIGNAL \Control_Reg_1:clk\ : bit;
 SIGNAL \Control_Reg_1:rst\ : bit;
 SIGNAL \Control_Reg_1:control_out_0\ : bit;
@@ -230,18 +228,16 @@ SIGNAL \Control_Reg_1:control_3\ : bit;
 SIGNAL \Control_Reg_1:control_2\ : bit;
 SIGNAL \Control_Reg_1:control_1\ : bit;
 SIGNAL \Control_Reg_1:control_0\ : bit;
+SIGNAL Net_357 : bit;
 BEGIN
 
 zero <=  ('0') ;
 
 tmpOE__Dis_A_net_0 <=  ('1') ;
 
-Net_211 <= (not Net_197
-	OR Net_260);
+Ultrasonic_EN <= ((not Net_260 and Net_233));
 
-Net_205 <= ((not Net_260 and Net_197));
-
-Net_282 <= (not Net_260);
+Net_364 <= (not Net_260);
 
 Net_297 <= (not Net_233
 	OR Net_260);
@@ -1091,7 +1087,7 @@ Clock_2:cy_clock_v1_0
 		id=>"fecf2043-6d49-42fd-8232-fd8ca109feba",
 		source_clock_id=>"",
 		divisor=>0,
-		period=>"100000000000000",
+		period=>"10000000000000",
 		is_direct=>'0',
 		is_digital=>'1')
 	PORT MAP(clock_out=>Net_92,
@@ -1974,7 +1970,7 @@ TX1:cy_psoc3_pins_v1_10
 		ovt_hyst_trim=>"0",
 		input_buffer_sel=>"00")
 	PORT MAP(oe=>(tmpOE__Dis_A_net_0),
-		y=>Net_211,
+		y=>Net_297,
 		fb=>(tmpFB_0__TX1_net_0),
 		analog=>(open),
 		io=>(tmpIO_0__TX1_net_0),
@@ -2044,7 +2040,7 @@ TX2:cy_psoc3_pins_v1_10
 		ovt_hyst_trim=>"0",
 		input_buffer_sel=>"00")
 	PORT MAP(oe=>(tmpOE__Dis_A_net_0),
-		y=>Net_205,
+		y=>Ultrasonic_EN,
 		fb=>(tmpFB_0__TX2_net_0),
 		analog=>(open),
 		io=>(tmpIO_0__TX2_net_0),
@@ -2065,7 +2061,7 @@ Clock_1:cy_clock_v1_0
 		period=>"25000000000",
 		is_direct=>'0',
 		is_digital=>'1')
-	PORT MAP(clock_out=>Net_197,
+	PORT MAP(clock_out=>Net_233,
 		dig_domain_out=>open);
 timer_clock:cy_clock_v1_0
 	GENERIC MAP(cy_registers=>"",
@@ -2174,8 +2170,8 @@ OP_Out_1:cy_psoc3_pins_v1_10
 	PORT MAP(clock=>Net_10,
 		kill=>zero,
 		enable=>tmpOE__Dis_A_net_0,
-		capture=>zero,
-		timer_reset=>zero,
+		capture=>Net_138,
+		timer_reset=>Net_364,
 		tc=>\Timer_1:Net_51\,
 		compare=>\Timer_1:Net_261\,
 		interrupt=>\Timer_1:Net_57\);
@@ -2187,7 +2183,7 @@ timer_clock_1:cy_clock_v1_0
 		period=>"100000000000000",
 		is_direct=>'0',
 		is_digital=>'1')
-	PORT MAP(clock_out=>Net_233,
+	PORT MAP(clock_out=>Net_349,
 		dig_domain_out=>open);
 \Count7_1:Counter7\:cy_psoc3_count7
 	GENERIC MAP(cy_period=>"1111111",
@@ -2198,9 +2194,9 @@ timer_clock_1:cy_clock_v1_0
 	PORT MAP(clock=>Net_233,
 		reset=>Net_251,
 		load=>zero,
-		enable=>Net_282,
-		count=>(Net_248_6, Net_248_5, Net_248_4, Net_248_3,
-			Net_248_2, Net_248_1, Net_248_0),
+		enable=>Net_364,
+		count=>(Net_362_6, Net_362_5, Net_362_4, Net_362_3,
+			Net_362_2, Net_362_1, Net_362_0),
 		tc=>Net_260);
 \Control_Reg_1:Sync:ctrl_reg\:cy_psoc3_control
 	GENERIC MAP(cy_init_value=>"00000000",
@@ -2216,5 +2212,15 @@ isr_1:cy_isr_v1_0
 	GENERIC MAP(int_type=>"10",
 		is_nmi=>'0')
 	PORT MAP(int_signal=>Net_103);
+timer_clock_2:cy_clock_v1_0
+	GENERIC MAP(cy_registers=>"",
+		id=>"ac5deb87-6669-45dc-8828-6354e8b1f9f1",
+		source_clock_id=>"",
+		divisor=>0,
+		period=>"200000000000",
+		is_direct=>'0',
+		is_digital=>'1')
+	PORT MAP(clock_out=>Net_357,
+		dig_domain_out=>open);
 
 END R_T_L;

@@ -1,7 +1,6 @@
-D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\7Seg_Display.cyprj|de3c5593-7aa2-4243-ad07-16dbbbae1c24
-D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|79de403e-d1a1-4163-9a34-c2fab1008fa7
-C:\Users\AndrewJNg_Legion\OneDrive - Monash University\Documents\PSoC Creator\4.4\Downloads ( 4.4).cylib\Downloads ( 4.4).cyprj|74829e3f-2ab2-40e5-bd68-2e8a3669cd09
-D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|9ed1909b-fc6c-4845-9878-09435c3987b5
-D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|43714189-f6c6-4888-a92b-b7a00cad9eca
-D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|a7af9a20-bc35-499c-b4f5-8983b35e9534
-D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\dev\psoc3\AnalogDevice\PSoC35AnalogDevice.cylib\PSoC35AnalogDevice.cyprj|8a774818-e11d-4098-b246-27c0dc93a600
+D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\7Seg_Display.cyprj|d51942d4-a377-4b1e-af29-457f108c9cbe
+D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|5254844e-2a3c-4cd0-8648-f0b47b5ac2c7
+C:\Users\AndrewJNg_Legion\OneDrive - Monash University\Documents\PSoC Creator\4.4\Downloads ( 4.4).cylib\Downloads ( 4.4).cyprj|10c7d030-bfcd-41e0-8a9d-98b9e26e0348
+D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|f38cce58-c7b4-494b-a4af-00b28c88a580
+D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|1bfb2d4c-3916-463c-936e-5da5f5073b74
+D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|2f5e9a73-a6b0-45f2-b8c0-659f25785a65

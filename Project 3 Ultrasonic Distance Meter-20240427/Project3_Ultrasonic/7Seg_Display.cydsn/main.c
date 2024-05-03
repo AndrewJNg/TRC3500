@@ -24,20 +24,24 @@ double counter = 0;
 
 CY_ISR(MyCustomISR2) // Interrupt counter
 {
-    counter +=0.001;
-    //Count7_1_Stop(); 
-    //Count7_1_WriteCounter(10) ; 
-    //Count7_1_Enable(); 
+    counter +=1.0;
 }
 CY_ISR(MyCustomISR3) // Interrupt counter
 {
-    //counter +=0.001;
-    //Count7_1_Stop(); 
-    //Count7_1_WriteCounter(10) ; 
-    //Count7_1_Enable(); 
+    // Launch 1 ultrasonic cycle
     Control_Reg_1_Write(1); // Yes so reset counter to do more pulses
     Control_Reg_1_Write(0);
 }
+
+        // High level 7 segment display code
+double value = 0; 
+double distance = 0;
+//CY_ISR(Timer) // Interrupt counter
+//{
+//    //value = Timer_1_ReadStatusRegister()/100; //in ms
+//    //distance = (34*value)/2;
+//    counter = 1;
+//}
 
 int main(void)
 {
@@ -49,11 +53,13 @@ int main(void)
     isr_7Seg_ClearPending(); 
     isr_1_ClearPending(); 
     isr_2_ClearPending(); 
+    //isr_3_ClearPending(); 
 
     // Enable the interrupt service routine
     isr_7Seg_StartEx(ISR);  
     isr_1_StartEx(MyCustomISR3);  // Temp just to update counter
     isr_2_StartEx(MyCustomISR2);  // Temp just to update counter
+    //isr_3_StartEx(Timer);  // Temp just to update counter
     
     
     // Ultrasonic setup
@@ -67,12 +73,13 @@ int main(void)
     EEPROM_1_Start(); 
     //EEPROM_1_Enable();
     
+    // Launch 1 ultrasonic cycle
     Control_Reg_1_Write(1); // Yes so reset counter to do more pulses
     Control_Reg_1_Write(0);
     
+    Timer_1_Start();
     for(;;)
     {
-        // High level 7 segment display code
         display_num(counter);
     }
 }
@@ -98,7 +105,7 @@ void display_num(double value){
     
     //////////////// Code after this would only run once per interrupt////////////////
     // Only update the value when it gets a new value (for consistency and save computation for pooling loop)
-    if(value != old_dis_val){ 
+    if((value != old_dis_val)){ 
         // Convert double to d1,d2,d3,d4,dp_pos
         int dp_pos = 0;
         
