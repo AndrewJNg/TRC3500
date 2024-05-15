@@ -1,5 +1,5 @@
 /*******************************************************************************
-* File Name: TX2.h  
+* File Name: TX2_Ultra.h  
 * Version 2.20
 *
 * Description:
@@ -15,8 +15,8 @@
 * the software package with which this file was provided.
 *******************************************************************************/
 
-#if !defined(CY_PINS_TX2_ALIASES_H) /* Pins TX2_ALIASES_H */
-#define CY_PINS_TX2_ALIASES_H
+#if !defined(CY_PINS_TX2_Ultra_ALIASES_H) /* Pins TX2_Ultra_ALIASES_H */
+#define CY_PINS_TX2_Ultra_ALIASES_H
 
 #include "cytypes.h"
 #include "cyfitter.h"
@@ -25,12 +25,12 @@
 /***************************************
 *              Constants        
 ***************************************/
-#define TX2_0			(TX2__0__PC)
-#define TX2_0_INTR	((uint16)((uint16)0x0001u << TX2__0__SHIFT))
+#define TX2_Ultra_0			(TX2_Ultra__0__PC)
+#define TX2_Ultra_0_INTR	((uint16)((uint16)0x0001u << TX2_Ultra__0__SHIFT))
 
-#define TX2_INTR_ALL	 ((uint16)(TX2_0_INTR))
+#define TX2_Ultra_INTR_ALL	 ((uint16)(TX2_Ultra_0_INTR))
 
-#endif /* End Pins TX2_ALIASES_H */
+#endif /* End Pins TX2_Ultra_ALIASES_H */
 
 
 /* [] END OF FILE */

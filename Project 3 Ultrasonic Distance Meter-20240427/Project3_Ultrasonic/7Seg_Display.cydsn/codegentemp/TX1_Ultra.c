@@ -1,5 +1,5 @@
 /*******************************************************************************
-* File Name: TX1.c  
+* File Name: TX1_Ultra.c  
 * Version 2.20
 *
 * Description:
@@ -15,15 +15,15 @@
 *******************************************************************************/
 
 #include "cytypes.h"
-#include "TX1.h"
+#include "TX1_Ultra.h"
 
 /* APIs are not generated for P15[7:6] on PSoC 5 */
 #if !(CY_PSOC5A &&\
-	 TX1__PORT == 15 && ((TX1__MASK & 0xC0) != 0))
+	 TX1_Ultra__PORT == 15 && ((TX1_Ultra__MASK & 0xC0) != 0))
 
 
 /*******************************************************************************
-* Function Name: TX1_Write
+* Function Name: TX1_Ultra_Write
 ****************************************************************************//**
 *
 * \brief Writes the value to the physical port (data output register), masking
@@ -52,17 +52,17 @@
 *  this function.
 *
 * \funcusage
-*  \snippet TX1_SUT.c usage_TX1_Write
+*  \snippet TX1_Ultra_SUT.c usage_TX1_Ultra_Write
 *******************************************************************************/
-void TX1_Write(uint8 value)
+void TX1_Ultra_Write(uint8 value)
 {
-    uint8 staticBits = (TX1_DR & (uint8)(~TX1_MASK));
-    TX1_DR = staticBits | ((uint8)(value << TX1_SHIFT) & TX1_MASK);
+    uint8 staticBits = (TX1_Ultra_DR & (uint8)(~TX1_Ultra_MASK));
+    TX1_Ultra_DR = staticBits | ((uint8)(value << TX1_Ultra_SHIFT) & TX1_Ultra_MASK);
 }
 
 
 /*******************************************************************************
-* Function Name: TX1_SetDriveMode
+* Function Name: TX1_Ultra_SetDriveMode
 ****************************************************************************//**
 *
 * \brief Sets the drive mode for each of the Pins component's pins.
@@ -85,16 +85,16 @@ void TX1_Write(uint8 value)
 *  APIs (primary method) or disable interrupts around this function.
 *
 * \funcusage
-*  \snippet TX1_SUT.c usage_TX1_SetDriveMode
+*  \snippet TX1_Ultra_SUT.c usage_TX1_Ultra_SetDriveMode
 *******************************************************************************/
-void TX1_SetDriveMode(uint8 mode)
+void TX1_Ultra_SetDriveMode(uint8 mode)
 {
-	CyPins_SetPinDriveMode(TX1_0, mode);
+	CyPins_SetPinDriveMode(TX1_Ultra_0, mode);
 }
 
 
 /*******************************************************************************
-* Function Name: TX1_Read
+* Function Name: TX1_Ultra_Read
 ****************************************************************************//**
 *
 * \brief Reads the associated physical port (pin status register) and masks 
@@ -108,16 +108,16 @@ void TX1_SetDriveMode(uint8 mode)
 *  The current value for the pins in the component as a right justified number.
 *
 * \funcusage
-*  \snippet TX1_SUT.c usage_TX1_Read  
+*  \snippet TX1_Ultra_SUT.c usage_TX1_Ultra_Read  
 *******************************************************************************/
-uint8 TX1_Read(void)
+uint8 TX1_Ultra_Read(void)
 {
-    return (TX1_PS & TX1_MASK) >> TX1_SHIFT;
+    return (TX1_Ultra_PS & TX1_Ultra_MASK) >> TX1_Ultra_SHIFT;
 }
 
 
 /*******************************************************************************
-* Function Name: TX1_ReadDataReg
+* Function Name: TX1_Ultra_ReadDataReg
 ****************************************************************************//**
 *
 * \brief Reads the associated physical port's data output register and masks 
@@ -126,8 +126,8 @@ uint8 TX1_Read(void)
 *
 * The data output register controls the signal applied to the physical pin in 
 * conjunction with the drive mode parameter. This is not the same as the 
-* preferred TX1_Read() API because the 
-* TX1_ReadDataReg() reads the data register instead of the status 
+* preferred TX1_Ultra_Read() API because the 
+* TX1_Ultra_ReadDataReg() reads the data register instead of the status 
 * register. For output pins this is a useful function to determine the value 
 * just written to the pin.
 *
@@ -136,19 +136,19 @@ uint8 TX1_Read(void)
 *  justified number for the component instance.
 *
 * \funcusage
-*  \snippet TX1_SUT.c usage_TX1_ReadDataReg 
+*  \snippet TX1_Ultra_SUT.c usage_TX1_Ultra_ReadDataReg 
 *******************************************************************************/
-uint8 TX1_ReadDataReg(void)
+uint8 TX1_Ultra_ReadDataReg(void)
 {
-    return (TX1_DR & TX1_MASK) >> TX1_SHIFT;
+    return (TX1_Ultra_DR & TX1_Ultra_MASK) >> TX1_Ultra_SHIFT;
 }
 
 
 /* If interrupt is connected for this Pins component */ 
-#if defined(TX1_INTSTAT) 
+#if defined(TX1_Ultra_INTSTAT) 
 
     /*******************************************************************************
-    * Function Name: TX1_SetInterruptMode
+    * Function Name: TX1_Ultra_SetInterruptMode
     ****************************************************************************//**
     *
     * \brief Configures the interrupt mode for each of the Pins component's
@@ -161,12 +161,12 @@ uint8 TX1_ReadDataReg(void)
     * \param position
     *  The pin position as listed in the Pins component. You may OR these to be 
     *  able to configure the interrupt mode of multiple pins within a Pins 
-    *  component. Or you may use TX1_INTR_ALL to configure the
+    *  component. Or you may use TX1_Ultra_INTR_ALL to configure the
     *  interrupt mode of all the pins in the Pins component.       
-    *  - TX1_0_INTR       (First pin in the list)
-    *  - TX1_1_INTR       (Second pin in the list)
+    *  - TX1_Ultra_0_INTR       (First pin in the list)
+    *  - TX1_Ultra_1_INTR       (Second pin in the list)
     *  - ...
-    *  - TX1_INTR_ALL     (All pins in Pins component)
+    *  - TX1_Ultra_INTR_ALL     (All pins in Pins component)
     *
     * \param mode
     *  Interrupt mode for the selected pins. Valid options are documented in
@@ -182,19 +182,19 @@ uint8 TX1_ReadDataReg(void)
     *  port.
     *
     * \funcusage
-    *  \snippet TX1_SUT.c usage_TX1_SetInterruptMode
+    *  \snippet TX1_Ultra_SUT.c usage_TX1_Ultra_SetInterruptMode
     *******************************************************************************/
-    void TX1_SetInterruptMode(uint16 position, uint16 mode)
+    void TX1_Ultra_SetInterruptMode(uint16 position, uint16 mode)
     {
-		if((position & TX1_0_INTR) != 0u) 
+		if((position & TX1_Ultra_0_INTR) != 0u) 
 		{ 
-			 TX1_0_INTTYPE_REG = (uint8)mode; 
+			 TX1_Ultra_0_INTTYPE_REG = (uint8)mode; 
 		}
     }
     
     
     /*******************************************************************************
-    * Function Name: TX1_ClearInterrupt
+    * Function Name: TX1_Ultra_ClearInterrupt
     ****************************************************************************//**
     *
     * \brief Clears any active interrupts attached with the component and returns 
@@ -211,11 +211,11 @@ uint8 TX1_ReadDataReg(void)
     *  those associated with the Pins component.
     *
     * \funcusage
-    *  \snippet TX1_SUT.c usage_TX1_ClearInterrupt
+    *  \snippet TX1_Ultra_SUT.c usage_TX1_Ultra_ClearInterrupt
     *******************************************************************************/
-    uint8 TX1_ClearInterrupt(void)
+    uint8 TX1_Ultra_ClearInterrupt(void)
     {
-        return (TX1_INTSTAT & TX1_MASK) >> TX1_SHIFT;
+        return (TX1_Ultra_INTSTAT & TX1_Ultra_MASK) >> TX1_Ultra_SHIFT;
     }
 
 #endif /* If Interrupts Are Enabled for this Pins component */ 

@@ -1,5 +1,5 @@
 /*******************************************************************************
-* File Name: timer_clock_2.c
+* File Name: Clock_4.c
 * Version 2.20
 *
 *  Description:
@@ -15,7 +15,7 @@
 *******************************************************************************/
 
 #include <cydevice_trm.h>
-#include "timer_clock_2.h"
+#include "Clock_4.h"
 
 /* Clock Distribution registers. */
 #define CLK_DIST_LD              (* (reg8 *) CYREG_CLKDIST_LD)
@@ -28,7 +28,7 @@
 
 
 /*******************************************************************************
-* Function Name: timer_clock_2_Start
+* Function Name: Clock_4_Start
 ********************************************************************************
 *
 * Summary:
@@ -42,16 +42,16 @@
 *  None
 *
 *******************************************************************************/
-void timer_clock_2_Start(void) 
+void Clock_4_Start(void) 
 {
     /* Set the bit to enable the clock. */
-    timer_clock_2_CLKEN |= timer_clock_2_CLKEN_MASK;
-	timer_clock_2_CLKSTBY |= timer_clock_2_CLKSTBY_MASK;
+    Clock_4_CLKEN |= Clock_4_CLKEN_MASK;
+	Clock_4_CLKSTBY |= Clock_4_CLKSTBY_MASK;
 }
 
 
 /*******************************************************************************
-* Function Name: timer_clock_2_Stop
+* Function Name: Clock_4_Stop
 ********************************************************************************
 *
 * Summary:
@@ -68,11 +68,11 @@ void timer_clock_2_Start(void)
 *  None
 *
 *******************************************************************************/
-void timer_clock_2_Stop(void) 
+void Clock_4_Stop(void) 
 {
     /* Clear the bit to disable the clock. */
-    timer_clock_2_CLKEN &= (uint8)(~timer_clock_2_CLKEN_MASK);
-	timer_clock_2_CLKSTBY &= (uint8)(~timer_clock_2_CLKSTBY_MASK);
+    Clock_4_CLKEN &= (uint8)(~Clock_4_CLKEN_MASK);
+	Clock_4_CLKSTBY &= (uint8)(~Clock_4_CLKSTBY_MASK);
 }
 
 
@@ -80,7 +80,7 @@ void timer_clock_2_Stop(void)
 
 
 /*******************************************************************************
-* Function Name: timer_clock_2_StopBlock
+* Function Name: Clock_4_StopBlock
 ********************************************************************************
 *
 * Summary:
@@ -97,9 +97,9 @@ void timer_clock_2_Stop(void)
 *  None
 *
 *******************************************************************************/
-void timer_clock_2_StopBlock(void) 
+void Clock_4_StopBlock(void) 
 {
-    if ((timer_clock_2_CLKEN & timer_clock_2_CLKEN_MASK) != 0u)
+    if ((Clock_4_CLKEN & Clock_4_CLKEN_MASK) != 0u)
     {
 #if HAS_CLKDIST_LD_DISABLE
         uint16 oldDivider;
@@ -107,18 +107,18 @@ void timer_clock_2_StopBlock(void)
         CLK_DIST_LD = 0u;
 
         /* Clear all the mask bits except ours. */
-#if defined(timer_clock_2__CFG3)
-        CLK_DIST_AMASK = timer_clock_2_CLKEN_MASK;
+#if defined(Clock_4__CFG3)
+        CLK_DIST_AMASK = Clock_4_CLKEN_MASK;
         CLK_DIST_DMASK = 0x00u;
 #else
-        CLK_DIST_DMASK = timer_clock_2_CLKEN_MASK;
+        CLK_DIST_DMASK = Clock_4_CLKEN_MASK;
         CLK_DIST_AMASK = 0x00u;
-#endif /* timer_clock_2__CFG3 */
+#endif /* Clock_4__CFG3 */
 
         /* Clear mask of bus clock. */
         CLK_DIST_BCFG2 &= (uint8)(~BCFG2_MASK);
 
-        oldDivider = CY_GET_REG16(timer_clock_2_DIV_PTR);
+        oldDivider = CY_GET_REG16(Clock_4_DIV_PTR);
         CY_SET_REG16(CYREG_CLKDIST_WRK0, oldDivider);
         CLK_DIST_LD = CYCLK_LD_DISABLE | CYCLK_LD_SYNC_EN | CYCLK_LD_LOAD;
 
@@ -127,13 +127,13 @@ void timer_clock_2_StopBlock(void)
 #endif /* HAS_CLKDIST_LD_DISABLE */
 
         /* Clear the bit to disable the clock. */
-        timer_clock_2_CLKEN &= (uint8)(~timer_clock_2_CLKEN_MASK);
-        timer_clock_2_CLKSTBY &= (uint8)(~timer_clock_2_CLKSTBY_MASK);
+        Clock_4_CLKEN &= (uint8)(~Clock_4_CLKEN_MASK);
+        Clock_4_CLKSTBY &= (uint8)(~Clock_4_CLKSTBY_MASK);
 
 #if HAS_CLKDIST_LD_DISABLE
         /* Clear the disable bit */
         CLK_DIST_LD = 0x00u;
-        CY_SET_REG16(timer_clock_2_DIV_PTR, oldDivider);
+        CY_SET_REG16(Clock_4_DIV_PTR, oldDivider);
 #endif /* HAS_CLKDIST_LD_DISABLE */
     }
 }
@@ -141,7 +141,7 @@ void timer_clock_2_StopBlock(void)
 
 
 /*******************************************************************************
-* Function Name: timer_clock_2_StandbyPower
+* Function Name: Clock_4_StandbyPower
 ********************************************************************************
 *
 * Summary:
@@ -154,21 +154,21 @@ void timer_clock_2_StopBlock(void)
 *  None
 *
 *******************************************************************************/
-void timer_clock_2_StandbyPower(uint8 state) 
+void Clock_4_StandbyPower(uint8 state) 
 {
     if(state == 0u)
     {
-        timer_clock_2_CLKSTBY &= (uint8)(~timer_clock_2_CLKSTBY_MASK);
+        Clock_4_CLKSTBY &= (uint8)(~Clock_4_CLKSTBY_MASK);
     }
     else
     {
-        timer_clock_2_CLKSTBY |= timer_clock_2_CLKSTBY_MASK;
+        Clock_4_CLKSTBY |= Clock_4_CLKSTBY_MASK;
     }
 }
 
 
 /*******************************************************************************
-* Function Name: timer_clock_2_SetDividerRegister
+* Function Name: Clock_4_SetDividerRegister
 ********************************************************************************
 *
 * Summary:
@@ -190,17 +190,17 @@ void timer_clock_2_StandbyPower(uint8 state)
 *  None
 *
 *******************************************************************************/
-void timer_clock_2_SetDividerRegister(uint16 clkDivider, uint8 restart)
+void Clock_4_SetDividerRegister(uint16 clkDivider, uint8 restart)
                                 
 {
     uint8 enabled;
 
-    uint8 currSrc = timer_clock_2_GetSourceRegister();
-    uint16 oldDivider = timer_clock_2_GetDividerRegister();
+    uint8 currSrc = Clock_4_GetSourceRegister();
+    uint16 oldDivider = Clock_4_GetDividerRegister();
 
     if (clkDivider != oldDivider)
     {
-        enabled = timer_clock_2_CLKEN & timer_clock_2_CLKEN_MASK;
+        enabled = Clock_4_CLKEN & Clock_4_CLKEN_MASK;
 
         if ((currSrc == (uint8)CYCLK_SRC_SEL_CLK_SYNC_D) && ((oldDivider == 0u) || (clkDivider == 0u)))
         {
@@ -210,15 +210,15 @@ void timer_clock_2_SetDividerRegister(uint16 clkDivider, uint8 restart)
                 /* Moving away from SSS, set the divider first so when SSS is cleared we    */
                 /* don't halt the clock.  Using the shadow load isn't required as the       */
                 /* divider is ignored while SSS is set.                                     */
-                CY_SET_REG16(timer_clock_2_DIV_PTR, clkDivider);
-                timer_clock_2_MOD_SRC &= (uint8)(~CYCLK_SSS);
+                CY_SET_REG16(Clock_4_DIV_PTR, clkDivider);
+                Clock_4_MOD_SRC &= (uint8)(~CYCLK_SSS);
             }
             else
             {
                 /* Moving to SSS, set SSS which then ignores the divider and we can set     */
                 /* it without bothering with the shadow load.                               */
-                timer_clock_2_MOD_SRC |= CYCLK_SSS;
-                CY_SET_REG16(timer_clock_2_DIV_PTR, clkDivider);
+                Clock_4_MOD_SRC |= CYCLK_SSS;
+                CY_SET_REG16(Clock_4_DIV_PTR, clkDivider);
             }
         }
         else
@@ -229,18 +229,18 @@ void timer_clock_2_SetDividerRegister(uint16 clkDivider, uint8 restart)
                 CLK_DIST_LD = 0x00u;
 
                 /* Clear all the mask bits except ours. */
-#if defined(timer_clock_2__CFG3)
-                CLK_DIST_AMASK = timer_clock_2_CLKEN_MASK;
+#if defined(Clock_4__CFG3)
+                CLK_DIST_AMASK = Clock_4_CLKEN_MASK;
                 CLK_DIST_DMASK = 0x00u;
 #else
-                CLK_DIST_DMASK = timer_clock_2_CLKEN_MASK;
+                CLK_DIST_DMASK = Clock_4_CLKEN_MASK;
                 CLK_DIST_AMASK = 0x00u;
-#endif /* timer_clock_2__CFG3 */
+#endif /* Clock_4__CFG3 */
                 /* Clear mask of bus clock. */
                 CLK_DIST_BCFG2 &= (uint8)(~BCFG2_MASK);
 
                 /* If clock is currently enabled, disable it if async or going from N-to-1*/
-                if (((timer_clock_2_MOD_SRC & CYCLK_SYNC) == 0u) || (clkDivider == 0u))
+                if (((Clock_4_MOD_SRC & CYCLK_SYNC) == 0u) || (clkDivider == 0u))
                 {
 #if HAS_CLKDIST_LD_DISABLE
                     CY_SET_REG16(CYREG_CLKDIST_WRK0, oldDivider);
@@ -250,7 +250,7 @@ void timer_clock_2_SetDividerRegister(uint16 clkDivider, uint8 restart)
                     while ((CLK_DIST_LD & CYCLK_LD_LOAD) != 0u) { }
 #endif /* HAS_CLKDIST_LD_DISABLE */
 
-                    timer_clock_2_CLKEN &= (uint8)(~timer_clock_2_CLKEN_MASK);
+                    Clock_4_CLKEN &= (uint8)(~Clock_4_CLKEN_MASK);
 
 #if HAS_CLKDIST_LD_DISABLE
                     /* Clear the disable bit */
@@ -260,7 +260,7 @@ void timer_clock_2_SetDividerRegister(uint16 clkDivider, uint8 restart)
             }
 
             /* Load divide value. */
-            if ((timer_clock_2_CLKEN & timer_clock_2_CLKEN_MASK) != 0u)
+            if ((Clock_4_CLKEN & Clock_4_CLKEN_MASK) != 0u)
             {
                 /* If the clock is still enabled, use the shadow registers */
                 CY_SET_REG16(CYREG_CLKDIST_WRK0, clkDivider);
@@ -271,8 +271,8 @@ void timer_clock_2_SetDividerRegister(uint16 clkDivider, uint8 restart)
             else
             {
                 /* If the clock is disabled, set the divider directly */
-                CY_SET_REG16(timer_clock_2_DIV_PTR, clkDivider);
-				timer_clock_2_CLKEN |= enabled;
+                CY_SET_REG16(Clock_4_DIV_PTR, clkDivider);
+				Clock_4_CLKEN |= enabled;
             }
         }
     }
@@ -280,7 +280,7 @@ void timer_clock_2_SetDividerRegister(uint16 clkDivider, uint8 restart)
 
 
 /*******************************************************************************
-* Function Name: timer_clock_2_GetDividerRegister
+* Function Name: Clock_4_GetDividerRegister
 ********************************************************************************
 *
 * Summary:
@@ -294,14 +294,14 @@ void timer_clock_2_SetDividerRegister(uint16 clkDivider, uint8 restart)
 *  divide by 2, the return value will be 1.
 *
 *******************************************************************************/
-uint16 timer_clock_2_GetDividerRegister(void) 
+uint16 Clock_4_GetDividerRegister(void) 
 {
-    return CY_GET_REG16(timer_clock_2_DIV_PTR);
+    return CY_GET_REG16(Clock_4_DIV_PTR);
 }
 
 
 /*******************************************************************************
-* Function Name: timer_clock_2_SetModeRegister
+* Function Name: Clock_4_SetModeRegister
 ********************************************************************************
 *
 * Summary:
@@ -329,14 +329,14 @@ uint16 timer_clock_2_GetDividerRegister(void)
 *  None
 *
 *******************************************************************************/
-void timer_clock_2_SetModeRegister(uint8 modeBitMask) 
+void Clock_4_SetModeRegister(uint8 modeBitMask) 
 {
-    timer_clock_2_MOD_SRC |= modeBitMask & (uint8)timer_clock_2_MODE_MASK;
+    Clock_4_MOD_SRC |= modeBitMask & (uint8)Clock_4_MODE_MASK;
 }
 
 
 /*******************************************************************************
-* Function Name: timer_clock_2_ClearModeRegister
+* Function Name: Clock_4_ClearModeRegister
 ********************************************************************************
 *
 * Summary:
@@ -364,14 +364,14 @@ void timer_clock_2_SetModeRegister(uint8 modeBitMask)
 *  None
 *
 *******************************************************************************/
-void timer_clock_2_ClearModeRegister(uint8 modeBitMask) 
+void Clock_4_ClearModeRegister(uint8 modeBitMask) 
 {
-    timer_clock_2_MOD_SRC &= (uint8)(~modeBitMask) | (uint8)(~(uint8)(timer_clock_2_MODE_MASK));
+    Clock_4_MOD_SRC &= (uint8)(~modeBitMask) | (uint8)(~(uint8)(Clock_4_MODE_MASK));
 }
 
 
 /*******************************************************************************
-* Function Name: timer_clock_2_GetModeRegister
+* Function Name: Clock_4_GetModeRegister
 ********************************************************************************
 *
 * Summary:
@@ -385,14 +385,14 @@ void timer_clock_2_ClearModeRegister(uint8 modeBitMask)
 *  ClearModeRegister descriptions for details about the mode bits.
 *
 *******************************************************************************/
-uint8 timer_clock_2_GetModeRegister(void) 
+uint8 Clock_4_GetModeRegister(void) 
 {
-    return timer_clock_2_MOD_SRC & (uint8)(timer_clock_2_MODE_MASK);
+    return Clock_4_MOD_SRC & (uint8)(Clock_4_MODE_MASK);
 }
 
 
 /*******************************************************************************
-* Function Name: timer_clock_2_SetSourceRegister
+* Function Name: Clock_4_SetSourceRegister
 ********************************************************************************
 *
 * Summary:
@@ -416,39 +416,39 @@ uint8 timer_clock_2_GetModeRegister(void)
 *  None
 *
 *******************************************************************************/
-void timer_clock_2_SetSourceRegister(uint8 clkSource) 
+void Clock_4_SetSourceRegister(uint8 clkSource) 
 {
-    uint16 currDiv = timer_clock_2_GetDividerRegister();
-    uint8 oldSrc = timer_clock_2_GetSourceRegister();
+    uint16 currDiv = Clock_4_GetDividerRegister();
+    uint8 oldSrc = Clock_4_GetSourceRegister();
 
     if (((oldSrc != ((uint8)CYCLK_SRC_SEL_CLK_SYNC_D)) && 
         (clkSource == ((uint8)CYCLK_SRC_SEL_CLK_SYNC_D))) && (currDiv == 0u))
     {
         /* Switching to Master and divider is 1, set SSS, which will output master, */
         /* then set the source so we are consistent.                                */
-        timer_clock_2_MOD_SRC |= CYCLK_SSS;
-        timer_clock_2_MOD_SRC =
-            (timer_clock_2_MOD_SRC & (uint8)(~timer_clock_2_SRC_SEL_MSK)) | clkSource;
+        Clock_4_MOD_SRC |= CYCLK_SSS;
+        Clock_4_MOD_SRC =
+            (Clock_4_MOD_SRC & (uint8)(~Clock_4_SRC_SEL_MSK)) | clkSource;
     }
     else if (((oldSrc == ((uint8)CYCLK_SRC_SEL_CLK_SYNC_D)) && 
             (clkSource != ((uint8)CYCLK_SRC_SEL_CLK_SYNC_D))) && (currDiv == 0u))
     {
         /* Switching from Master to not and divider is 1, set source, so we don't   */
         /* lock when we clear SSS.                                                  */
-        timer_clock_2_MOD_SRC =
-            (timer_clock_2_MOD_SRC & (uint8)(~timer_clock_2_SRC_SEL_MSK)) | clkSource;
-        timer_clock_2_MOD_SRC &= (uint8)(~CYCLK_SSS);
+        Clock_4_MOD_SRC =
+            (Clock_4_MOD_SRC & (uint8)(~Clock_4_SRC_SEL_MSK)) | clkSource;
+        Clock_4_MOD_SRC &= (uint8)(~CYCLK_SSS);
     }
     else
     {
-        timer_clock_2_MOD_SRC =
-            (timer_clock_2_MOD_SRC & (uint8)(~timer_clock_2_SRC_SEL_MSK)) | clkSource;
+        Clock_4_MOD_SRC =
+            (Clock_4_MOD_SRC & (uint8)(~Clock_4_SRC_SEL_MSK)) | clkSource;
     }
 }
 
 
 /*******************************************************************************
-* Function Name: timer_clock_2_GetSourceRegister
+* Function Name: Clock_4_GetSourceRegister
 ********************************************************************************
 *
 * Summary:
@@ -461,17 +461,17 @@ void timer_clock_2_SetSourceRegister(uint8 clkSource)
 *  The input source of the clock. See SetSourceRegister for details.
 *
 *******************************************************************************/
-uint8 timer_clock_2_GetSourceRegister(void) 
+uint8 Clock_4_GetSourceRegister(void) 
 {
-    return timer_clock_2_MOD_SRC & timer_clock_2_SRC_SEL_MSK;
+    return Clock_4_MOD_SRC & Clock_4_SRC_SEL_MSK;
 }
 
 
-#if defined(timer_clock_2__CFG3)
+#if defined(Clock_4__CFG3)
 
 
 /*******************************************************************************
-* Function Name: timer_clock_2_SetPhaseRegister
+* Function Name: Clock_4_SetPhaseRegister
 ********************************************************************************
 *
 * Summary:
@@ -489,14 +489,14 @@ uint8 timer_clock_2_GetSourceRegister(void)
 *  None
 *
 *******************************************************************************/
-void timer_clock_2_SetPhaseRegister(uint8 clkPhase) 
+void Clock_4_SetPhaseRegister(uint8 clkPhase) 
 {
-    timer_clock_2_PHASE = clkPhase & timer_clock_2_PHASE_MASK;
+    Clock_4_PHASE = clkPhase & Clock_4_PHASE_MASK;
 }
 
 
 /*******************************************************************************
-* Function Name: timer_clock_2_GetPhase
+* Function Name: Clock_4_GetPhase
 ********************************************************************************
 *
 * Summary:
@@ -510,12 +510,12 @@ void timer_clock_2_SetPhaseRegister(uint8 clkPhase)
 *  Phase of the analog clock. See SetPhaseRegister for details.
 *
 *******************************************************************************/
-uint8 timer_clock_2_GetPhaseRegister(void) 
+uint8 Clock_4_GetPhaseRegister(void) 
 {
-    return timer_clock_2_PHASE & timer_clock_2_PHASE_MASK;
+    return Clock_4_PHASE & Clock_4_PHASE_MASK;
 }
 
-#endif /* timer_clock_2__CFG3 */
+#endif /* Clock_4__CFG3 */
 
 
 /* [] END OF FILE */

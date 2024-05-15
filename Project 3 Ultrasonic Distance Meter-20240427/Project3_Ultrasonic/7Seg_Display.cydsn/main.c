@@ -17,31 +17,48 @@ void display_num(double value);
 void draw_7Seg(int number,int dp);
 CY_ISR(ISR);
 CY_ISR(MyCustomISR2);
+void print_uart(int num);
 
 
 // ========================================================================================================================
 double counter = 0;
 
+int time_passed_step=0;
 CY_ISR(MyCustomISR2) // Interrupt counter
 {
-    counter +=1.0;
+    //counter +=1.0;
+    Timer_1_Stop();
+    time_passed_step = Timer_1_ReadPeriod()-Timer_1_ReadCounter() ;
 }
-CY_ISR(MyCustomISR3) // Interrupt counter
+CY_ISR(MyCustomISR1) // Interrupt counter
 {
     // Launch 1 ultrasonic cycle
     Control_Reg_1_Write(1); // Yes so reset counter to do more pulses
+    Timer_1_Start();
+    //CyDelay(10);
     Control_Reg_1_Write(0);
+    
+    //UART_1_PutString("Int1\n");
 }
 
         // High level 7 segment display code
 double value = 0; 
 double distance = 0;
-//CY_ISR(Timer) // Interrupt counter
-//{
-//    //value = Timer_1_ReadStatusRegister()/100; //in ms
-//    //distance = (34*value)/2;
-//    counter = 1;
-//}
+
+uint8 InterruptCnt;
+CY_ISR(MyCustomISR3) // Interrupt counter
+{
+    //value = Timer_1_ReadStatusRegister()/100; //in ms
+    //distance = (34*value)/2;
+    //counter = 1;
+    //Timer_1_STATUS;
+    //InterruptCnt++;  
+    
+    Timer_1_Stop();
+    //time_passed_step = Timer_1_ReadCounter() ;
+    time_passed_step = Timer_1_ReadPeriod()-Timer_1_ReadCounter() ;
+    UART_1_PutString("Int3\n");
+}
 
 int main(void)
 {
@@ -53,13 +70,15 @@ int main(void)
     isr_7Seg_ClearPending(); 
     isr_1_ClearPending(); 
     isr_2_ClearPending(); 
-    //isr_3_ClearPending(); 
+    isr_3_ClearPending(); 
 
     // Enable the interrupt service routine
     isr_7Seg_StartEx(ISR);  
-    isr_1_StartEx(MyCustomISR3);  // Temp just to update counter
+    isr_1_StartEx(MyCustomISR1);  // Temp just to update counter
     isr_2_StartEx(MyCustomISR2);  // Temp just to update counter
-    //isr_3_StartEx(Timer);  // Temp just to update counter
+    
+    Timer_1_SetInterruptMode(3);
+    isr_3_StartEx(MyCustomISR3);  // Temp just to update counter
     
     
     // Ultrasonic setup
@@ -72,18 +91,96 @@ int main(void)
     // Setup EEPROM
     EEPROM_1_Start(); 
     //EEPROM_1_Enable();
+    UART_1_Start();
     
     // Launch 1 ultrasonic cycle
     Control_Reg_1_Write(1); // Yes so reset counter to do more pulses
     Control_Reg_1_Write(0);
-    
     Timer_1_Start();
+    
     for(;;)
     {
-        display_num(counter);
+    //Control_Reg_1_Write(1); // Yes so reset counter to do more pulses
+    //Control_Reg_1_Write(0);
+        //CyDelay(5);
+        //UART_1_PutString("Contents of buffer2: ");
+        //CyDelay(5);
+        //UART_1_WriteTxData(0x20); //Space
+        //CyDelay(10);
+        
+        
+  //      value_text[0] = value_text[0];
+        
+        //UART_1_WriteTxData(value_text[0]+0x30); //display number
+        //UART_1_WriteTxData(value_text[1]+0x30); //display number
+        //UART_1_WriteTxData(value_text[2]+0x30); //display number
+        //UART_1_PutArray(value_text, 4) ;
+        //LCD_PrintInt16(Timer_1_ReadPeriod());
+        //LCD_PrintInt16(Timer_1_ReadCapture());
+        //LCD_PrintInt16(Timer_1_ReadCounter());;
+        //UART_1_PutString("\n");
+        //LCD_PrintInt16(InterruptCnt)
+        
+        /*
+        print_uart(Timer_1_ReadPeriod());
+        CyDelay(5);
+        UART_1_PutString("  ");
+        CyDelay(5);
+        
+        print_uart(Timer_1_ReadCapture());
+        CyDelay(5);
+        UART_1_PutString("  ");
+        CyDelay(5);
+        
+        print_uart(Timer_1_ReadCounter());
+        CyDelay(5);
+        UART_1_PutString("  ");
+        CyDelay(5);
+        
+        print_uart(InterruptCnt);
+        CyDelay(5);
+        UART_1_PutString("  ");
+        CyDelay(5);
+        */
+        
+        //CyDelay(1000);
+        //display_num(counter);
+        
+        value =  time_passed_step/100; //in ms
+        distance = (34*value)/2;
+        display_num(time_passed_step);
+        
+        //UART_1_WriteTxData(0x0d); //new line
+        //CyDelay(10);
     }
 }
 
+uint8 value_text[16];
+void print_uart(int num)
+{ 
+    int num_digits = 0;
+    int temp = num;
+    
+    // Count the number of digits (optional for pre-allocation)
+    while (temp != 0) {
+        temp /= 10;
+        num_digits++;
+    }
+
+    for (int i = num_digits-1; i >= 0; --i) {
+        value_text[i] = num % 10;
+        num /= 10;
+    }
+    
+    
+    for (int i = 0; i < num_digits; ++i) {
+        UART_1_WriteTxData(value_text[i]+0x30); //display number
+        CyDelay(5);
+    }
+    
+    
+    
+}
 
 // ========================================================================================================================
 /* Mid Level 7 Segment display code*/
@@ -128,8 +225,8 @@ void display_num(double value){
         int digits = (int) (value*1000);
                 
         D[0] = (int)(digits/1000)%10;
-         D[1] = (int)(digits/100)%10;
-         D[2] = (int)(digits/10)%10;
+        D[1] = (int)(digits/100)%10;
+        D[2] = (int)(digits/10)%10;
         D[3] = (int)(digits/1) %10;
     }
         

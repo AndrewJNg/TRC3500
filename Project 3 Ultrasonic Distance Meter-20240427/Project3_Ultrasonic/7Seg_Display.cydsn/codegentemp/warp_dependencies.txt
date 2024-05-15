@@ -8,3 +8,5 @@ D:/Monash_Apps/PSoC\ Creator/4.4/PSoC\ Creator/warp/lib/common/cy_psoc3_inc.v :
 
 D:/Monash_Apps/PSoC\ Creator/4.4/PSoC\ Creator/warp/lib/common/stdlogic/rtlpkg.vif : 
 
+D:/Monash_Apps/PSoC\ Creator/4.4/PSoC\ Creator/warp/lib/common/stdlogic/cy_psoc3.vif : 
+

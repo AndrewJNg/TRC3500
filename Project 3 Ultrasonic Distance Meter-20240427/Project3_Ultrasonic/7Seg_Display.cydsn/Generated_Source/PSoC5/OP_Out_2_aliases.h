@@ -1,5 +1,5 @@
 /*******************************************************************************
-* File Name: TX1.h  
+* File Name: OP_Out_2.h  
 * Version 2.20
 *
 * Description:
@@ -15,8 +15,8 @@
 * the software package with which this file was provided.
 *******************************************************************************/
 
-#if !defined(CY_PINS_TX1_ALIASES_H) /* Pins TX1_ALIASES_H */
-#define CY_PINS_TX1_ALIASES_H
+#if !defined(CY_PINS_OP_Out_2_ALIASES_H) /* Pins OP_Out_2_ALIASES_H */
+#define CY_PINS_OP_Out_2_ALIASES_H
 
 #include "cytypes.h"
 #include "cyfitter.h"
@@ -25,12 +25,12 @@
 /***************************************
 *              Constants        
 ***************************************/
-#define TX1_0			(TX1__0__PC)
-#define TX1_0_INTR	((uint16)((uint16)0x0001u << TX1__0__SHIFT))
+#define OP_Out_2_0			(OP_Out_2__0__PC)
+#define OP_Out_2_0_INTR	((uint16)((uint16)0x0001u << OP_Out_2__0__SHIFT))
 
-#define TX1_INTR_ALL	 ((uint16)(TX1_0_INTR))
+#define OP_Out_2_INTR_ALL	 ((uint16)(OP_Out_2_0_INTR))
 
-#endif /* End Pins TX1_ALIASES_H */
+#endif /* End Pins OP_Out_2_ALIASES_H */
 
 
 /* [] END OF FILE */

@@ -68,7 +68,7 @@ extern uint8 Count7_1_initVar;
 /***************************************
 * Initial Parameter
 ***************************************/
-#define Count7_1_INITIAL_PERIOD               (9u)
+#define Count7_1_INITIAL_PERIOD               (1u)
 
 
 /***************************************
