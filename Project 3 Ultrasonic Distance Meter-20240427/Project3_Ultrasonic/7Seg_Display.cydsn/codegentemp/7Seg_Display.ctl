@@ -1,6 +1,6 @@
 -- ======================================================================
 -- 7Seg_Display.ctl generated from 7Seg_Display
--- 05/15/2024 at 12:16
+-- 05/15/2024 at 13:43
 -- This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 -- ======================================================================
 

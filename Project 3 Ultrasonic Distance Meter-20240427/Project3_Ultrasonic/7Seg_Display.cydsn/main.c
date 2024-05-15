@@ -15,54 +15,43 @@
 
 void display_num(double value);
 void draw_7Seg(int number,int dp);
-CY_ISR(ISR);
+CY_ISR(seg7_ISR);
 CY_ISR(MyCustomISR2);
 void print_uart(int num);
+void send_ultra_pulse();
+CY_ISR(MyCustomISR1);
+CY_ISR(Receive_Ultra);
+double ultra_reading();
+double current_second();
+void BuzzerSound(double duration);
 
 
 // ========================================================================================================================
 double counter = 0;
 
 int time_passed_step=0;
-CY_ISR(MyCustomISR2) // Interrupt counter
-{
-    //counter +=1.0;
-    Timer_1_Stop();
-    time_passed_step = Timer_1_ReadPeriod()-Timer_1_ReadCounter() ;
-}
-CY_ISR(MyCustomISR1) // Interrupt counter
+
+CY_ISR(MyCustomISR1) //Select button interrupt
 {
     // Launch 1 ultrasonic cycle
-    Control_Reg_1_Write(1); // Yes so reset counter to do more pulses
-    Timer_1_Start();
-    //CyDelayUs(10);
-    Control_Reg_1_Write(0);
-    
-    //UART_1_PutString("Int1\n");
+    send_ultra_pulse();
 }
 
-        // High level 7 segment display code
-double value = 0; 
-double distance = 0;
+double previous_buzz=0;
 
-uint8 InterruptCnt;
-CY_ISR(MyCustomISR3) // Interrupt counter
+CY_ISR(MyCustomISR2) //Right button interrupt
 {
-    //value = Timer_1_ReadStatusRegister()/100; //in ms
-    //distance = (34*value)/2;
-    //counter = 1;
-    //Timer_1_STATUS;
-    //InterruptCnt++;  
-    
     Timer_1_Stop();
-    //time_passed_step = Timer_1_ReadCounter() ;
     time_passed_step = Timer_1_ReadPeriod()-Timer_1_ReadCounter() ;
-    UART_1_PutString("Int3\n");
+    previous_buzz = current_second();
 }
+
+
+
+
 
 int main(void)
 {
-
     // Enable interrupts
     CyGlobalIntEnable; 
     
@@ -72,88 +61,49 @@ int main(void)
     isr_2_ClearPending(); 
     isr_3_ClearPending(); 
 
-    // Enable the interrupt service routine
-    isr_7Seg_StartEx(ISR);  
-    isr_1_StartEx(MyCustomISR1);  // Temp just to update counter
-    isr_2_StartEx(MyCustomISR2);  // Temp just to update counter
+    // Enable button interrupts
+    isr_7Seg_StartEx(seg7_ISR);  
+    isr_1_StartEx(MyCustomISR1);  
+    isr_2_StartEx(MyCustomISR2);  
     
+    //  Ultrasonic transmitter setup
     Timer_1_SetInterruptMode(3);
-    isr_3_StartEx(MyCustomISR3);  // Temp just to update counter
+    isr_3_StartEx(Receive_Ultra);  
     
-    
-    // Ultrasonic setup
+    // Ultrasonic receiver setup
     PGA_1_Start();
     Opamp_1_Start();
     Comp_1_Start();
     VDAC8_1_Start();
     Count7_1_Start(); 
     
+    // Global timer 
+    Timer_2_SetInterruptMode(3);
+    Timer_2_Start();
+    
     // Setup EEPROM
     EEPROM_1_Start(); 
     //EEPROM_1_Enable();
     UART_1_Start();
     
-    // Launch 1 ultrasonic cycle
-    Control_Reg_1_Write(1); // Yes so reset counter to do more pulses
-    Control_Reg_1_Write(0);
-    Timer_1_Start();
-    
     for(;;)
     {
-    //Control_Reg_1_Write(1); // Yes so reset counter to do more pulses
-    //Control_Reg_1_Write(0);
-        //CyDelay(5);
-        //UART_1_PutString("Contents of buffer2: ");
-        //CyDelay(5);
-        //UART_1_WriteTxData(0x20); //Space
-        //CyDelay(10);
         
-        
-  //      value_text[0] = value_text[0];
-        
-        //UART_1_WriteTxData(value_text[0]+0x30); //display number
-        //UART_1_WriteTxData(value_text[1]+0x30); //display number
-        //UART_1_WriteTxData(value_text[2]+0x30); //display number
-        //UART_1_PutArray(value_text, 4) ;
-        //LCD_PrintInt16(Timer_1_ReadPeriod());
-        //LCD_PrintInt16(Timer_1_ReadCapture());
-        //LCD_PrintInt16(Timer_1_ReadCounter());;
-        //UART_1_PutString("\n");
-        //LCD_PrintInt16(InterruptCnt)
-        
-        /*
-        print_uart(Timer_1_ReadPeriod());
-        CyDelay(5);
-        UART_1_PutString("  ");
-        CyDelay(5);
-        
-        print_uart(Timer_1_ReadCapture());
-        CyDelay(5);
-        UART_1_PutString("  ");
-        CyDelay(5);
-        
-        print_uart(Timer_1_ReadCounter());
-        CyDelay(5);
-        UART_1_PutString("  ");
-        CyDelay(5);
-        
-        print_uart(InterruptCnt);
-        CyDelay(5);
-        UART_1_PutString("  ");
-        CyDelay(5);
-        */
-        
-        //CyDelay(1000);
-        //display_num(counter);
-        
-        value =  ((double)time_passed_step/10000)-0.5; //in ms
-        distance = (34*value)/2;
-        display_num(distance);
-        
-        //UART_1_WriteTxData(0x0d); //new line
-        //CyDelay(10);
+        //display_num( ultra_reading());
+        display_num( current_second());
+        BuzzerSound(0.2);
     }
 }
+double current_second()
+{
+    double time = (double)(Timer_2_ReadPeriod()-Timer_2_ReadCounter());
+    time = time/1000;
+    
+    return time;
+}
+
+// ========================================================================================================================
+/* UART communications */
 
 uint8 value_text[16];
 void print_uart(int num)
@@ -172,21 +122,63 @@ void print_uart(int num)
         num /= 10;
     }
     
-    
     for (int i = 0; i < num_digits; ++i) {
         UART_1_WriteTxData(value_text[i]+0x30); //display number
         CyDelay(5);
     }
     
-    
-    
 }
+
+// ========================================================================================================================
+/* Buzzer */
+
+void BuzzerSound(double duration)
+{
+    long time_diff = current_second()-previous_buzz;
+    if(time_diff<=duration) Buzzer_Write(0);  // Turn on buzzer
+    else Buzzer_Write(1); // Turn off buzzer
+}
+
+
+// ========================================================================================================================
+/* Ultrasinic launch function*/
+
+double value = 0; 
+double distance = 0;
+
+double ultra_reading()
+{
+    send_ultra_pulse();
+    
+    // TODO: may need to write blocking code to obtain ultrasonic values
+    value =  ((double)time_passed_step/10000)-0.5; //in ms
+    distance = (34*value)/2;
+    
+    return distance;
+}
+void send_ultra_pulse()
+{
+    Control_Reg_1_Write(1); // Reset counter to do more pulses
+    Timer_1_Start();        // Start receiver timer
+    Control_Reg_1_Write(0);
+}
+
+uint8 InterruptCnt;
+CY_ISR(Receive_Ultra)  // Ultrasonic Receiver
+{
+    Timer_1_Stop();
+    time_passed_step = Timer_1_ReadPeriod()-Timer_1_ReadCounter() ;
+}
+
 
 // ========================================================================================================================
 /* Mid Level 7 Segment display code*/
 
+//Global variable
 int run_7_Seg = 0;
-CY_ISR(ISR) // Interrupt routine for displaying each digit
+
+// Interrupt routine for displaying each sections
+CY_ISR(seg7_ISR) 
 {
     run_7_Seg = 1;
 }

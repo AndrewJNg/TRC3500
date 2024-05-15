@@ -259,6 +259,7 @@
       <Data key="3c8f51f8-f882-4ead-8a66-595df5cdd117" value="Dis_D3" />
       <Data key="3d313123-38cf-4bd6-a990-7777295476a3" value="Dis_C" />
       <Data key="4f89ffd6-82e6-4034-b00b-a5c9a108344e" value="LED2_Yellow" />
+      <Data key="5abbe5e6-fbb8-4564-ae08-8a137c990e09" value="Buzzer" />
       <Data key="6c961e0e-e6b8-4b3a-8680-e9ba87b1b0c3" value="Dis_G" />
       <Data key="8d318d8b-cf7b-4b6b-b02c-ab1c5c49d0ba" value="Button_S4_Right" />
       <Data key="8f2d9a34-dfc8-4ea7-8d13-311767a0c3e6" value="Dis_D1" />
@@ -274,6 +275,7 @@
       <Data key="a3c4a0e7-1976-4177-b4bf-07b512b2e759" value="Button_S1_Bottom" />
       <Data key="a9a81f18-a35b-496f-8762-4a1a84fb232e" value="Dis_B" />
       <Data key="a83e0af3-2241-4bc6-8f14-6f7f499b44e8" value="Button_S2_Left" />
+      <Data key="b73a1677-bcf9-40fd-9bd9-98329b61d7be" value="Buzzer" />
       <Data key="bd0bda36-bb86-4b8e-bd83-7f621d565a41" value="Rec1" />
       <Data key="d492611a-d288-47f3-acc3-5e0956c2af71" value="OP_Out_1" />
       <Data key="e5ca0116-26fc-4bcd-b12b-d22a53312e8b" value="LED1_Red" />
@@ -3406,6 +3408,11 @@
         <Data key="Port Format" value="3,6" />
       </Group>
     </Group>
+    <Group key="5abbe5e6-fbb8-4564-ae08-8a137c990e09">
+      <Group key="0">
+        <Data key="Port Format" value="3,3" />
+      </Group>
+    </Group>
     <Group key="6c961e0e-e6b8-4b3a-8680-e9ba87b1b0c3">
       <Group key="0">
         <Data key="Port Format" value="2,3" />
@@ -3479,6 +3486,11 @@
     <Group key="a83e0af3-2241-4bc6-8f14-6f7f499b44e8">
       <Group key="0">
         <Data key="Port Format" value="0,2" />
+      </Group>
+    </Group>
+    <Group key="b73a1677-bcf9-40fd-9bd9-98329b61d7be">
+      <Group key="0">
+        <Data key="Port Format" value="3,3" />
       </Group>
     </Group>
     <Group key="bd0bda36-bb86-4b8e-bd83-7f621d565a41">

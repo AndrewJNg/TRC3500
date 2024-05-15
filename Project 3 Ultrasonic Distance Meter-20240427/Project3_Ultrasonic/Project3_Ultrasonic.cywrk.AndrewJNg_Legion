@@ -13,7 +13,7 @@
 <v>Output</v>
 </TreeKeys>
 <TreeStates>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="Project3_Ultrasonic\7Seg_Display\Source Files\main.c">
 <ExpandedNodeIds>
 <v>Project3_Ultrasonic</v>
 <v>Project3_Ultrasonic\7Seg_Display</v>
@@ -32,7 +32,6 @@
 <v>Project3_Ultrasonic\7Seg_Display\Header Files\cyapicallbacks.h</v>
 <v>Project3_Ultrasonic\7Seg_Display\Source Files</v>
 <v>Project3_Ultrasonic\7Seg_Display\Source Files\main.c</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source</v>
 <v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5</v>
 <v>Project3_Ultrasonic\CE195313_PSoC_Emulated_EEPROM.pdf</v>
 </ExpandedNodeIds>
@@ -55,55 +54,7 @@
 <v>Project3_Ultrasonic\7Seg_Display\Source Files</v>
 <v>Project3_Ultrasonic\7Seg_Display\Source Files\main.c</v>
 <v>Project3_Ultrasonic\7Seg_Display\Generated_Source</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Button_S1_Bottom</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Button_S2_Left</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Button_S3_Top</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Button_S4_Right</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Button_S5_Select</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Clock_2</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Clock_3</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Clock_4</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Comp_1</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Control_Reg_1</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Count7_1</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\cy_boot</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Dis_A</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Dis_B</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Dis_C</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Dis_D</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Dis_D1</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Dis_D2</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Dis_D3</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Dis_D4</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Dis_DP</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Dis_E</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Dis_F</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Dis_G</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Display_Clk</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\EEPROM_1</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Em_EEPROM_Dynamic</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\isr_1</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\isr_2</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\isr_3</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\isr_7Seg</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\LED1_Red</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\LED2_Yellow</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\LED3_Green</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\OP_Out</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\OP_Out_1</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Opamp_1</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\PGA_1</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Rec1</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Rec2</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Timer_1</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\timer_clock</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\TX1_Ultra</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\TX2_Ultra</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\UART_1</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\UART_1_IntClock</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\VDAC8_1</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\cycodeshareexport.ld</v>
+<v>Project3_Ultrasonic\CE195313_PSoC_Emulated_EEPROM.pdf</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 <CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
@@ -133,8 +84,9 @@
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Button_S3_Top.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Button_S4_Right.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Button_S5_Select.lst</v>
+<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Buzzer.lst</v>
+<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_1.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_2.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_3.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_4.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Cm3Start.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Comp_1.lst</v>
@@ -185,7 +137,10 @@
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Rec2.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer_1.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer_1_PM.lst</v>
+<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer_2.lst</v>
+<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer_2_PM.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\timer_clock.lst</v>
+<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Transmitter_Clk.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\TX1_Ultra.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\TX2_Ultra.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_1.lst</v>
@@ -214,8 +169,9 @@
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Button_S3_Top.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Button_S4_Right.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Button_S5_Select.lst</v>
+<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Buzzer.lst</v>
+<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_1.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_2.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_3.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_4.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Cm3Start.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Comp_1.lst</v>
@@ -266,10 +222,9 @@
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Rec2.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer_1.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer_1_PM.lst</v>
+<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer_2.lst</v>
+<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer_2_PM.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\timer_clock.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\TX1_Ultra.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\TX2_Ultra.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_1.lst</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </TreeStates>
@@ -290,19 +245,22 @@
 <v>Project3_Ultrasonic\7Seg_Display\Count7_v1_0.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\cy_clock_v2_20</v>
 <v>Project3_Ultrasonic\7Seg_Display\cy_clock_v2_20\cy_clock_v2_20.pdf</v>
+<v>Project3_Ultrasonic\7Seg_Display\cy_constant_v1_0.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\cy_isr_v1_70</v>
 <v>Project3_Ultrasonic\7Seg_Display\cy_isr_v1_70\cy_isr_v1_70.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\cy_pins_v2_20</v>
 <v>Project3_Ultrasonic\7Seg_Display\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\cy_vref_v1_70.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\CyControlReg_v1_80.pdf</v>
-<v>Project3_Ultrasonic\7Seg_Display\Debouncer_v1_0.pdf</v>
+<v>Project3_Ultrasonic\7Seg_Display\Debouncer_v1_0</v>
+<v>Project3_Ultrasonic\7Seg_Display\Debouncer_v1_0\Debouncer_v1_0.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\EEPROM_v3_0.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\not_v1_0</v>
 <v>Project3_Ultrasonic\7Seg_Display\not_v1_0\not_v1_0.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\OpAmp_v1_90.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\PGA_v2_0.pdf</v>
-<v>Project3_Ultrasonic\7Seg_Display\Timer_v2_80.pdf</v>
+<v>Project3_Ultrasonic\7Seg_Display\Timer_v2_80</v>
+<v>Project3_Ultrasonic\7Seg_Display\Timer_v2_80\Timer_v2_80.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\UART_v2_50.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\VDAC8_v1_90.pdf</v>
 </ExpandedNodeIds>
@@ -318,19 +276,22 @@
 <v>Project3_Ultrasonic\7Seg_Display\Count7_v1_0.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\cy_clock_v2_20</v>
 <v>Project3_Ultrasonic\7Seg_Display\cy_clock_v2_20\cy_clock_v2_20.pdf</v>
+<v>Project3_Ultrasonic\7Seg_Display\cy_constant_v1_0.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\cy_isr_v1_70</v>
 <v>Project3_Ultrasonic\7Seg_Display\cy_isr_v1_70\cy_isr_v1_70.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\cy_pins_v2_20</v>
 <v>Project3_Ultrasonic\7Seg_Display\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\cy_vref_v1_70.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\CyControlReg_v1_80.pdf</v>
-<v>Project3_Ultrasonic\7Seg_Display\Debouncer_v1_0.pdf</v>
+<v>Project3_Ultrasonic\7Seg_Display\Debouncer_v1_0</v>
+<v>Project3_Ultrasonic\7Seg_Display\Debouncer_v1_0\Debouncer_v1_0.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\EEPROM_v3_0.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\not_v1_0</v>
 <v>Project3_Ultrasonic\7Seg_Display\not_v1_0\not_v1_0.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\OpAmp_v1_90.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\PGA_v2_0.pdf</v>
-<v>Project3_Ultrasonic\7Seg_Display\Timer_v2_80.pdf</v>
+<v>Project3_Ultrasonic\7Seg_Display\Timer_v2_80</v>
+<v>Project3_Ultrasonic\7Seg_Display\Timer_v2_80\Timer_v2_80.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\UART_v2_50.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\VDAC8_v1_90.pdf</v>
 </VisibleNodeIds>
@@ -347,7 +308,6 @@
 </CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997>
 <Unloaded />
 <OpenDocs>
-<name v=".\7Seg_Display.cydsn\main.c" />
 <name v=".\7Seg_Display.cydsn\TopDesign\TopDesign.cysch" />
 <name v=".\7Seg_Display.cydsn\7Seg_Display.cydwr" />
 </OpenDocs>
@@ -357,7 +317,7 @@
   Copyright (c) 2001-2016 Actipro Software LLC.  All rights reserved.
   http://www.actiprosoftware.com
 
---><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="2130, 1063" SelectedTabbedMdiWindow="08e6e103-dee7-46ce-b0ac-ed747449f220"><DocumentWindow Key="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\main.c" Guid="08e6e103-dee7-46ce-b0ac-ed747449f220" /><DocumentWindow Key="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\TopDesign\TopDesign.cysch" Guid="4dbf9801-a0d9-4e17-9256-938c9111f341" /><DocumentWindow Key="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\7Seg_Display.cydwr" Guid="279ec16b-817d-466e-ae82-2c328681f1aa" /><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="4c5062ca-7c5c-4036-9339-a2d340a00f95" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
+--><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="2130, 1063" SelectedTabbedMdiWindow="4dbf9801-a0d9-4e17-9256-938c9111f341"><DocumentWindow Key="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\TopDesign\TopDesign.cysch" Guid="4dbf9801-a0d9-4e17-9256-938c9111f341" /><DocumentWindow Key="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\7Seg_Display.cydwr" Guid="279ec16b-817d-466e-ae82-2c328681f1aa" /><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="4c5062ca-7c5c-4036-9339-a2d340a00f95" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
 <config v="" />
 <AutoUpdate v="true" />
 </CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>
