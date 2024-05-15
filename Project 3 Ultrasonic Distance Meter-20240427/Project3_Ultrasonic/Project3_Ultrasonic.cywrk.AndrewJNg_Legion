@@ -61,7 +61,6 @@
 <v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Button_S3_Top</v>
 <v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Button_S4_Right</v>
 <v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Button_S5_Select</v>
-<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Clock_1</v>
 <v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Clock_2</v>
 <v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Clock_3</v>
 <v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\Clock_4</v>
@@ -104,6 +103,7 @@
 <v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\UART_1</v>
 <v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\UART_1_IntClock</v>
 <v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\VDAC8_1</v>
+<v>Project3_Ultrasonic\7Seg_Display\Generated_Source\PSoC5\cycodeshareexport.ld</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 <CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
@@ -133,7 +133,6 @@
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Button_S3_Top.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Button_S4_Right.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Button_S5_Select.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_1.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_2.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_3.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_4.lst</v>
@@ -215,7 +214,6 @@
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Button_S3_Top.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Button_S4_Right.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Button_S5_Select.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_1.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_2.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_3.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_4.lst</v>
@@ -271,6 +269,7 @@
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\timer_clock.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\TX1_Ultra.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\TX2_Ultra.lst</v>
+<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\UART_1.lst</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </TreeStates>
@@ -286,8 +285,7 @@
 <v>Project3_Ultrasonic\7Seg_Display\CY8C58LP Family Datasheet</v>
 <v>Project3_Ultrasonic\7Seg_Display\System Reference Guides</v>
 <v>Project3_Ultrasonic\7Seg_Display\System Reference Guides\cy_boot_v6_0</v>
-<v>Project3_Ultrasonic\7Seg_Display\and_v1_0</v>
-<v>Project3_Ultrasonic\7Seg_Display\and_v1_0\and_v1_0.pdf</v>
+<v>Project3_Ultrasonic\7Seg_Display\and_v1_0.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\Comp_v2_0.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\Count7_v1_0.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\cy_clock_v2_20</v>
@@ -315,8 +313,7 @@
 <v>Project3_Ultrasonic\7Seg_Display\CY8C58LP Family Datasheet</v>
 <v>Project3_Ultrasonic\7Seg_Display\System Reference Guides</v>
 <v>Project3_Ultrasonic\7Seg_Display\System Reference Guides\cy_boot_v6_0</v>
-<v>Project3_Ultrasonic\7Seg_Display\and_v1_0</v>
-<v>Project3_Ultrasonic\7Seg_Display\and_v1_0\and_v1_0.pdf</v>
+<v>Project3_Ultrasonic\7Seg_Display\and_v1_0.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\Comp_v2_0.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\Count7_v1_0.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\cy_clock_v2_20</v>

@@ -1,5 +1,5 @@
 -- Project:   7Seg_Display
--- Generated: 05/15/2024 11:41:31
+-- Generated: 05/15/2024 12:16:42
 -- PSoC Creator  4.4
 
 ENTITY \7Seg_Display\ IS
@@ -79,15 +79,10 @@ ARCHITECTURE __DEFAULT__ OF \7Seg_Display\ IS
     SIGNAL Net_10_local : bit;
     SIGNAL Net_138 : bit;
     SIGNAL Net_205 : bit;
-    SIGNAL Net_233 : bit;
-    ATTRIBUTE global_signal OF Net_233 : SIGNAL IS true;
-    SIGNAL Net_233_local : bit;
     SIGNAL Net_260 : bit;
-    SIGNAL Net_297 : bit;
     SIGNAL Net_369 : bit;
     SIGNAL Net_382 : bit;
     SIGNAL Net_386 : bit;
-    SIGNAL Net_395 : bit;
     SIGNAL Net_417_0 : bit;
     SIGNAL Net_417_1 : bit;
     SIGNAL Net_417_2 : bit;
@@ -97,8 +92,6 @@ ARCHITECTURE __DEFAULT__ OF \7Seg_Display\ IS
     SIGNAL Net_417_6 : bit;
     SIGNAL Net_474 : bit;
     SIGNAL Net_489 : bit;
-    ATTRIBUTE global_signal OF Net_489 : SIGNAL IS true;
-    SIGNAL Net_489_local : bit;
     SIGNAL Net_491 : bit;
     SIGNAL Net_492 : bit;
     ATTRIBUTE udbclken_assigned OF Net_492 : SIGNAL IS "True";
@@ -106,6 +99,9 @@ ARCHITECTURE __DEFAULT__ OF \7Seg_Display\ IS
     SIGNAL Net_492_local : bit;
     SIGNAL Net_493 : bit;
     SIGNAL Net_502 : bit;
+    SIGNAL Net_513 : bit;
+    ATTRIBUTE global_signal OF Net_513 : SIGNAL IS true;
+    SIGNAL Net_513_local : bit;
     SIGNAL Net_83 : bit;
     ATTRIBUTE global_signal OF Net_83 : SIGNAL IS true;
     SIGNAL Net_83_local : bit;
@@ -276,12 +272,11 @@ ARCHITECTURE __DEFAULT__ OF \7Seg_Display\ IS
     ATTRIBUTE lib_model OF \UART_1:BUART:rx_postpoll\ : LABEL IS "macrocell6";
     ATTRIBUTE lib_model OF \UART_1:BUART:rx_status_4\ : LABEL IS "macrocell7";
     ATTRIBUTE lib_model OF \UART_1:BUART:rx_status_5\ : LABEL IS "macrocell8";
-    ATTRIBUTE lib_model OF Net_297 : LABEL IS "macrocell9";
-    ATTRIBUTE lib_model OF Net_395 : LABEL IS "macrocell10";
-    ATTRIBUTE lib_model OF \Timer_1:TimerUDB:capt_fifo_load\ : LABEL IS "macrocell11";
-    ATTRIBUTE lib_model OF \Timer_1:TimerUDB:status_tc\ : LABEL IS "macrocell12";
-    ATTRIBUTE lib_model OF Net_474 : LABEL IS "macrocell13";
-    ATTRIBUTE lib_model OF Net_205 : LABEL IS "macrocell14";
+    ATTRIBUTE lib_model OF Net_489 : LABEL IS "macrocell9";
+    ATTRIBUTE lib_model OF \Timer_1:TimerUDB:capt_fifo_load\ : LABEL IS "macrocell10";
+    ATTRIBUTE lib_model OF \Timer_1:TimerUDB:status_tc\ : LABEL IS "macrocell11";
+    ATTRIBUTE lib_model OF Net_474 : LABEL IS "macrocell12";
+    ATTRIBUTE lib_model OF Net_205 : LABEL IS "macrocell13";
     ATTRIBUTE Location OF \PGA_1:SC\ : LABEL IS "F(SC,2)";
     ATTRIBUTE lib_model OF \UART_1:BUART:sTX:TxShifter:u0\ : LABEL IS "datapathcell1";
     ATTRIBUTE lib_model OF \UART_1:BUART:sTX:sCLOCK:TxBitClkGen\ : LABEL IS "datapathcell2";
@@ -296,32 +291,32 @@ ARCHITECTURE __DEFAULT__ OF \7Seg_Display\ IS
     ATTRIBUTE lib_model OF \Timer_1:TimerUDB:sT16:timerdp:u1\ : LABEL IS "datapathcell5";
     ATTRIBUTE Location OF \Comp_1:ctComp\ : LABEL IS "F(Comparator,0)";
     ATTRIBUTE Location OF \Opamp_1:ABuf\ : LABEL IS "F(OpAmp,2)";
-    ATTRIBUTE lib_model OF \UART_1:BUART:txn\ : LABEL IS "macrocell15";
-    ATTRIBUTE lib_model OF \UART_1:BUART:tx_state_1\ : LABEL IS "macrocell16";
-    ATTRIBUTE lib_model OF \UART_1:BUART:tx_state_0\ : LABEL IS "macrocell17";
-    ATTRIBUTE lib_model OF \UART_1:BUART:tx_state_2\ : LABEL IS "macrocell18";
-    ATTRIBUTE lib_model OF \UART_1:BUART:tx_bitclk\ : LABEL IS "macrocell19";
-    ATTRIBUTE lib_model OF \UART_1:BUART:tx_ctrl_mark_last\ : LABEL IS "macrocell20";
+    ATTRIBUTE lib_model OF \UART_1:BUART:txn\ : LABEL IS "macrocell14";
+    ATTRIBUTE lib_model OF \UART_1:BUART:tx_state_1\ : LABEL IS "macrocell15";
+    ATTRIBUTE lib_model OF \UART_1:BUART:tx_state_0\ : LABEL IS "macrocell16";
+    ATTRIBUTE lib_model OF \UART_1:BUART:tx_state_2\ : LABEL IS "macrocell17";
+    ATTRIBUTE lib_model OF \UART_1:BUART:tx_bitclk\ : LABEL IS "macrocell18";
+    ATTRIBUTE lib_model OF \UART_1:BUART:tx_ctrl_mark_last\ : LABEL IS "macrocell19";
     ATTRIBUTE lib_model OF Dedicated_Output : LABEL IS "iocell29";
     ATTRIBUTE Location OF Dedicated_Output : LABEL IS "P0[0]";
-    ATTRIBUTE lib_model OF \UART_1:BUART:rx_state_0\ : LABEL IS "macrocell21";
-    ATTRIBUTE lib_model OF \UART_1:BUART:rx_load_fifo\ : LABEL IS "macrocell22";
-    ATTRIBUTE lib_model OF \UART_1:BUART:rx_state_3\ : LABEL IS "macrocell23";
-    ATTRIBUTE lib_model OF \UART_1:BUART:rx_state_2\ : LABEL IS "macrocell24";
-    ATTRIBUTE lib_model OF \UART_1:BUART:rx_bitclk_enable\ : LABEL IS "macrocell25";
-    ATTRIBUTE lib_model OF \UART_1:BUART:rx_state_stop1_reg\ : LABEL IS "macrocell26";
-    ATTRIBUTE lib_model OF \UART_1:BUART:pollcount_1\ : LABEL IS "macrocell27";
-    ATTRIBUTE lib_model OF \UART_1:BUART:pollcount_0\ : LABEL IS "macrocell28";
-    ATTRIBUTE lib_model OF \UART_1:BUART:rx_status_3\ : LABEL IS "macrocell29";
-    ATTRIBUTE lib_model OF \UART_1:BUART:rx_last\ : LABEL IS "macrocell30";
-    ATTRIBUTE lib_model OF \Timer_1:TimerUDB:capture_last\ : LABEL IS "macrocell31";
-    ATTRIBUTE lib_model OF \Timer_1:TimerUDB:run_mode\ : LABEL IS "macrocell32";
-    ATTRIBUTE lib_model OF \Timer_1:TimerUDB:int_capt_count_1\ : LABEL IS "macrocell33";
-    ATTRIBUTE lib_model OF \Timer_1:TimerUDB:int_capt_count_0\ : LABEL IS "macrocell34";
-    ATTRIBUTE lib_model OF \Timer_1:TimerUDB:capt_int_temp\ : LABEL IS "macrocell35";
-    ATTRIBUTE lib_model OF \Timer_1:TimerUDB:timer_enable\ : LABEL IS "macrocell36";
-    ATTRIBUTE lib_model OF \Timer_1:TimerUDB:trig_disable\ : LABEL IS "macrocell37";
-    ATTRIBUTE lib_model OF Net_493 : LABEL IS "macrocell38";
+    ATTRIBUTE lib_model OF \UART_1:BUART:rx_state_0\ : LABEL IS "macrocell20";
+    ATTRIBUTE lib_model OF \UART_1:BUART:rx_load_fifo\ : LABEL IS "macrocell21";
+    ATTRIBUTE lib_model OF \UART_1:BUART:rx_state_3\ : LABEL IS "macrocell22";
+    ATTRIBUTE lib_model OF \UART_1:BUART:rx_state_2\ : LABEL IS "macrocell23";
+    ATTRIBUTE lib_model OF \UART_1:BUART:rx_bitclk_enable\ : LABEL IS "macrocell24";
+    ATTRIBUTE lib_model OF \UART_1:BUART:rx_state_stop1_reg\ : LABEL IS "macrocell25";
+    ATTRIBUTE lib_model OF \UART_1:BUART:pollcount_1\ : LABEL IS "macrocell26";
+    ATTRIBUTE lib_model OF \UART_1:BUART:pollcount_0\ : LABEL IS "macrocell27";
+    ATTRIBUTE lib_model OF \UART_1:BUART:rx_status_3\ : LABEL IS "macrocell28";
+    ATTRIBUTE lib_model OF \UART_1:BUART:rx_last\ : LABEL IS "macrocell29";
+    ATTRIBUTE lib_model OF \Timer_1:TimerUDB:capture_last\ : LABEL IS "macrocell30";
+    ATTRIBUTE lib_model OF \Timer_1:TimerUDB:run_mode\ : LABEL IS "macrocell31";
+    ATTRIBUTE lib_model OF \Timer_1:TimerUDB:int_capt_count_1\ : LABEL IS "macrocell32";
+    ATTRIBUTE lib_model OF \Timer_1:TimerUDB:int_capt_count_0\ : LABEL IS "macrocell33";
+    ATTRIBUTE lib_model OF \Timer_1:TimerUDB:capt_int_temp\ : LABEL IS "macrocell34";
+    ATTRIBUTE lib_model OF \Timer_1:TimerUDB:timer_enable\ : LABEL IS "macrocell35";
+    ATTRIBUTE lib_model OF \Timer_1:TimerUDB:trig_disable\ : LABEL IS "macrocell36";
+    ATTRIBUTE lib_model OF Net_493 : LABEL IS "macrocell37";
     COMPONENT abufcell
     END COMPONENT;
     COMPONENT clockblockcell
@@ -697,18 +692,16 @@ BEGIN
             dsi_glb_div => open,
             dclk_glb_0 => Net_10,
             dclk_0 => Net_10_local,
-            dclk_glb_1 => Net_233,
-            dclk_1 => Net_233_local,
-            dclk_glb_2 => \UART_1:Net_9\,
-            dclk_2 => \UART_1:Net_9_local\,
-            dclk_glb_3 => Net_489,
-            dclk_3 => Net_489_local,
-            dclk_glb_4 => Net_83,
-            dclk_4 => Net_83_local,
-            dclk_glb_5 => Net_492,
-            dclk_5 => Net_492_local,
-            dclk_glb_6 => Net_92,
-            dclk_6 => Net_92_local);
+            dclk_glb_1 => \UART_1:Net_9\,
+            dclk_1 => \UART_1:Net_9_local\,
+            dclk_glb_2 => Net_513,
+            dclk_2 => Net_513_local,
+            dclk_glb_3 => Net_83,
+            dclk_3 => Net_83_local,
+            dclk_glb_4 => Net_492,
+            dclk_4 => Net_492_local,
+            dclk_glb_5 => Net_92,
+            dclk_5 => Net_92_local);
 
     Dis_A:logicalport
         GENERIC MAP(
@@ -2873,7 +2866,7 @@ BEGIN
         PORT MAP(
             pa_out => LED3_Green(0)__PA,
             oe => open,
-            pin_input => Net_297,
+            pin_input => Net_99,
             pad_out => LED3_Green(0)_PAD,
             pad_in => LED3_Green(0)_PAD,
             in_clock => open,
@@ -3331,23 +3324,13 @@ BEGIN
             main_0 => \UART_1:BUART:rx_fifonotempty\,
             main_1 => \UART_1:BUART:rx_state_stop1_reg\);
 
-    Net_297:macrocell
-        GENERIC MAP(
-            eqn_main => "(!main_0 * main_1)",
-            regmode => 0,
-            clken_mode => 1)
-        PORT MAP(
-            q => Net_297,
-            main_0 => Net_260,
-            main_1 => Net_233_local);
-
-    Net_395:macrocell
+    Net_489:macrocell
         GENERIC MAP(
             eqn_main => "(!main_0)",
             regmode => 0,
             clken_mode => 1)
         PORT MAP(
-            q => Net_395,
+            q => Net_489,
             main_0 => Net_260);
 
     \Timer_1:TimerUDB:capt_fifo_load\:macrocell
@@ -3379,7 +3362,7 @@ BEGIN
         PORT MAP(
             q => Net_474,
             main_0 => Net_260,
-            main_1 => Net_489_local);
+            main_1 => Net_513_local);
 
     Net_205:macrocell
         GENERIC MAP(
@@ -3389,7 +3372,7 @@ BEGIN
         PORT MAP(
             q => Net_205,
             main_0 => Net_260,
-            main_1 => Net_489_local);
+            main_1 => Net_513_local);
 
     isr_2:interrupt
         GENERIC MAP(
@@ -3418,10 +3401,10 @@ BEGIN
             clken_mode => 1,
             reset_inv => '0')
         PORT MAP(
-            clock => Net_233,
+            clock => Net_513,
             reset => Net_502,
             load => open,
-            enable => Net_395,
+            enable => Net_489,
             count_6 => Net_417_6,
             count_5 => Net_417_5,
             count_4 => Net_417_4,
