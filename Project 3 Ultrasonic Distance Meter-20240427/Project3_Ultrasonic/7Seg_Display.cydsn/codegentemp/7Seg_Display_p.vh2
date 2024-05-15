@@ -1,5 +1,5 @@
 -- Project:   7Seg_Display
--- Generated: 05/15/2024 11:03:25
+-- Generated: 05/15/2024 11:41:31
 -- PSoC Creator  4.4
 
 ENTITY \7Seg_Display\ IS
@@ -697,12 +697,12 @@ BEGIN
             dsi_glb_div => open,
             dclk_glb_0 => Net_10,
             dclk_0 => Net_10_local,
-            dclk_glb_1 => \UART_1:Net_9\,
-            dclk_1 => \UART_1:Net_9_local\,
-            dclk_glb_2 => Net_489,
-            dclk_2 => Net_489_local,
-            dclk_glb_3 => Net_233,
-            dclk_3 => Net_233_local,
+            dclk_glb_1 => Net_233,
+            dclk_1 => Net_233_local,
+            dclk_glb_2 => \UART_1:Net_9\,
+            dclk_2 => \UART_1:Net_9_local\,
+            dclk_glb_3 => Net_489,
+            dclk_3 => Net_489_local,
             dclk_glb_4 => Net_83,
             dclk_4 => Net_83_local,
             dclk_glb_5 => Net_492,

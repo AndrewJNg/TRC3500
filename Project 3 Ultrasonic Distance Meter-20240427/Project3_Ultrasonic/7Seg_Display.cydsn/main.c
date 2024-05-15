@@ -35,7 +35,7 @@ CY_ISR(MyCustomISR1) // Interrupt counter
     // Launch 1 ultrasonic cycle
     Control_Reg_1_Write(1); // Yes so reset counter to do more pulses
     Timer_1_Start();
-    //CyDelay(10);
+    CyDelayUs(10);
     Control_Reg_1_Write(0);
     
     //UART_1_PutString("Int1\n");
@@ -146,9 +146,9 @@ int main(void)
         //CyDelay(1000);
         //display_num(counter);
         
-        value =  time_passed_step/100; //in ms
+        value =  ((double)time_passed_step/10000) - 0.2365; //in ms
         distance = (34*value)/2;
-        display_num(time_passed_step);
+        display_num(value);
         
         //UART_1_WriteTxData(0x0d); //new line
         //CyDelay(10);
