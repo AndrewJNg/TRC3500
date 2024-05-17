@@ -1,5 +1,5 @@
 -- Project:   7Seg_Display
--- Generated: 05/15/2024 13:43:44
+-- Generated: 05/17/2024 09:58:25
 -- PSoC Creator  4.4
 
 ENTITY \7Seg_Display\ IS
@@ -95,31 +95,28 @@ ARCHITECTURE __DEFAULT__ OF \7Seg_Display\ IS
     SIGNAL Net_474 : bit;
     SIGNAL Net_489 : bit;
     SIGNAL Net_491 : bit;
-    SIGNAL Net_492 : bit;
-    ATTRIBUTE udbclken_assigned OF Net_492 : SIGNAL IS "True";
-    ATTRIBUTE global_signal OF Net_492 : SIGNAL IS true;
-    SIGNAL Net_492_local : bit;
     SIGNAL Net_493 : bit;
     SIGNAL Net_502 : bit;
     SIGNAL Net_517 : bit;
     ATTRIBUTE global_signal OF Net_517 : SIGNAL IS true;
     SIGNAL Net_517_local : bit;
-    SIGNAL Net_520 : bit;
-    ATTRIBUTE udbclken_assigned OF Net_520 : SIGNAL IS "True";
-    ATTRIBUTE global_signal OF Net_520 : SIGNAL IS true;
-    SIGNAL Net_520_local : bit;
+    SIGNAL Net_547 : bit;
+    SIGNAL Net_553 : bit;
+    SIGNAL Net_559 : bit;
+    SIGNAL Net_565 : bit;
+    SIGNAL Net_574 : bit;
     SIGNAL Net_83 : bit;
     ATTRIBUTE global_signal OF Net_83 : SIGNAL IS true;
     SIGNAL Net_83_local : bit;
-    SIGNAL Net_92 : bit;
-    ATTRIBUTE global_signal OF Net_92 : SIGNAL IS true;
-    SIGNAL Net_92_local : bit;
-    SIGNAL Net_99 : bit;
     SIGNAL OP_Out(0)__PA : bit;
     SIGNAL OP_Out_1(0)__PA : bit;
     SIGNAL Rec1(0)__PA : bit;
     SIGNAL Rec2(0)__PA : bit;
     SIGNAL Rx_1(0)__PA : bit;
+    SIGNAL System_clk : bit;
+    ATTRIBUTE udbclken_assigned OF System_clk : SIGNAL IS "True";
+    ATTRIBUTE global_signal OF System_clk : SIGNAL IS true;
+    SIGNAL System_clk_local : bit;
     SIGNAL TX1_Ultra(0)__PA : bit;
     SIGNAL TX2_Ultra(0)__PA : bit;
     SIGNAL Tx_1(0)__PA : bit;
@@ -382,7 +379,8 @@ ARCHITECTURE __DEFAULT__ OF \7Seg_Display\ IS
     ATTRIBUTE lib_model OF \Timer_1:TimerUDB:capt_int_temp\ : LABEL IS "macrocell35";
     ATTRIBUTE lib_model OF \Timer_1:TimerUDB:timer_enable\ : LABEL IS "macrocell36";
     ATTRIBUTE lib_model OF \Timer_1:TimerUDB:trig_disable\ : LABEL IS "macrocell37";
-    ATTRIBUTE lib_model OF Net_493 : LABEL IS "macrocell38";
+    ATTRIBUTE lib_model OF Net_574 : LABEL IS "macrocell38";
+    ATTRIBUTE lib_model OF Net_493 : LABEL IS "macrocell39";
     COMPONENT abufcell
     END COMPONENT;
     COMPONENT clockblockcell
@@ -762,14 +760,10 @@ BEGIN
             dclk_1 => \UART_1:Net_9_local\,
             dclk_glb_2 => Net_517,
             dclk_2 => Net_517_local,
-            dclk_glb_3 => Net_520,
-            dclk_3 => Net_520_local,
+            dclk_glb_3 => System_clk,
+            dclk_3 => System_clk_local,
             dclk_glb_4 => Net_83,
-            dclk_4 => Net_83_local,
-            dclk_glb_5 => Net_492,
-            dclk_5 => Net_492_local,
-            dclk_glb_6 => Net_92,
-            dclk_6 => Net_92_local);
+            dclk_4 => Net_83_local);
 
     Dis_A:logicalport
         GENERIC MAP(
@@ -2022,7 +2016,7 @@ BEGIN
         PORT MAP(
             pa_out => Button_S4_Right(0)__PA,
             oe => open,
-            fb => Net_99,
+            fb => Net_565,
             pad_in => Button_S4_Right(0)_PAD,
             in_clock => open,
             in_clock_en => '1',
@@ -2204,6 +2198,7 @@ BEGIN
         PORT MAP(
             pa_out => Button_S2_Left(0)__PA,
             oe => open,
+            fb => Net_553,
             pad_in => Button_S2_Left(0)_PAD,
             in_clock => open,
             in_clock_en => '1',
@@ -2294,6 +2289,7 @@ BEGIN
         PORT MAP(
             pa_out => Button_S1_Bottom(0)__PA,
             oe => open,
+            fb => Net_547,
             pad_in => Button_S1_Bottom(0)_PAD,
             in_clock => open,
             in_clock_en => '1',
@@ -2384,6 +2380,7 @@ BEGIN
         PORT MAP(
             pa_out => Button_S3_Top(0)__PA,
             oe => open,
+            fb => Net_559,
             pad_in => Button_S3_Top(0)_PAD,
             in_clock => open,
             in_clock_en => '1',
@@ -2934,7 +2931,7 @@ BEGIN
         PORT MAP(
             pa_out => LED3_Green(0)__PA,
             oe => open,
-            pin_input => Net_99,
+            pin_input => Net_574,
             pad_out => LED3_Green(0)_PAD,
             pad_in => LED3_Green(0)_PAD,
             in_clock => open,
@@ -3544,10 +3541,10 @@ BEGIN
 
     isr_2:interrupt
         GENERIC MAP(
-            int_type => "10",
+            int_type => "00",
             is_nmi => 0)
         PORT MAP(
-            interrupt => Net_99,
+            interrupt => Net_574,
             clock => ClockBlock_BUS_CLK);
 
     isr_7Seg:interrupt
@@ -3778,7 +3775,7 @@ BEGIN
             clk_inv => '0',
             clken_mode => 1)
         PORT MAP(
-            clock => Net_520,
+            clock => System_clk,
             control_7 => \Timer_2:TimerUDB:control_7\,
             control_6 => \Timer_2:TimerUDB:control_6\,
             control_5 => \Timer_2:TimerUDB:control_5\,
@@ -3797,7 +3794,7 @@ BEGIN
             clk_inv => '0',
             clken_mode => 1)
         PORT MAP(
-            clock => Net_520,
+            clock => System_clk,
             status_6 => open,
             status_5 => open,
             status_4 => open,
@@ -3834,7 +3831,7 @@ BEGIN
             clk_inv => '0',
             clken_mode => 1)
         PORT MAP(
-            clock => Net_520,
+            clock => System_clk,
             cs_addr_1 => \Timer_2:TimerUDB:control_7\,
             cs_addr_0 => \Timer_2:TimerUDB:per_zero\,
             busclk => ClockBlock_BUS_CLK,
@@ -3880,7 +3877,7 @@ BEGIN
             clk_inv => '0',
             clken_mode => 1)
         PORT MAP(
-            clock => Net_520,
+            clock => System_clk,
             cs_addr_1 => \Timer_2:TimerUDB:control_7\,
             cs_addr_0 => \Timer_2:TimerUDB:per_zero\,
             busclk => ClockBlock_BUS_CLK,
@@ -3939,7 +3936,7 @@ BEGIN
             clk_inv => '0',
             clken_mode => 1)
         PORT MAP(
-            clock => Net_520,
+            clock => System_clk,
             cs_addr_1 => \Timer_2:TimerUDB:control_7\,
             cs_addr_0 => \Timer_2:TimerUDB:per_zero\,
             busclk => ClockBlock_BUS_CLK,
@@ -3998,7 +3995,7 @@ BEGIN
             clk_inv => '0',
             clken_mode => 1)
         PORT MAP(
-            clock => Net_520,
+            clock => System_clk,
             cs_addr_1 => \Timer_2:TimerUDB:control_7\,
             cs_addr_0 => \Timer_2:TimerUDB:per_zero\,
             z0_comb => \Timer_2:TimerUDB:per_zero\,
@@ -4579,6 +4576,17 @@ BEGIN
             main_3 => \Timer_1:TimerUDB:per_zero\,
             main_4 => \Timer_1:TimerUDB:trig_disable\);
 
+    Net_574:macrocell
+        GENERIC MAP(
+            eqn_main => "(main_0)",
+            regmode => 1,
+            clk_inv => '0',
+            clken_mode => 1)
+        PORT MAP(
+            q => Net_574,
+            clock_0 => System_clk,
+            main_0 => Net_565);
+
     Net_493:macrocell
         GENERIC MAP(
             eqn_main => "(main_0)",
@@ -4587,7 +4595,7 @@ BEGIN
             clken_mode => 1)
         PORT MAP(
             q => Net_493,
-            clock_0 => Net_492,
+            clock_0 => System_clk,
             main_0 => Net_491);
 
 END __DEFAULT__;

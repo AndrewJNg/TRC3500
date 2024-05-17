@@ -1,5 +1,5 @@
 /*******************************************************************************
-* File Name: EEPROM_1.c
+* File Name: EEPROM.c
 * Version 3.0
 *
 *  Description:
@@ -12,11 +12,11 @@
 * the software package with which this file was provided.
 *******************************************************************************/
 
-#include "EEPROM_1.h"
+#include "EEPROM.h"
 
 
 /*******************************************************************************
-* Function Name: EEPROM_1_Enable
+* Function Name: EEPROM_Enable
 ********************************************************************************
 *
 * Summary:
@@ -30,7 +30,7 @@
 *  None
 *
 *******************************************************************************/
-void EEPROM_1_Enable(void) 
+void EEPROM_Enable(void) 
 {
     /* Read temperature value */
     (void)CySetTemp();
@@ -41,7 +41,7 @@ void EEPROM_1_Enable(void)
 
 
 /*******************************************************************************
-* Function Name: EEPROM_1_Start
+* Function Name: EEPROM_Start
 ********************************************************************************
 *
 * Summary:
@@ -54,14 +54,14 @@ void EEPROM_1_Enable(void)
 *  None
 *
 *******************************************************************************/
-void EEPROM_1_Start(void) 
+void EEPROM_Start(void) 
 {
-    EEPROM_1_Enable();
+    EEPROM_Enable();
 }
 
 
 /*******************************************************************************
-* Function Name: EEPROM_1_Stop
+* Function Name: EEPROM_Stop
 ********************************************************************************
 *
 * Summary:
@@ -74,7 +74,7 @@ void EEPROM_1_Start(void)
 *  None
 *
 *******************************************************************************/
-void EEPROM_1_Stop (void) 
+void EEPROM_Stop (void) 
 {
     /* Stop and power down EEPROM block */
     CyEEPROM_Stop();
@@ -82,13 +82,13 @@ void EEPROM_1_Stop (void)
 
 
 /*******************************************************************************
-* Function Name: EEPROM_1_WriteByte
+* Function Name: EEPROM_WriteByte
 ********************************************************************************
 *
 * Summary:
 *  Writes a byte of data to the EEPROM. This function blocks until
 *  the function is complete. For a reliable write procedure to occur you should
-*  call EEPROM_1_UpdateTemperature() function if the temperature of the
+*  call EEPROM_UpdateTemperature() function if the temperature of the
 *  silicon has been changed for more than 10C since the component was started.
 *
 * Parameters:
@@ -103,7 +103,7 @@ void EEPROM_1_Stop (void)
 *  CYRET_UNKNOWN, if there was an SPC error.
 *
 *******************************************************************************/
-cystatus EEPROM_1_WriteByte(uint8 dataByte, uint16 address) 
+cystatus EEPROM_WriteByte(uint8 dataByte, uint16 address) 
 {
     cystatus status;
     uint16 rowNumber;
@@ -118,7 +118,7 @@ cystatus EEPROM_1_WriteByte(uint8 dataByte, uint16 address)
         if(CYRET_SUCCESS == CySpcLock())
         {
             status = CySpcLoadMultiByte(CY_SPC_FIRST_EE_ARRAYID, byteNumber, &dataByte, \
-                                                                    EEPROM_1_SPC_BYTE_WRITE_SIZE);
+                                                                    EEPROM_SPC_BYTE_WRITE_SIZE);
             if (CYRET_STARTED == status)
             {
                 /* Plan for failure */
@@ -188,7 +188,7 @@ cystatus EEPROM_1_WriteByte(uint8 dataByte, uint16 address)
 
 
 /*******************************************************************************
-* Function Name: EEPROM_1_ReadByte
+* Function Name: EEPROM_ReadByte
 ********************************************************************************
 *
 * Summary:
@@ -205,7 +205,7 @@ cystatus EEPROM_1_WriteByte(uint8 dataByte, uint16 address)
 *  Data located at an address.
 *
 *******************************************************************************/
-uint8 EEPROM_1_ReadByte(uint16 address) 
+uint8 EEPROM_ReadByte(uint16 address) 
 {
     uint8 retByte;
     uint8 interruptState;
@@ -228,7 +228,7 @@ uint8 EEPROM_1_ReadByte(uint16 address)
 
 
 /*******************************************************************************
-* Function Name: EEPROM_1_UpdateTemperature
+* Function Name: EEPROM_UpdateTemperature
 ********************************************************************************
 *
 * Summary:
@@ -244,14 +244,14 @@ uint8 EEPROM_1_ReadByte(uint16 address)
 *  was detected.
 *
 *******************************************************************************/
-uint8 EEPROM_1_UpdateTemperature(void) 
+uint8 EEPROM_UpdateTemperature(void) 
 {
     return ((uint8)CySetTemp());
 }
 
 
 /*******************************************************************************
-* Function Name: EEPROM_1_EraseSector
+* Function Name: EEPROM_EraseSector
 ********************************************************************************
 *
 * Summary:
@@ -270,13 +270,13 @@ uint8 EEPROM_1_UpdateTemperature(void)
 *  CYRET_UNKNOWN, if there was an SPC error.
 *
 *******************************************************************************/
-cystatus EEPROM_1_EraseSector(uint8 sectorNumber) 
+cystatus EEPROM_EraseSector(uint8 sectorNumber) 
 {
     cystatus status;
     
     CySpcStart();
 
-    if(sectorNumber < (uint8) EEPROM_1_SECTORS_NUMBER)
+    if(sectorNumber < (uint8) EEPROM_SECTORS_NUMBER)
     {
         /* See if we can get SPC. */
         if(CySpcLock() == CYRET_SUCCESS)
@@ -320,7 +320,7 @@ cystatus EEPROM_1_EraseSector(uint8 sectorNumber)
 
 
 /*******************************************************************************
-* Function Name: EEPROM_1_Write
+* Function Name: EEPROM_Write
 ********************************************************************************
 *
 * Summary:
@@ -328,7 +328,7 @@ cystatus EEPROM_1_EraseSector(uint8 sectorNumber)
 *  the write operation is complete. Compared to functions that write one byte,
 *  this function allows writing a whole row (16 bytes) at a time. For
 *  a reliable write procedure to occur you should call the
-*  EEPROM_1_UpdateTemperature() function if the temperature of the
+*  EEPROM_UpdateTemperature() function if the temperature of the
 *  silicon has changed for more than 10C since component was started.
 *
 * Parameters:
@@ -342,7 +342,7 @@ cystatus EEPROM_1_EraseSector(uint8 sectorNumber)
 *  CYRET_UNKNOWN, if there was an SPC error.
 *
 *******************************************************************************/
-cystatus EEPROM_1_Write(const uint8 * rowData, uint8 rowNumber) 
+cystatus EEPROM_Write(const uint8 * rowData, uint8 rowNumber) 
 {
     cystatus status;
     
@@ -419,19 +419,19 @@ cystatus EEPROM_1_Write(const uint8 * rowData, uint8 rowNumber)
 
 
 /*******************************************************************************
-* Function Name: EEPROM_1_StartWrite
+* Function Name: EEPROM_StartWrite
 ********************************************************************************
 *
 * Summary:
 *  Starts a write of a row (16 bytes) of data to the EEPROM.
 *  This function does not block. The function returns once the SPC has begun
 *  writing the data. This function must be used in combination with
-*  EEPROM_1_Query(). EEPROM_1_Query() must be called
+*  EEPROM_Query(). EEPROM_Query() must be called
 *  until it returns a status other than CYRET_STARTED. That indicates that the
-*  write has completed. Until EEPROM_1_Query() detects that
+*  write has completed. Until EEPROM_Query() detects that
 *  the write is complete, the SPC is marked as locked to prevent another
 *  SPC operation from being performed. For a reliable write procedure to occur
-*  you should call EEPROM_1_UpdateTemperature() API if the temperature
+*  you should call EEPROM_UpdateTemperature() API if the temperature
 *  of the silicon has changed for more than 10C since component was started.
 *
 * Parameters:
@@ -451,7 +451,7 @@ cystatus EEPROM_1_Write(const uint8 * rowData, uint8 rowNumber)
 *  unexpected behavior.
 *
 *******************************************************************************/
-cystatus EEPROM_1_StartWrite(const uint8 * rowData, uint8 rowNumber) \
+cystatus EEPROM_StartWrite(const uint8 * rowData, uint8 rowNumber) \
 
 {
     cystatus status;
@@ -514,16 +514,16 @@ cystatus EEPROM_1_StartWrite(const uint8 * rowData, uint8 rowNumber) \
 
 
 /*******************************************************************************
-* Function Name: EEPROM_1_StartErase
+* Function Name: EEPROM_StartErase
 ********************************************************************************
 *
 * Summary:
 *  Starts the EEPROM sector erase. This function does not block.
 *  The function returns once the SPC has begun writing the data. This function
-*  must be used in combination with EEPROM_1_Query().
-*  EEPROM_1_Query() must be called until it returns a status
+*  must be used in combination with EEPROM_Query().
+*  EEPROM_Query() must be called until it returns a status
 *  other than CYRET_STARTED. That indicates the erase has been completed.
-*  Until EEPROM_1_Query() detects that the erase is
+*  Until EEPROM_Query() detects that the erase is
 *  complete, the SPC is marked as locked to prevent another SPC operation
 *  from being performed.
 *
@@ -543,7 +543,7 @@ cystatus EEPROM_1_StartWrite(const uint8 * rowData, uint8 rowNumber) \
 *  unexpected behavior.
 *
 *******************************************************************************/
-cystatus EEPROM_1_StartErase(uint8 sectorNumber) 
+cystatus EEPROM_StartErase(uint8 sectorNumber) 
 {
     cystatus status;
     
@@ -578,12 +578,12 @@ cystatus EEPROM_1_StartErase(uint8 sectorNumber)
 
 
 /*******************************************************************************
-* Function Name: EEPROM_1_Query
+* Function Name: EEPROM_Query
 ********************************************************************************
 *
 * Summary:
-*  Checks the status of an earlier call to EEPROM_1_StartWrite() or
-*  EEPROM_1_StartErase().
+*  Checks the status of an earlier call to EEPROM_StartWrite() or
+*  EEPROM_StartErase().
 *  This function must be called until it returns a value other than
 *  CYRET_STARTED. Once that occurs, the write or erase has been completed and
 *  the SPC is unlocked.
@@ -597,7 +597,7 @@ cystatus EEPROM_1_StartErase(uint8 sectorNumber)
 *  CYRET_UNKNOWN, if there was an SPC error.
 *
 *******************************************************************************/
-cystatus EEPROM_1_Query(void) 
+cystatus EEPROM_Query(void) 
 {
     cystatus status;
     
@@ -629,7 +629,7 @@ cystatus EEPROM_1_Query(void)
 
 
 /*******************************************************************************
-* Function Name: EEPROM_1_ByteWritePos
+* Function Name: EEPROM_ByteWritePos
 ********************************************************************************
 *
 * Summary:
@@ -648,7 +648,7 @@ cystatus EEPROM_1_Query(void)
 *  CYRET_UNKNOWN, if there was an SPC error.
 *
 *******************************************************************************/
-cystatus EEPROM_1_ByteWritePos(uint8 dataByte, uint8 rowNumber, uint8 byteNumber) \
+cystatus EEPROM_ByteWritePos(uint8 dataByte, uint8 rowNumber, uint8 byteNumber) \
 
 {
     cystatus status;
@@ -666,7 +666,7 @@ cystatus EEPROM_1_ByteWritePos(uint8 dataByte, uint8 rowNumber, uint8 byteNumber
 
             /* Command to load byte of data */
             if(CySpcLoadMultiByte(CY_SPC_FIRST_EE_ARRAYID, (uint16)byteNumber, &dataByte,\
-                                                                EEPROM_1_SPC_BYTE_WRITE_SIZE) == CYRET_STARTED)
+                                                                EEPROM_SPC_BYTE_WRITE_SIZE) == CYRET_STARTED)
             {
                 while(CY_SPC_BUSY)
                 {

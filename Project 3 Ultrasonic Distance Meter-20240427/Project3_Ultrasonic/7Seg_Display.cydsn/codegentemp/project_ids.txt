@@ -1,6 +1,6 @@
-D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\7Seg_Display.cyprj|41a78c0b-4e51-447d-b4e9-374b55d65dad
-D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|498e316b-e813-49e3-8c31-45033637cfef
-C:\Users\AndrewJNg_Legion\OneDrive - Monash University\Documents\PSoC Creator\4.4\Downloads ( 4.4).cylib\Downloads ( 4.4).cyprj|5d4a6b2e-04e0-4fbf-83d4-4240ef9ed400
-D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|885af359-68b7-47d8-b2c8-a0418f37538e
-D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|a99863e7-7392-4d7f-a097-995f08ab2eb5
-D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|cd04663b-5627-47e1-8f31-c649824951ff
+D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\7Seg_Display.cyprj|fe9551c1-559a-41d2-b26e-f36bd1abf87e
+D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|e644f417-93d6-4443-bbc8-2699436c343b
+C:\Users\AndrewJNg_Legion\OneDrive - Monash University\Documents\PSoC Creator\4.4\Downloads ( 4.4).cylib\Downloads ( 4.4).cyprj|8fc19eec-18e3-4d29-b9d6-f6fa32cd4d4f
+D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|515ea0cf-af5f-41fa-b814-6324f8a57515
+D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|d4f65ed8-46b4-44e0-a4cc-f17dfc82b91b
+D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|21794341-ec45-4586-9a04-69f3610f3b4f

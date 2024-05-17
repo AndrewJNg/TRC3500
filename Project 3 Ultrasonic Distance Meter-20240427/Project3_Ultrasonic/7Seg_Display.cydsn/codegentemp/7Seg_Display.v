@@ -1,6 +1,6 @@
 // ======================================================================
 // 7Seg_Display.v generated from TopDesign.cysch
-// 05/15/2024 at 13:43
+// 05/17/2024 at 09:58
 // This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 // ======================================================================
 
@@ -144,6 +144,19 @@
 `define CYDEV_CHIP_FAMILY_USED 3
 `define CYDEV_CHIP_MEMBER_USED 2
 `define CYDEV_CHIP_REVISION_USED 0
+// Component: Debouncer_v1_0
+`ifdef CY_BLK_DIR
+`undef CY_BLK_DIR
+`endif
+
+`ifdef WARP
+`define CY_BLK_DIR "D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\Debouncer_v1_0"
+`include "D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\Debouncer_v1_0\Debouncer_v1_0.v"
+`else
+`define CY_BLK_DIR "D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\Debouncer_v1_0"
+`include "D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\Debouncer_v1_0\Debouncer_v1_0.v"
+`endif
+
 // Component: Count7_v1_0
 `ifdef CY_BLK_DIR
 `undef CY_BLK_DIR
@@ -710,33 +723,28 @@ endmodule
 `include "D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\and_v1_0\and_v1_0.v"
 `endif
 
-// Component: Debouncer_v1_0
-`ifdef CY_BLK_DIR
-`undef CY_BLK_DIR
-`endif
-
-`ifdef WARP
-`define CY_BLK_DIR "D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\Debouncer_v1_0"
-`include "D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\Debouncer_v1_0\Debouncer_v1_0.v"
-`else
-`define CY_BLK_DIR "D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\Debouncer_v1_0"
-`include "D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\Debouncer_v1_0\Debouncer_v1_0.v"
-`endif
-
 // top
 module top ;
 
+          wire  Net_572;
+          wire  Net_571;
+          wire  Net_570;
+          wire  Net_579;
+          wire  Net_578;
+          wire  Net_577;
+          wire  Net_563;
+          wire  Net_562;
+          wire  Net_561;
+          wire  Net_560;
     electrical  Net_541;
-          wire  Net_500;
-          wire  Net_496;
-          wire  Net_494;
-          wire  Net_495;
-          wire  Net_492;
+          wire  Net_551;
+          wire  Net_550;
+          wire  Net_549;
+          wire  Net_548;
           wire  Net_512;
     electrical  Net_408;
     electrical  Net_407;
           wire  Net_409;
-          wire  Net_493;
           wire  Net_474;
           wire  Net_503;
           wire  Net_414;
@@ -758,6 +766,7 @@ module top ;
           wire  Net_525;
           wire  Net_524;
           wire  Net_523;
+          wire  Net_539;
           wire  Net_521;
           wire  Net_519;
           wire  Net_518;
@@ -772,16 +781,18 @@ module top ;
           wire  Net_453;
           wire  Net_452;
           wire  Net_451;
-          wire  Net_119;
-          wire  Net_464;
-          wire  Net_491;
+          wire  Net_559;
+          wire  Net_547;
           wire  Net_260;
           wire  Net_418;
+          wire  System_clk;
           wire [6:0] Net_417;
           wire  Net_90;
-          wire  Net_83;
-          wire  Net_96;
-          wire  Net_92;
+          wire  Net_557;
+          wire  Net_556;
+          wire  Net_555;
+          wire  Net_554;
+          wire  Net_553;
     electrical  Net_33;
     electrical  Net_34;
     electrical  Net_35;
@@ -794,8 +805,11 @@ module top ;
     electrical  Net_39;
     electrical  Net_38;
     electrical  Net_71;
-          wire  Net_539;
-          wire  Net_520;
+          wire  Net_83;
+          wire  Net_565;
+          wire  Net_491;
+          wire  Net_493;
+          wire  Net_574;
           wire  Net_369;
           wire  Net_489;
           wire  Net_517;
@@ -809,8 +823,6 @@ module top ;
     electrical  Net_139;
     electrical  Net_11;
     electrical  Net_372;
-          wire  Net_120;
-          wire  Net_99;
 
 	wire [0:0] tmpOE__Dis_A_net;
 	wire [0:0] tmpFB_0__Dis_A_net;
@@ -1724,23 +1736,23 @@ module top ;
 
 	assign tmpOE__Dis_D4_net = (`CYDEV_CHIP_MEMBER_USED == `CYDEV_CHIP_MEMBER_3A && `CYDEV_CHIP_REVISION_USED < `CYDEV_CHIP_REVISION_3A_ES3) ? ~{1'b1} : {1'b1};
 
-
-	cy_clock_v1_0
-		#(.id("fecf2043-6d49-42fd-8232-fd8ca109feba"),
-		  .source_clock_id(""),
-		  .divisor(0),
-		  .period("10000000000000"),
-		  .is_direct(0),
-		  .is_digital(1))
-		Clock_2
-		 (.clock_out(Net_92));
-
+    Debouncer_v1_0 Debouncer_2 (
+        .clock(System_clk),
+        .d(Net_553),
+        .either(Net_554),
+        .neg(Net_555),
+        .pos(Net_556),
+        .q(Net_557));
+    defparam Debouncer_2.EitherEdgeDetect = 0;
+    defparam Debouncer_2.NegEdgeDetect = 0;
+    defparam Debouncer_2.PosEdgeDetect = 1;
+    defparam Debouncer_2.SignalWidth = 1;
 
 
 	cy_isr_v1_0
-		#(.int_type(2'b10))
+		#(.int_type(2'b00))
 		isr_2
-		 (.int_signal(Net_99));
+		 (.int_signal(Net_574));
 
 
 	wire [0:0] tmpOE__OP_Out_net;
@@ -1909,7 +1921,7 @@ module top ;
 		Button_S4_Right
 		 (.oe(tmpOE__Button_S4_Right_net),
 		  .y({1'b0}),
-		  .fb({Net_99}),
+		  .fb({Net_565}),
 		  .io({tmpIO_0__Button_S4_Right_net[0:0]}),
 		  .siovref(tmpSIOVREF__Button_S4_Right_net),
 		  .interrupt({tmpINTERRUPT_0__Button_S4_Right_net[0:0]}),
@@ -2062,7 +2074,7 @@ module top ;
 		Button_S2_Left
 		 (.oe(tmpOE__Button_S2_Left_net),
 		  .y({1'b0}),
-		  .fb({Net_120}),
+		  .fb({Net_553}),
 		  .io({tmpIO_0__Button_S2_Left_net[0:0]}),
 		  .siovref(tmpSIOVREF__Button_S2_Left_net),
 		  .interrupt({tmpINTERRUPT_0__Button_S2_Left_net[0:0]}),
@@ -2136,7 +2148,7 @@ module top ;
 		Button_S1_Bottom
 		 (.oe(tmpOE__Button_S1_Bottom_net),
 		  .y({1'b0}),
-		  .fb({Net_464}),
+		  .fb({Net_547}),
 		  .io({tmpIO_0__Button_S1_Bottom_net[0:0]}),
 		  .siovref(tmpSIOVREF__Button_S1_Bottom_net),
 		  .interrupt({tmpINTERRUPT_0__Button_S1_Bottom_net[0:0]}),
@@ -2210,7 +2222,7 @@ module top ;
 		Button_S3_Top
 		 (.oe(tmpOE__Button_S3_Top_net),
 		  .y({1'b0}),
-		  .fb({Net_119}),
+		  .fb({Net_559}),
 		  .io({tmpIO_0__Button_S3_Top_net[0:0]}),
 		  .siovref(tmpSIOVREF__Button_S3_Top_net),
 		  .interrupt({tmpINTERRUPT_0__Button_S3_Top_net[0:0]}),
@@ -2559,7 +2571,7 @@ module top ;
     Timer_v2_80_2 Timer_2 (
         .capture(1'b0),
         .capture_out(Net_519),
-        .clock(Net_520),
+        .clock(System_clk),
         .enable(1'b1),
         .interrupt(Net_539),
         .reset(Net_523),
@@ -2706,7 +2718,7 @@ module top ;
 		  .is_direct(0),
 		  .is_digital(1))
 		Clock_1
-		 (.clock_out(Net_520));
+		 (.clock_out(System_clk));
 
 
     Timer_v2_80_4 Timer_1 (
@@ -2787,7 +2799,7 @@ module top ;
 		  .input_buffer_sel(2'b00))
 		LED3_Green
 		 (.oe(tmpOE__LED3_Green_net),
-		  .y({Net_99}),
+		  .y({Net_574}),
 		  .fb({tmpFB_0__LED3_Green_net[0:0]}),
 		  .io({tmpIO_0__LED3_Green_net[0:0]}),
 		  .siovref(tmpSIOVREF__LED3_Green_net),
@@ -3150,28 +3162,16 @@ module top ;
     assign Net_205 = Net_489 & Net_517;
 
     Debouncer_v1_0 Debouncer_1 (
-        .clock(Net_492),
-        .d(Net_491),
-        .either(Net_495),
-        .neg(Net_494),
-        .pos(Net_496),
-        .q(Net_493));
+        .clock(System_clk),
+        .d(Net_547),
+        .either(Net_548),
+        .neg(Net_549),
+        .pos(Net_550),
+        .q(Net_551));
     defparam Debouncer_1.EitherEdgeDetect = 0;
     defparam Debouncer_1.NegEdgeDetect = 0;
     defparam Debouncer_1.PosEdgeDetect = 1;
     defparam Debouncer_1.SignalWidth = 1;
-
-
-	cy_clock_v1_0
-		#(.id("d5cda707-0eb0-4754-a353-dcc276e51d58"),
-		  .source_clock_id(""),
-		  .divisor(0),
-		  .period("10000000000000"),
-		  .is_direct(0),
-		  .is_digital(1))
-		Clock_4
-		 (.clock_out(Net_492));
-
 
 	wire [0:0] tmpOE__Buzzer_net;
 	wire [0:0] tmpFB_0__Buzzer_net;
@@ -3248,6 +3248,42 @@ module top ;
 		  .out_reset({1'b0}));
 
 	assign tmpOE__Buzzer_net = (`CYDEV_CHIP_MEMBER_USED == `CYDEV_CHIP_MEMBER_3A && `CYDEV_CHIP_REVISION_USED < `CYDEV_CHIP_REVISION_3A_ES3) ? ~{1'b1} : {1'b1};
+
+    Debouncer_v1_0 Debouncer_3 (
+        .clock(System_clk),
+        .d(Net_559),
+        .either(Net_560),
+        .neg(Net_561),
+        .pos(Net_562),
+        .q(Net_563));
+    defparam Debouncer_3.EitherEdgeDetect = 0;
+    defparam Debouncer_3.NegEdgeDetect = 0;
+    defparam Debouncer_3.PosEdgeDetect = 1;
+    defparam Debouncer_3.SignalWidth = 1;
+
+    Debouncer_v1_0 Debouncer_4 (
+        .clock(System_clk),
+        .d(Net_565),
+        .either(Net_577),
+        .neg(Net_578),
+        .pos(Net_579),
+        .q(Net_574));
+    defparam Debouncer_4.EitherEdgeDetect = 0;
+    defparam Debouncer_4.NegEdgeDetect = 0;
+    defparam Debouncer_4.PosEdgeDetect = 1;
+    defparam Debouncer_4.SignalWidth = 1;
+
+    Debouncer_v1_0 Debouncer_5 (
+        .clock(System_clk),
+        .d(Net_491),
+        .either(Net_570),
+        .neg(Net_571),
+        .pos(Net_572),
+        .q(Net_493));
+    defparam Debouncer_5.EitherEdgeDetect = 0;
+    defparam Debouncer_5.NegEdgeDetect = 0;
+    defparam Debouncer_5.PosEdgeDetect = 1;
+    defparam Debouncer_5.SignalWidth = 1;
 
 
 

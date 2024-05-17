@@ -24,6 +24,9 @@ CY_ISR(Receive_Ultra);
 double ultra_reading();
 double current_second();
 void BuzzerSound(double duration);
+void BuzzerRuntime(double duration);
+void seg_runtime(double value);
+void runtime();
 
 
 // ========================================================================================================================
@@ -37,16 +40,20 @@ CY_ISR(MyCustomISR1) //Select button interrupt
     send_ultra_pulse();
 }
 
-double previous_buzz=0;
+double previous_buzz= 0;
+
+double buzz_duration=0;
+double seg_num =0;
 
 CY_ISR(MyCustomISR2) //Right button interrupt
 {
     Timer_1_Stop();
     time_passed_step = Timer_1_ReadPeriod()-Timer_1_ReadCounter() ;
-    previous_buzz = current_second();
+    
+    //previous_buzz = current_second();
+    //buzz_duration=0.2;
+    BuzzerSound(0.1);
 }
-
-
 
 
 
@@ -82,18 +89,52 @@ int main(void)
     Timer_2_Start();
     
     // Setup EEPROM
-    EEPROM_1_Start(); 
-    //EEPROM_1_Enable();
+    EEPROM_Start(); 
+    
+    // Setup UART
     UART_1_Start();
+    
+    
+    double setup_previous_time =current_second();
+    while((current_second()-setup_previous_time)<=4)
+    {
+        if((int)(current_second()-setup_previous_time) ==0) display_num(-5);
+        if((int)(current_second()-setup_previous_time) ==1) display_num(-6);
+        if((int)(current_second()-setup_previous_time) ==2) display_num(-7);
+        if((int)(current_second()-setup_previous_time) ==3) display_num(-8);
+        runtime();
+    }
+    
+    //int eprom_read = EEPROM_ReadByte(0x00);
+    //int eprom_write =eprom_read+1;
+    //EEPROM_WriteByte(eprom_write,0x0000);
+    
+    
+    int eprom_num = EEPROM_ReadByte(55*sizeof(double)+sizeof(char));
+    
     
     for(;;)
     {
         
         //display_num( ultra_reading());
-        display_num( current_second());
-        BuzzerSound(0.2);
+        //display_num( current_second());
+        
+        display_num( eprom_num);
+        //display_num( 12 );
+        //display_num(-3);
+        //BuzzerRuntime(0.2);
+        runtime();
+        
+        
     }
 }
+void runtime()
+{
+    BuzzerRuntime(buzz_duration);
+    seg_runtime(seg_num);
+    
+}
+
 double current_second()
 {
     double time = (double)(Timer_2_ReadPeriod()-Timer_2_ReadCounter());
@@ -101,6 +142,9 @@ double current_second()
     
     return time;
 }
+// ========================================================================================================================
+/* EEPROM */
+
 
 // ========================================================================================================================
 /* UART communications */
@@ -131,13 +175,19 @@ void print_uart(int num)
 
 // ========================================================================================================================
 /* Buzzer */
-
 void BuzzerSound(double duration)
 {
-    long time_diff = current_second()-previous_buzz;
-    if(time_diff<=duration) Buzzer_Write(0);  // Turn on buzzer
+    previous_buzz = current_second();
+    buzz_duration= duration;
+}
+void BuzzerRuntime(double duration)
+{
+    double time_diff = current_second()-previous_buzz;
+    
+    if(time_diff<duration) Buzzer_Write(0);  // Turn on buzzer
     else Buzzer_Write(1); // Turn off buzzer
 }
+
 
 
 // ========================================================================================================================
@@ -188,48 +238,103 @@ double old_dis_val=0;
 int D[4]= {0,0,0,0};
 int dp[4]={0,0,0,0};
 unsigned long count = 0;
-        
-void display_num(double value){       
+
+void display_num(double value)
+{
+    seg_num = value;
+}
+void seg_runtime(double value){
+      
     if (run_7_Seg==0) return; // Ignore the rest of the code when interrupt is not triggered
     
-    //////////////// Code after this would only run once per interrupt////////////////
-    // Only update the value when it gets a new value (for consistency and save computation for pooling loop)
-    if((value != old_dis_val)){ 
-        // Convert double to d1,d2,d3,d4,dp_pos
-        int dp_pos = 0;
-        
-        if (value>=1){ // For values above 1
-        while(value<1000){
-            value=value*10;
-             dp_pos+=1;
-        }
-                
-        // Extract integer and decimal parts
-        int digits = (int)value;
-                
-        D[0] = (int)(digits/1000)%10;
-        D[1] = (int)(digits/100)%10;
-        D[2] = (int)(digits/10)%10;
-        D[3] = (int)(digits/1) %10;
-    }
-        else { //For below 1, fix decimal point to always show 4 significant figure (eg. 0.900, 0.805, 0.010)
-        dp_pos=3;
-        int digits = (int) (value*1000);
-                
-        D[0] = (int)(digits/1000)%10;
-        D[1] = (int)(digits/100)%10;
-        D[2] = (int)(digits/10)%10;
-        D[3] = (int)(digits/1) %10;
-    }
-        
-    ////////////////////////////////////////////
-    // fill each segments of the display
-    for (int i = 0; i < 4; ++i) dp[i] = 0; // Reset all 0 
-        dp[dp_pos]=1;
+    if(value>0)
+    {
+    
+        //////////////// Code after this would only run once per interrupt////////////////
+        // Only update the value when it gets a new value (for consistency and save computation for pooling loop)
+        if((value != old_dis_val)){ 
+            // Convert double to d1,d2,d3,d4,dp_pos
+            int dp_pos = 0;
             
-        old_dis_val = value;
+            if (value>=1){ // For values above 1
+            while(value<1000){
+                value=value*10;
+                 dp_pos+=1;
+            }
+                    
+            // Extract integer and decimal parts
+            int digits = (int)value;
+                    
+            D[0] = (int)(digits/1000)%10;
+            D[1] = (int)(digits/100)%10;
+            D[2] = (int)(digits/10)%10;
+            D[3] = (int)(digits/1) %10;
+            }
+            else { //For below 1, fix decimal point to always show 4 significant figure (eg. 0.900, 0.805, 0.010)
+            dp_pos=3;
+            int digits = (int) (value*1000);
+                    
+            D[0] = (int)(digits/1000)%10;
+            D[1] = (int)(digits/100)%10;
+            D[2] = (int)(digits/10)%10;
+            D[3] = (int)(digits/1) %10;
+            }
+            
+        ////////////////////////////////////////////
+        // fill each segments of the display
+        for (int i = 0; i < 4; ++i) dp[i] = 0; // Reset all 0 
+            dp[dp_pos]=1;
+                
+            old_dis_val = value;
+        }
+            
     }
+    else if(value== -1) //Show cm icon
+    {
+        D[0] = 15; //C
+        D[1] = 16; //E
+        D[2] = 18; //N
+        D[3] = 17; //t
+    }
+    else if(value== -2) //Show inch icon
+    {
+        D[0] = 13; //i 
+        D[1] = 12; //n 
+        D[2] = 11; //c
+        D[3] = 14; //h
         
+    }
+    else if(value== -3) // Dot
+    {
+        D[0] = 10; //space
+        D[1] = 10; //space
+        D[2] = 10; //space
+        D[3] = 10; //space
+        dp[1]=1;
+    }
+    else if(value== -4) // Nothing
+    {
+        D[0] = 10; //space
+        D[1] = 10; //space
+        D[2] = 10; //space
+        D[3] = 10; //space
+    }
+    else // reserve for startup
+    {
+        D[0] = 10; //space
+        D[1] = 10; //space
+        D[2] = 10; //space
+        D[3] = 10; //space
+        
+        if(value ==-5) D[0] = 8; 
+        if(value ==-6) D[1] = 8; 
+        if(value ==-7) D[2] = 8; 
+        if(value ==-8) D[3] = 8; 
+    }
+    
+        
+    
+    
     // Loop through each display each time we run 7_seg display function
     count++;
     count = count %4; //limit count between 0 to 3
@@ -267,7 +372,15 @@ const char charLookup[][8] = {
   "1110000", // 7
   "1111111", // 8
   "1111011", // 9
-  "0000000", // Space
+  "0000000", // Space - 10
+  "0001101", // c -11
+  "0010101", // n -12
+  "0010000", // i -13
+  "0010111", // h -14
+  "1001110", // big C -15
+  "1001111", // big E -16
+  "0001111", // t -17
+  "1110110", // big N -18
 };
 
 // update pins to show a specific number and turn on the decimal point if required
