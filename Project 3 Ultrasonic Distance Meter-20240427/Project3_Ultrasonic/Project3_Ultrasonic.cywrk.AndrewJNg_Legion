@@ -80,10 +80,15 @@
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Button_S1_Bottom.lst</v>
+<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Button_S1_Bottom_State.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Button_S2_Left.lst</v>
+<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Button_S2_Left_State.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Button_S3_Top.lst</v>
+<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Button_S3_Top_State.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Button_S4_Right.lst</v>
+<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Button_S4_Right_State.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Button_S5_Select.lst</v>
+<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Button_S5_Select_State.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Buzzer.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_1.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Cm3Start.lst</v>
@@ -120,6 +125,9 @@
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\isr_1.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\isr_2.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\isr_3.lst</v>
+<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\isr_4.lst</v>
+<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\isr_5.lst</v>
+<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\isr_6.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\isr_7Seg.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\LED1_Red.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\LED2_Yellow.lst</v>
@@ -158,71 +166,6 @@
 <VisibleNodeIds>
 <v>Project3_Ultrasonic</v>
 <v>Project3_Ultrasonic\7Seg_Display</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Button_S1_Bottom.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Button_S2_Left.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Button_S3_Top.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Button_S4_Right.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Button_S5_Select.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Buzzer.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Clock_1.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Cm3Start.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Comp_1.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Comp_1_PM.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Control_Reg_1.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Control_Reg_1_PM.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Count7_1.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Count7_1_PM.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\cy_em_eeprom.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\CyBootAsmGnu.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\CyDmac.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\cyfitter_cfg.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\CyFlash.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\CyLib.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\cyPm.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\CySpc.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\cyutils.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Dis_A.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Dis_B.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Dis_C.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Dis_D.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Dis_D1.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Dis_D2.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Dis_D3.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Dis_D4.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Dis_DP.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Dis_E.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Dis_F.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Dis_G.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Display_Clk.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\EEPROM.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\isr_1.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\isr_2.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\isr_3.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\isr_7Seg.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\LED1_Red.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\LED2_Yellow.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\LED3_Green.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\main.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\OP_Out.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\OP_Out_1.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Opamp_1.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Opamp_1_PM.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\PGA_1.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\PGA_1_PM.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Rec1.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Rec2.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer_1.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer_1_PM.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer_2.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Timer_2_PM.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\timer_clock.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Transmitter_Clk.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\TX1_Ultra.lst</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </TreeStates>
@@ -316,7 +259,7 @@
   Copyright (c) 2001-2016 Actipro Software LLC.  All rights reserved.
   http://www.actiprosoftware.com
 
---><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="2018, 1063" SelectedTabbedMdiWindow="4dbf9801-a0d9-4e17-9256-938c9111f341"><DocumentWindow Key="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\TopDesign\TopDesign.cysch" Guid="4dbf9801-a0d9-4e17-9256-938c9111f341" /><DocumentWindow Key="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\7Seg_Display.cydwr" Guid="279ec16b-817d-466e-ae82-2c328681f1aa" /><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="4c5062ca-7c5c-4036-9339-a2d340a00f95" /><DocumentWindow Key="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\main.c" Guid="624663d3-b3aa-435d-a744-79f033d87ff5" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
+--><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="2018, 1109" SelectedTabbedMdiWindow="624663d3-b3aa-435d-a744-79f033d87ff5"><DocumentWindow Key="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\TopDesign\TopDesign.cysch" Guid="4dbf9801-a0d9-4e17-9256-938c9111f341" /><DocumentWindow Key="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\7Seg_Display.cydwr" Guid="279ec16b-817d-466e-ae82-2c328681f1aa" /><DocumentWindow Key="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\main.c" Guid="624663d3-b3aa-435d-a744-79f033d87ff5" /><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="4c5062ca-7c5c-4036-9339-a2d340a00f95" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
 <config v="" />
 <AutoUpdate v="true" />
 </CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>

@@ -16,11 +16,15 @@
 void display_num(double value);
 void draw_7Seg(int number,int dp);
 CY_ISR(seg7_ISR);
-CY_ISR(MyCustomISR2);
+CY_ISR(button1ISR);
+CY_ISR(button2ISR);
+CY_ISR(button3ISR);
+CY_ISR(button4ISR);
+CY_ISR(button5ISR);
+CY_ISR(Receive_Ultra);
+
 void print_uart(int num);
 void send_ultra_pulse();
-CY_ISR(MyCustomISR1);
-CY_ISR(Receive_Ultra);
 double ultra_reading();
 double current_second();
 void BuzzerSound(double duration);
@@ -35,54 +39,90 @@ void readDoubleArrayFromEEPROM(uint16 startAddress, double* array, uint16 arrayS
 void EEPROM_writeInt(uint16 address, int value);
 int EEPROM_readInt(uint16 address) ;
 
+void mode_0(void);
+void mode_1(void);
+void mode_2(void);
+void mode_3(void);
+
+void MetricLedOn(void);
+void ImperialLedOn(void);
+void SingleButtonWait(void);
+void DoubleButtonWait(void);
+
+
 
 // ========================================================================================================================
 double counter = 0;
 
 int time_passed_step=0;
-
-CY_ISR(MyCustomISR1) //Select button interrupt
-{
-    // Launch 1 ultrasonic cycle
-    send_ultra_pulse();
-}
-
 double previous_buzz= 0;
 
 double buzz_duration=0;
 double seg_num =0;
 
+int button1=1;
+int button2=1;
+int button3=1;
+int button4=1;
+int button5=1;
+
+/*
+CY_ISR(MyCustomISR1) //Right button interrupt
+{
+    button1=1;
+    send_ultra_pulse();
+}
+
 CY_ISR(MyCustomISR2) //Right button interrupt
 {
-    Timer_1_Stop();
-    time_passed_step = Timer_1_ReadPeriod()-Timer_1_ReadCounter() ;
+    button2=!button2;
+    //Timer_1_Stop();
+    //time_passed_step = Timer_1_ReadPeriod()-Timer_1_ReadCounter() ;
     
     //previous_buzz = current_second();
     //buzz_duration=0.2;
-    BuzzerSound(0.1);
-}
+    //BuzzerSound(0.1);
+}*/
+
+CY_ISR(button1ISR) {button1=!button1;}
+CY_ISR(button2ISR) {button2=!button2;}
+CY_ISR(button3ISR) {button3=!button3;}
+CY_ISR(button4ISR) {button4=!button4;}
+CY_ISR(button5ISR) {button5=!button5;}
 
 
+int mode = 0;
+int group_num = 0;
+char cm_or_inch;
+
+double distance=0;
 
 int main(void)
 {
     // Enable interrupts
     CyGlobalIntEnable; 
     
-    // Clear any existing interrupts
-    isr_7Seg_ClearPending(); 
+    // Enable button interrupts
     isr_1_ClearPending(); 
     isr_2_ClearPending(); 
     isr_3_ClearPending(); 
-
-    // Enable button interrupts
+    isr_4_ClearPending(); 
+    isr_5_ClearPending(); 
+    
+    isr_1_StartEx(button1ISR);  
+    isr_2_StartEx(button2ISR);  
+    isr_3_StartEx(button3ISR);  
+    isr_4_StartEx(button4ISR);  
+    isr_5_StartEx(button5ISR);  
+    
+    // 7 Segment display setup
+    isr_7Seg_ClearPending(); 
     isr_7Seg_StartEx(seg7_ISR);  
-    isr_1_StartEx(MyCustomISR1);  
-    isr_2_StartEx(MyCustomISR2);  
     
     //  Ultrasonic transmitter setup
+    isr_6_ClearPending(); 
     Timer_1_SetInterruptMode(3);
-    isr_3_StartEx(Receive_Ultra);  
+    isr_6_StartEx(Receive_Ultra);  
     
     // Ultrasonic receiver setup
     PGA_1_Start();
@@ -91,7 +131,7 @@ int main(void)
     VDAC8_1_Start();
     Count7_1_Start(); 
     
-    // Global timer 
+    // Global clock timer 
     Timer_2_SetInterruptMode(3);
     Timer_2_Start();
     
@@ -100,6 +140,7 @@ int main(void)
     
     // Setup UART
     UART_1_Start();
+    UART_1_PutString("Start UART");
     
     
     double setup_previous_time =current_second();
@@ -131,21 +172,47 @@ int main(void)
     
     
     //int eprom_num = EEPROM_ReadByte(55*sizeof(double)+sizeof(char));
-    int eprom_num = EEPROM_ReadByte(0);
-    char eprom_in = EEPROM_ReadByte(sizeof(int));
+    group_num = EEPROM_ReadByte(0);
+    cm_or_inch = EEPROM_ReadByte(sizeof(int));
     
     
     
     for(;;)
     {
+        /*
+    print_uart(mode);
+    
+        if (mode==0)
+        {
+        print_uart(mode);
+            mode_0();
         
+        }
+        if (mode==1)
+        {
+        print_uart(mode);
+        //mode_1();
+        }
+        if (mode==2)
+        {
+        print_uart(mode);
+            //mode_2();
+        }
+        if (mode==3)
+        {
+        print_uart(mode);
+            //mode_3();
+        }*/
+        
+        //mode_0();
         //display_num( ultra_reading());
         //display_num( current_second());
-        if (eprom_in =='c') display_num(-1);
-        if (eprom_in =='i') display_num(-2);
+        //display_num( current_second());
+        //if (cm_or_inch =='c') display_num(-1);
+        //if (cm_or_inch =='i') display_num(-2);
         
         //display_num( eprom_num);
-        //display_num( 12 );
+        display_num(Button_S5_Select_State_Read());
         //display_num(-3);
         //BuzzerRuntime(0.2);
         runtime();
@@ -153,6 +220,230 @@ int main(void)
         
     }
 }
+int Button_S2_Left(){return button2;}
+int Button_S4_Right(){return button4;}
+int Button_S5_Select() {return button5;}
+
+// ========================================================================================================================
+//sleep mode
+void mode_0(void)
+{
+    double previous_second=current_second();
+    while (mode == 0) {
+        runtime();
+        //flash decimal point 1 second on, off
+        double time_diff = current_second()-previous_second;
+        if (time_diff<=1)
+        {
+            display_num(-3); //display decimal
+        }
+        else if (time_diff > 1  || time_diff <= 2)
+        {
+            display_num(-4); //display blank
+        }
+        else
+        {
+            previous_second = current_second();
+        }
+      
+        
+        //check if either button is pressed
+        if (Button_S5_Select() == 0 || Button_S2_Left() == 0)
+        {
+            //wait 0.2 seconds to delay check
+            double check_second = current_second();
+            while (current_second() - check_second <0.2)
+            {
+                runtime();
+            }
+           
+            //if both buttons pressed, wait 1 seconds to go to mode 1
+            if (Button_S5_Select() == 0 && Button_S2_Left() == 0)
+            {
+                BuzzerSound(0.2);
+                check_second = current_second();        
+                while (Button_S5_Select() == 0 && Button_S2_Left() == 0)
+                {
+                    runtime();
+                    if (current_second()-check_second==1)
+                    {
+                        mode = 1;
+                        break;
+                    }
+                }  
+            }
+            //if instead just button 1 is pressed, go to mode 3
+            else if (Button_S5_Select() == 0 && Button_S2_Left() == 1)
+            {
+                mode = 3;
+            }
+        }
+    }
+}
+
+//program mode
+void mode_1(void)
+{
+    double previous_second=0;
+    while (mode == 1) {
+       
+        runtime();
+        //flash group number
+        double time_diff = current_second()-previous_second;
+        if (time_diff<=1)
+        {
+            display_num(group_num); // group_num
+        }
+        else if ((time_diff>1) || (time_diff<=1.5))
+        {
+            display_num(-4); // Blank
+        }
+        else
+        {
+            previous_second = current_second();
+        }
+       
+       
+        // Check to go to mode 2
+        if (Button_S4_Right() == 0) // Assuming active low buttons
+        {
+            SingleButtonWait();
+            BuzzerSound(0.2);
+            mode = 2;
+        }
+        //check to increment number
+        if (Button_S5_Select() == 0)
+        {
+            SingleButtonWait();
+            BuzzerSound(0.2);
+            group_num ++;
+        }
+        //check to decrement number
+        if (Button_S2_Left() == 0)
+        {
+            SingleButtonWait();
+            BuzzerSound(0.2);
+            group_num --;
+        }
+    }
+}
+
+//system change mode
+void mode_2(void)
+{
+    while (mode == 2)
+    {
+        runtime();
+        
+        // Display cm or inch
+        if (cm_or_inch =='c') display_num(-1);
+        if (cm_or_inch =='i') display_num(-2);
+        
+        //check to go to mode 0
+        if (Button_S4_Right() == 0)
+        {
+            SingleButtonWait();
+            BuzzerSound(0.2);
+            mode = 0;
+        }
+        //Set system to metric (centimeters)
+        if (Button_S5_Select() == 0)
+        {
+            SingleButtonWait();
+            BuzzerSound(0.2);
+            MetricLedOn();
+            
+            cm_or_inch = 'c'; // set system to use cm
+        }
+        //Set system to imperial (inches)
+        if (Button_S2_Left() == 0)
+        {
+            SingleButtonWait();
+            BuzzerSound(0.2);
+            ImperialLedOn();
+            
+            cm_or_inch = 'i'; // set system to use inch
+            
+           
+        }
+    }
+    
+    EEPROM_WriteByte(cm_or_inch,sizeof(int));
+
+}
+
+ //ultrasonic reading and display mode
+void mode_3(void)
+{
+   
+    int flag_read = 1;
+    double previous_second;
+    while (mode == 3)
+    {
+        runtime();
+        //check if first time entering loop
+        if (flag_read == 1)
+        {
+            distance = ultra_reading();
+            previous_second= current_second();
+            flag_read = 0;
+        }
+       
+        display_num(distance);
+       
+        //check if loop has gone for over 2 seconds
+        if (current_second()-previous_second >=2)
+        {
+            //if button pressed, reset whole loop from start. else go to mode 0
+            if (Button_S5_Select() == 0)
+            {
+                BuzzerSound(0.2);
+                flag_read=1;
+            }
+            else
+            {
+                mode = 0;
+            }
+        }
+       
+    }
+   
+}
+
+
+
+
+void MetricLedOn(void)
+{
+    LED2_Yellow_Write(0);
+    LED3_Green_Write(1);
+}
+
+void ImperialLedOn(void)
+{
+    LED3_Green_Write(0);
+    LED2_Yellow_Write(1);
+
+}
+
+void SingleButtonWait(void)
+{
+    while (Button_S4_Right()==0 || Button_S5_Select()==0 || Button_S2_Left()==0)
+    {
+        runtime();
+    }
+}
+
+void DoubleButtonWait(void)
+{
+    while (Button_S5_Select() == 0 && Button_S2_Left() == 0)
+    {
+        runtime();
+    }
+}
+
+// ========================================================================================================================
+
 void runtime()
 {
     BuzzerRuntime(buzz_duration);
@@ -263,7 +554,7 @@ void BuzzerRuntime(double duration)
 /* Ultrasinic launch function*/
 
 double value = 0; 
-double distance = 0;
+//double distance = 0;
 
 double ultra_reading()
 {
@@ -358,6 +649,14 @@ void seg_runtime(double value){
         }
             
     }
+    else if(value==0)
+    {
+        D[0] = 0; //C
+        D[1] = 0; //E
+        D[2] = 0; //N
+        D[3] = 0; //t
+    }
+    
     else if(value== -1) //Show cm icon
     {
         D[0] = 15; //C

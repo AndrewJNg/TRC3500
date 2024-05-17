@@ -1,6 +1,6 @@
 // ======================================================================
 // 7Seg_Display.v generated from TopDesign.cysch
-// 05/17/2024 at 10:17
+// 05/17/2024 at 12:52
 // This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 // ======================================================================
 
@@ -728,19 +728,13 @@ module top ;
 
           wire  Net_572;
           wire  Net_571;
-          wire  Net_570;
           wire  Net_579;
           wire  Net_578;
-          wire  Net_577;
-          wire  Net_563;
           wire  Net_562;
           wire  Net_561;
-          wire  Net_560;
     electrical  Net_541;
-          wire  Net_551;
           wire  Net_550;
           wire  Net_549;
-          wire  Net_548;
           wire  Net_512;
     electrical  Net_408;
     electrical  Net_407;
@@ -785,14 +779,12 @@ module top ;
           wire  Net_547;
           wire  Net_260;
           wire  Net_418;
-          wire  System_clk;
           wire [6:0] Net_417;
           wire  Net_90;
-          wire  Net_557;
           wire  Net_556;
           wire  Net_555;
-          wire  Net_554;
           wire  Net_553;
+          wire  System_clk;
     electrical  Net_33;
     electrical  Net_34;
     electrical  Net_35;
@@ -805,11 +797,19 @@ module top ;
     electrical  Net_39;
     electrical  Net_38;
     electrical  Net_71;
+          wire  Net_610;
+          wire  Net_609;
+          wire  Net_613;
+          wire  Net_605;
+          wire  Net_593;
+          wire  Net_604;
+          wire  Net_584;
+          wire  Net_560;
+          wire  Net_570;
+          wire  Net_577;
           wire  Net_83;
           wire  Net_565;
           wire  Net_491;
-          wire  Net_493;
-          wire  Net_574;
           wire  Net_369;
           wire  Net_489;
           wire  Net_517;
@@ -1739,20 +1739,20 @@ module top ;
     Debouncer_v1_0 Debouncer_2 (
         .clock(System_clk),
         .d(Net_553),
-        .either(Net_554),
+        .either(Net_584),
         .neg(Net_555),
         .pos(Net_556),
-        .q(Net_557));
-    defparam Debouncer_2.EitherEdgeDetect = 0;
+        .q(Net_593));
+    defparam Debouncer_2.EitherEdgeDetect = 1;
     defparam Debouncer_2.NegEdgeDetect = 0;
-    defparam Debouncer_2.PosEdgeDetect = 1;
+    defparam Debouncer_2.PosEdgeDetect = 0;
     defparam Debouncer_2.SignalWidth = 1;
 
 
 	cy_isr_v1_0
 		#(.int_type(2'b00))
 		isr_2
-		 (.int_signal(Net_574));
+		 (.int_signal(Net_584));
 
 
 	wire [0:0] tmpOE__OP_Out_net;
@@ -2313,7 +2313,7 @@ module top ;
 
 	cy_isr_v1_0
 		#(.int_type(2'b10))
-		isr_3
+		isr_6
 		 (.int_signal(Net_369));
 
 
@@ -2799,7 +2799,7 @@ module top ;
 		  .input_buffer_sel(2'b00))
 		LED3_Green
 		 (.oe(tmpOE__LED3_Green_net),
-		  .y({Net_574}),
+		  .y({Net_593}),
 		  .fb({tmpFB_0__LED3_Green_net[0:0]}),
 		  .io({tmpIO_0__LED3_Green_net[0:0]}),
 		  .siovref(tmpSIOVREF__LED3_Green_net),
@@ -2970,7 +2970,7 @@ module top ;
 	cy_isr_v1_0
 		#(.int_type(2'b00))
 		isr_1
-		 (.int_signal(Net_493));
+		 (.int_signal(Net_604));
 
 
     Comp_v2_0_5 Comp_1 (
@@ -3164,13 +3164,13 @@ module top ;
     Debouncer_v1_0 Debouncer_1 (
         .clock(System_clk),
         .d(Net_547),
-        .either(Net_548),
+        .either(Net_604),
         .neg(Net_549),
         .pos(Net_550),
-        .q(Net_551));
-    defparam Debouncer_1.EitherEdgeDetect = 0;
+        .q(Net_605));
+    defparam Debouncer_1.EitherEdgeDetect = 1;
     defparam Debouncer_1.NegEdgeDetect = 0;
-    defparam Debouncer_1.PosEdgeDetect = 1;
+    defparam Debouncer_1.PosEdgeDetect = 0;
     defparam Debouncer_1.SignalWidth = 1;
 
 	wire [0:0] tmpOE__Buzzer_net;
@@ -3255,10 +3255,10 @@ module top ;
         .either(Net_560),
         .neg(Net_561),
         .pos(Net_562),
-        .q(Net_563));
-    defparam Debouncer_3.EitherEdgeDetect = 0;
+        .q(Net_613));
+    defparam Debouncer_3.EitherEdgeDetect = 1;
     defparam Debouncer_3.NegEdgeDetect = 0;
-    defparam Debouncer_3.PosEdgeDetect = 1;
+    defparam Debouncer_3.PosEdgeDetect = 0;
     defparam Debouncer_3.SignalWidth = 1;
 
     Debouncer_v1_0 Debouncer_4 (
@@ -3267,10 +3267,10 @@ module top ;
         .either(Net_577),
         .neg(Net_578),
         .pos(Net_579),
-        .q(Net_574));
-    defparam Debouncer_4.EitherEdgeDetect = 0;
+        .q(Net_609));
+    defparam Debouncer_4.EitherEdgeDetect = 1;
     defparam Debouncer_4.NegEdgeDetect = 0;
-    defparam Debouncer_4.PosEdgeDetect = 1;
+    defparam Debouncer_4.PosEdgeDetect = 0;
     defparam Debouncer_4.SignalWidth = 1;
 
     Debouncer_v1_0 Debouncer_5 (
@@ -3279,11 +3279,407 @@ module top ;
         .either(Net_570),
         .neg(Net_571),
         .pos(Net_572),
-        .q(Net_493));
-    defparam Debouncer_5.EitherEdgeDetect = 0;
+        .q(Net_610));
+    defparam Debouncer_5.EitherEdgeDetect = 1;
     defparam Debouncer_5.NegEdgeDetect = 0;
-    defparam Debouncer_5.PosEdgeDetect = 1;
+    defparam Debouncer_5.PosEdgeDetect = 0;
     defparam Debouncer_5.SignalWidth = 1;
+
+
+	cy_isr_v1_0
+		#(.int_type(2'b00))
+		isr_4
+		 (.int_signal(Net_577));
+
+
+
+	cy_isr_v1_0
+		#(.int_type(2'b00))
+		isr_5
+		 (.int_signal(Net_570));
+
+
+
+	cy_isr_v1_0
+		#(.int_type(2'b00))
+		isr_3
+		 (.int_signal(Net_560));
+
+
+	wire [0:0] tmpOE__Button_S1_Bottom_State_net;
+	wire [0:0] tmpFB_0__Button_S1_Bottom_State_net;
+	wire [0:0] tmpIO_0__Button_S1_Bottom_State_net;
+	wire [0:0] tmpINTERRUPT_0__Button_S1_Bottom_State_net;
+	electrical [0:0] tmpSIOVREF__Button_S1_Bottom_State_net;
+
+	cy_psoc3_pins_v1_10
+		#(.id("48dabdce-7bfd-478a-8a68-0f91edb036cc"),
+		  .drive_mode(3'b110),
+		  .ibuf_enabled(1'b1),
+		  .init_dr_st(1'b1),
+		  .input_clk_en(0),
+		  .input_sync(1'b1),
+		  .input_sync_mode(1'b0),
+		  .intr_mode(2'b00),
+		  .invert_in_clock(0),
+		  .invert_in_clock_en(0),
+		  .invert_in_reset(0),
+		  .invert_out_clock(0),
+		  .invert_out_clock_en(0),
+		  .invert_out_reset(0),
+		  .io_voltage(""),
+		  .layout_mode("CONTIGUOUS"),
+		  .oe_conn(1'b0),
+		  .oe_reset(0),
+		  .oe_sync(1'b0),
+		  .output_clk_en(0),
+		  .output_clock_mode(1'b0),
+		  .output_conn(1'b1),
+		  .output_mode(1'b0),
+		  .output_reset(0),
+		  .output_sync(1'b0),
+		  .pa_in_clock(-1),
+		  .pa_in_clock_en(-1),
+		  .pa_in_reset(-1),
+		  .pa_out_clock(-1),
+		  .pa_out_clock_en(-1),
+		  .pa_out_reset(-1),
+		  .pin_aliases(""),
+		  .pin_mode("O"),
+		  .por_state(4),
+		  .sio_group_cnt(0),
+		  .sio_hyst(1'b1),
+		  .sio_ibuf(""),
+		  .sio_info(2'b00),
+		  .sio_obuf(""),
+		  .sio_refsel(""),
+		  .sio_vtrip(""),
+		  .sio_hifreq(""),
+		  .sio_vohsel(""),
+		  .slew_rate(1'b0),
+		  .spanning(0),
+		  .use_annotation(1'b0),
+		  .vtrip(2'b10),
+		  .width(1),
+		  .ovt_hyst_trim(1'b0),
+		  .ovt_needed(1'b0),
+		  .ovt_slew_control(2'b00),
+		  .input_buffer_sel(2'b00))
+		Button_S1_Bottom_State
+		 (.oe(tmpOE__Button_S1_Bottom_State_net),
+		  .y({Net_605}),
+		  .fb({tmpFB_0__Button_S1_Bottom_State_net[0:0]}),
+		  .io({tmpIO_0__Button_S1_Bottom_State_net[0:0]}),
+		  .siovref(tmpSIOVREF__Button_S1_Bottom_State_net),
+		  .interrupt({tmpINTERRUPT_0__Button_S1_Bottom_State_net[0:0]}),
+		  .in_clock({1'b0}),
+		  .in_clock_en({1'b1}),
+		  .in_reset({1'b0}),
+		  .out_clock({1'b0}),
+		  .out_clock_en({1'b1}),
+		  .out_reset({1'b0}));
+
+	assign tmpOE__Button_S1_Bottom_State_net = (`CYDEV_CHIP_MEMBER_USED == `CYDEV_CHIP_MEMBER_3A && `CYDEV_CHIP_REVISION_USED < `CYDEV_CHIP_REVISION_3A_ES3) ? ~{1'b1} : {1'b1};
+
+	wire [0:0] tmpOE__Button_S2_Left_State_net;
+	wire [0:0] tmpFB_0__Button_S2_Left_State_net;
+	wire [0:0] tmpIO_0__Button_S2_Left_State_net;
+	wire [0:0] tmpINTERRUPT_0__Button_S2_Left_State_net;
+	electrical [0:0] tmpSIOVREF__Button_S2_Left_State_net;
+
+	cy_psoc3_pins_v1_10
+		#(.id("23cfbf88-3e69-49b2-a4c6-9de2ef65ad53"),
+		  .drive_mode(3'b110),
+		  .ibuf_enabled(1'b1),
+		  .init_dr_st(1'b1),
+		  .input_clk_en(0),
+		  .input_sync(1'b1),
+		  .input_sync_mode(1'b0),
+		  .intr_mode(2'b00),
+		  .invert_in_clock(0),
+		  .invert_in_clock_en(0),
+		  .invert_in_reset(0),
+		  .invert_out_clock(0),
+		  .invert_out_clock_en(0),
+		  .invert_out_reset(0),
+		  .io_voltage(""),
+		  .layout_mode("CONTIGUOUS"),
+		  .oe_conn(1'b0),
+		  .oe_reset(0),
+		  .oe_sync(1'b0),
+		  .output_clk_en(0),
+		  .output_clock_mode(1'b0),
+		  .output_conn(1'b1),
+		  .output_mode(1'b0),
+		  .output_reset(0),
+		  .output_sync(1'b0),
+		  .pa_in_clock(-1),
+		  .pa_in_clock_en(-1),
+		  .pa_in_reset(-1),
+		  .pa_out_clock(-1),
+		  .pa_out_clock_en(-1),
+		  .pa_out_reset(-1),
+		  .pin_aliases(""),
+		  .pin_mode("O"),
+		  .por_state(4),
+		  .sio_group_cnt(0),
+		  .sio_hyst(1'b1),
+		  .sio_ibuf(""),
+		  .sio_info(2'b00),
+		  .sio_obuf(""),
+		  .sio_refsel(""),
+		  .sio_vtrip(""),
+		  .sio_hifreq(""),
+		  .sio_vohsel(""),
+		  .slew_rate(1'b0),
+		  .spanning(0),
+		  .use_annotation(1'b0),
+		  .vtrip(2'b10),
+		  .width(1),
+		  .ovt_hyst_trim(1'b0),
+		  .ovt_needed(1'b0),
+		  .ovt_slew_control(2'b00),
+		  .input_buffer_sel(2'b00))
+		Button_S2_Left_State
+		 (.oe(tmpOE__Button_S2_Left_State_net),
+		  .y({Net_593}),
+		  .fb({tmpFB_0__Button_S2_Left_State_net[0:0]}),
+		  .io({tmpIO_0__Button_S2_Left_State_net[0:0]}),
+		  .siovref(tmpSIOVREF__Button_S2_Left_State_net),
+		  .interrupt({tmpINTERRUPT_0__Button_S2_Left_State_net[0:0]}),
+		  .in_clock({1'b0}),
+		  .in_clock_en({1'b1}),
+		  .in_reset({1'b0}),
+		  .out_clock({1'b0}),
+		  .out_clock_en({1'b1}),
+		  .out_reset({1'b0}));
+
+	assign tmpOE__Button_S2_Left_State_net = (`CYDEV_CHIP_MEMBER_USED == `CYDEV_CHIP_MEMBER_3A && `CYDEV_CHIP_REVISION_USED < `CYDEV_CHIP_REVISION_3A_ES3) ? ~{1'b1} : {1'b1};
+
+	wire [0:0] tmpOE__Button_S3_Top_State_net;
+	wire [0:0] tmpFB_0__Button_S3_Top_State_net;
+	wire [0:0] tmpIO_0__Button_S3_Top_State_net;
+	wire [0:0] tmpINTERRUPT_0__Button_S3_Top_State_net;
+	electrical [0:0] tmpSIOVREF__Button_S3_Top_State_net;
+
+	cy_psoc3_pins_v1_10
+		#(.id("9b4d6a0c-5f57-4392-be9d-5e9eb4da93ef"),
+		  .drive_mode(3'b110),
+		  .ibuf_enabled(1'b1),
+		  .init_dr_st(1'b1),
+		  .input_clk_en(0),
+		  .input_sync(1'b1),
+		  .input_sync_mode(1'b0),
+		  .intr_mode(2'b00),
+		  .invert_in_clock(0),
+		  .invert_in_clock_en(0),
+		  .invert_in_reset(0),
+		  .invert_out_clock(0),
+		  .invert_out_clock_en(0),
+		  .invert_out_reset(0),
+		  .io_voltage(""),
+		  .layout_mode("CONTIGUOUS"),
+		  .oe_conn(1'b0),
+		  .oe_reset(0),
+		  .oe_sync(1'b0),
+		  .output_clk_en(0),
+		  .output_clock_mode(1'b0),
+		  .output_conn(1'b1),
+		  .output_mode(1'b0),
+		  .output_reset(0),
+		  .output_sync(1'b0),
+		  .pa_in_clock(-1),
+		  .pa_in_clock_en(-1),
+		  .pa_in_reset(-1),
+		  .pa_out_clock(-1),
+		  .pa_out_clock_en(-1),
+		  .pa_out_reset(-1),
+		  .pin_aliases(""),
+		  .pin_mode("O"),
+		  .por_state(4),
+		  .sio_group_cnt(0),
+		  .sio_hyst(1'b1),
+		  .sio_ibuf(""),
+		  .sio_info(2'b00),
+		  .sio_obuf(""),
+		  .sio_refsel(""),
+		  .sio_vtrip(""),
+		  .sio_hifreq(""),
+		  .sio_vohsel(""),
+		  .slew_rate(1'b0),
+		  .spanning(0),
+		  .use_annotation(1'b0),
+		  .vtrip(2'b10),
+		  .width(1),
+		  .ovt_hyst_trim(1'b0),
+		  .ovt_needed(1'b0),
+		  .ovt_slew_control(2'b00),
+		  .input_buffer_sel(2'b00))
+		Button_S3_Top_State
+		 (.oe(tmpOE__Button_S3_Top_State_net),
+		  .y({Net_613}),
+		  .fb({tmpFB_0__Button_S3_Top_State_net[0:0]}),
+		  .io({tmpIO_0__Button_S3_Top_State_net[0:0]}),
+		  .siovref(tmpSIOVREF__Button_S3_Top_State_net),
+		  .interrupt({tmpINTERRUPT_0__Button_S3_Top_State_net[0:0]}),
+		  .in_clock({1'b0}),
+		  .in_clock_en({1'b1}),
+		  .in_reset({1'b0}),
+		  .out_clock({1'b0}),
+		  .out_clock_en({1'b1}),
+		  .out_reset({1'b0}));
+
+	assign tmpOE__Button_S3_Top_State_net = (`CYDEV_CHIP_MEMBER_USED == `CYDEV_CHIP_MEMBER_3A && `CYDEV_CHIP_REVISION_USED < `CYDEV_CHIP_REVISION_3A_ES3) ? ~{1'b1} : {1'b1};
+
+	wire [0:0] tmpOE__Button_S4_Right_State_net;
+	wire [0:0] tmpFB_0__Button_S4_Right_State_net;
+	wire [0:0] tmpIO_0__Button_S4_Right_State_net;
+	wire [0:0] tmpINTERRUPT_0__Button_S4_Right_State_net;
+	electrical [0:0] tmpSIOVREF__Button_S4_Right_State_net;
+
+	cy_psoc3_pins_v1_10
+		#(.id("19ba1190-0de0-4da9-accf-25e993acc0dc"),
+		  .drive_mode(3'b110),
+		  .ibuf_enabled(1'b1),
+		  .init_dr_st(1'b1),
+		  .input_clk_en(0),
+		  .input_sync(1'b1),
+		  .input_sync_mode(1'b0),
+		  .intr_mode(2'b00),
+		  .invert_in_clock(0),
+		  .invert_in_clock_en(0),
+		  .invert_in_reset(0),
+		  .invert_out_clock(0),
+		  .invert_out_clock_en(0),
+		  .invert_out_reset(0),
+		  .io_voltage(""),
+		  .layout_mode("CONTIGUOUS"),
+		  .oe_conn(1'b0),
+		  .oe_reset(0),
+		  .oe_sync(1'b0),
+		  .output_clk_en(0),
+		  .output_clock_mode(1'b0),
+		  .output_conn(1'b1),
+		  .output_mode(1'b0),
+		  .output_reset(0),
+		  .output_sync(1'b0),
+		  .pa_in_clock(-1),
+		  .pa_in_clock_en(-1),
+		  .pa_in_reset(-1),
+		  .pa_out_clock(-1),
+		  .pa_out_clock_en(-1),
+		  .pa_out_reset(-1),
+		  .pin_aliases(""),
+		  .pin_mode("O"),
+		  .por_state(4),
+		  .sio_group_cnt(0),
+		  .sio_hyst(1'b1),
+		  .sio_ibuf(""),
+		  .sio_info(2'b00),
+		  .sio_obuf(""),
+		  .sio_refsel(""),
+		  .sio_vtrip(""),
+		  .sio_hifreq(""),
+		  .sio_vohsel(""),
+		  .slew_rate(1'b0),
+		  .spanning(0),
+		  .use_annotation(1'b0),
+		  .vtrip(2'b10),
+		  .width(1),
+		  .ovt_hyst_trim(1'b0),
+		  .ovt_needed(1'b0),
+		  .ovt_slew_control(2'b00),
+		  .input_buffer_sel(2'b00))
+		Button_S4_Right_State
+		 (.oe(tmpOE__Button_S4_Right_State_net),
+		  .y({Net_609}),
+		  .fb({tmpFB_0__Button_S4_Right_State_net[0:0]}),
+		  .io({tmpIO_0__Button_S4_Right_State_net[0:0]}),
+		  .siovref(tmpSIOVREF__Button_S4_Right_State_net),
+		  .interrupt({tmpINTERRUPT_0__Button_S4_Right_State_net[0:0]}),
+		  .in_clock({1'b0}),
+		  .in_clock_en({1'b1}),
+		  .in_reset({1'b0}),
+		  .out_clock({1'b0}),
+		  .out_clock_en({1'b1}),
+		  .out_reset({1'b0}));
+
+	assign tmpOE__Button_S4_Right_State_net = (`CYDEV_CHIP_MEMBER_USED == `CYDEV_CHIP_MEMBER_3A && `CYDEV_CHIP_REVISION_USED < `CYDEV_CHIP_REVISION_3A_ES3) ? ~{1'b1} : {1'b1};
+
+	wire [0:0] tmpOE__Button_S5_Select_State_net;
+	wire [0:0] tmpFB_0__Button_S5_Select_State_net;
+	wire [0:0] tmpIO_0__Button_S5_Select_State_net;
+	wire [0:0] tmpINTERRUPT_0__Button_S5_Select_State_net;
+	electrical [0:0] tmpSIOVREF__Button_S5_Select_State_net;
+
+	cy_psoc3_pins_v1_10
+		#(.id("cc959838-99c2-47ff-b5c8-c5892a9eae41"),
+		  .drive_mode(3'b110),
+		  .ibuf_enabled(1'b1),
+		  .init_dr_st(1'b1),
+		  .input_clk_en(0),
+		  .input_sync(1'b1),
+		  .input_sync_mode(1'b0),
+		  .intr_mode(2'b00),
+		  .invert_in_clock(0),
+		  .invert_in_clock_en(0),
+		  .invert_in_reset(0),
+		  .invert_out_clock(0),
+		  .invert_out_clock_en(0),
+		  .invert_out_reset(0),
+		  .io_voltage(""),
+		  .layout_mode("CONTIGUOUS"),
+		  .oe_conn(1'b0),
+		  .oe_reset(0),
+		  .oe_sync(1'b0),
+		  .output_clk_en(0),
+		  .output_clock_mode(1'b0),
+		  .output_conn(1'b1),
+		  .output_mode(1'b0),
+		  .output_reset(0),
+		  .output_sync(1'b0),
+		  .pa_in_clock(-1),
+		  .pa_in_clock_en(-1),
+		  .pa_in_reset(-1),
+		  .pa_out_clock(-1),
+		  .pa_out_clock_en(-1),
+		  .pa_out_reset(-1),
+		  .pin_aliases(""),
+		  .pin_mode("O"),
+		  .por_state(4),
+		  .sio_group_cnt(0),
+		  .sio_hyst(1'b1),
+		  .sio_ibuf(""),
+		  .sio_info(2'b00),
+		  .sio_obuf(""),
+		  .sio_refsel(""),
+		  .sio_vtrip(""),
+		  .sio_hifreq(""),
+		  .sio_vohsel(""),
+		  .slew_rate(1'b0),
+		  .spanning(0),
+		  .use_annotation(1'b0),
+		  .vtrip(2'b10),
+		  .width(1),
+		  .ovt_hyst_trim(1'b0),
+		  .ovt_needed(1'b0),
+		  .ovt_slew_control(2'b00),
+		  .input_buffer_sel(2'b00))
+		Button_S5_Select_State
+		 (.oe(tmpOE__Button_S5_Select_State_net),
+		  .y({Net_610}),
+		  .fb({tmpFB_0__Button_S5_Select_State_net[0:0]}),
+		  .io({tmpIO_0__Button_S5_Select_State_net[0:0]}),
+		  .siovref(tmpSIOVREF__Button_S5_Select_State_net),
+		  .interrupt({tmpINTERRUPT_0__Button_S5_Select_State_net[0:0]}),
+		  .in_clock({1'b0}),
+		  .in_clock_en({1'b1}),
+		  .in_reset({1'b0}),
+		  .out_clock({1'b0}),
+		  .out_clock_en({1'b1}),
+		  .out_reset({1'b0}));
+
+	assign tmpOE__Button_S5_Select_State_net = (`CYDEV_CHIP_MEMBER_USED == `CYDEV_CHIP_MEMBER_3A && `CYDEV_CHIP_REVISION_USED < `CYDEV_CHIP_REVISION_3A_ES3) ? ~{1'b1} : {1'b1};
 
 
 
