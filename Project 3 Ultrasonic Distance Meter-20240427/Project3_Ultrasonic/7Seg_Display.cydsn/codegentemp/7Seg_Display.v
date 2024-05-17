@@ -1,6 +1,6 @@
 // ======================================================================
 // 7Seg_Display.v generated from TopDesign.cysch
-// 05/17/2024 at 09:58
+// 05/17/2024 at 10:17
 // This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 // ======================================================================
 
@@ -1843,7 +1843,7 @@ module top ;
 		#(.id("1a9e21c4-d47e-451d-8868-4a4bb48ad8b7"),
 		  .source_clock_id(""),
 		  .divisor(0),
-		  .period("5000000000000"),
+		  .period("1000000000000"),
 		  .is_direct(0),
 		  .is_digital(1))
 		Display_Clk

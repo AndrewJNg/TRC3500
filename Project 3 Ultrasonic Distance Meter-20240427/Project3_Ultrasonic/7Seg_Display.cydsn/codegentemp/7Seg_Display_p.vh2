@@ -1,5 +1,5 @@
 -- Project:   7Seg_Display
--- Generated: 05/17/2024 09:58:25
+-- Generated: 05/17/2024 10:17:21
 -- PSoC Creator  4.4
 
 ENTITY \7Seg_Display\ IS
@@ -760,10 +760,10 @@ BEGIN
             dclk_1 => \UART_1:Net_9_local\,
             dclk_glb_2 => Net_517,
             dclk_2 => Net_517_local,
-            dclk_glb_3 => System_clk,
-            dclk_3 => System_clk_local,
-            dclk_glb_4 => Net_83,
-            dclk_4 => Net_83_local);
+            dclk_glb_3 => Net_83,
+            dclk_3 => Net_83_local,
+            dclk_glb_4 => System_clk,
+            dclk_4 => System_clk_local);
 
     Dis_A:logicalport
         GENERIC MAP(

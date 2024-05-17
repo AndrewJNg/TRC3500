@@ -2,7 +2,7 @@
 --	Conversion of 7Seg_Display.v to vh2:
 --
 --	Cypress Semiconductor - WARP Version 6.3 IR 41
---	Fri May 17 09:58:22 2024
+--	Fri May 17 10:17:18 2024
 --
 
 USE cypress.cypress.all;
@@ -2363,7 +2363,7 @@ Display_Clk:cy_clock_v1_0
 		id=>"1a9e21c4-d47e-451d-8868-4a4bb48ad8b7",
 		source_clock_id=>"",
 		divisor=>0,
-		period=>"5000000000000",
+		period=>"1000000000000",
 		is_direct=>'0',
 		is_digital=>'1')
 	PORT MAP(clock_out=>Net_83,

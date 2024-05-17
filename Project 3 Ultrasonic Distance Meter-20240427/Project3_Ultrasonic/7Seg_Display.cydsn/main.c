@@ -28,6 +28,13 @@ void BuzzerRuntime(double duration);
 void seg_runtime(double value);
 void runtime();
 
+void EEPROM_writeDouble(uint16 address, double value);
+double EEPROM_readDouble(uint16 address);
+void writeDoubleArrayToEEPROM(uint16 startAddress, double* array, uint16 arraySize);
+void readDoubleArrayFromEEPROM(uint16 startAddress, double* array, uint16 arraySize);
+void EEPROM_writeInt(uint16 address, int value);
+int EEPROM_readInt(uint16 address) ;
+
 
 // ========================================================================================================================
 double counter = 0;
@@ -105,12 +112,28 @@ int main(void)
         runtime();
     }
     
+    // EEPROM Write startup
+    /*
+    // Place your initialization/startup code here (e.g. MyInst_Start())
+    int teamNumber = 200;
+    EEPROM_writeInt(0, teamNumber);
+    int nextAddress = sizeof(int);
+    char measurementSystem = 'c';
+    EEPROM_WriteByte((uint8)measurementSystem, nextAddress);
+    nextAddress += sizeof(char);
+    double calibration[55] = {0.0};
+    writeDoubleArrayToEEPROM(nextAddress, calibration, 55);
+    */
+    
     //int eprom_read = EEPROM_ReadByte(0x00);
     //int eprom_write =eprom_read+1;
     //EEPROM_WriteByte(eprom_write,0x0000);
     
     
-    int eprom_num = EEPROM_ReadByte(55*sizeof(double)+sizeof(char));
+    //int eprom_num = EEPROM_ReadByte(55*sizeof(double)+sizeof(char));
+    int eprom_num = EEPROM_ReadByte(0);
+    char eprom_in = EEPROM_ReadByte(sizeof(int));
+    
     
     
     for(;;)
@@ -118,8 +141,10 @@ int main(void)
         
         //display_num( ultra_reading());
         //display_num( current_second());
+        if (eprom_in =='c') display_num(-1);
+        if (eprom_in =='i') display_num(-2);
         
-        display_num( eprom_num);
+        //display_num( eprom_num);
         //display_num( 12 );
         //display_num(-3);
         //BuzzerRuntime(0.2);
@@ -144,7 +169,51 @@ double current_second()
 }
 // ========================================================================================================================
 /* EEPROM */
+/*
+void EEPROM_writeDouble(uint16 address, double value) {
+    uint8 ptr = (uint8)(void*)&value;  // Convert double to byte array
+    for (uint8 i = 0; i < sizeof(double); i++) {
+        EEPROM_WriteByte(ptr[i], address + i);
+    }
+}
 
+double EEPROM_readDouble(uint16 address) {
+    double value = 0.0;
+    uint8 ptr = (uint8)(void*)&value;
+    for (uint8 i = 0; i < sizeof(double); i++) {
+        ptr[i] = EEPROM_ReadByte(address + i);
+    }
+    return value;
+}
+
+void writeDoubleArrayToEEPROM(uint16 startAddress, double* array, uint16 arraySize) {
+    for (uint16 i = 0; i < arraySize; i++) {
+        EEPROM_writeDouble(startAddress + i * sizeof(double), array[i]);
+    }
+}
+
+void readDoubleArrayFromEEPROM(uint16 startAddress, double* array, uint16 arraySize) {
+    for (uint16 i = 0; i < arraySize; i++) {
+        array[i] = EEPROM_readDouble(startAddress + i * sizeof(double));
+    }
+}
+
+void EEPROM_writeInt(uint16 address, int value) {
+    uint8 ptr = (uint8)(void*)&value;  // Convert int to byte array
+    for (uint8 i = 0; i < sizeof(int); i++) {
+        EEPROM_WriteByte(ptr[i], address + i);
+    }
+}
+
+int EEPROM_readInt(uint16 address) {
+    int value = 0;
+    uint8 ptr = (uint8)(void*)&value;
+    for (uint8 i = 0; i < sizeof(int); i++) {
+        ptr[i] = EEPROM_ReadByte(address + i);
+    }
+    return value;
+}
+*/
 
 // ========================================================================================================================
 /* UART communications */

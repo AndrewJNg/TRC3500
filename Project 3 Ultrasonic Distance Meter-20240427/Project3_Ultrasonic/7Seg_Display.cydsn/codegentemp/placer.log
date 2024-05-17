@@ -6,7 +6,7 @@
 
 #Build Date:         Sep  9 2019 11:47:43
 
-#File Generated:     May 17 2024 09:58:25
+#File Generated:     May 17 2024 10:17:21
 
 #Purpose:            
 
@@ -152,17 +152,17 @@ analysis after routing.
 ======================================================================
 Number of clocks: 12
 Clock: Clock_1              | Frequency:  35.7 MHz | Target:   0.0 MHz
-Clock: CyBUS_CLK            | Frequency:   1.4 MHz | Target:  24.0 MHz
+Clock: CyBUS_CLK            | Frequency:   1.5 MHz | Target:  24.0 MHz
 Clock: CyILO                | Frequency: N/A       | Target:   0.0 MHz
 Clock: CyIMO                | Frequency: N/A       | Target:   3.0 MHz
 Clock: CyMASTER_CLK         | Frequency: N/A       | Target:  24.0 MHz
 Clock: CyPLL_OUT            | Frequency: N/A       | Target:  24.0 MHz
 Clock: Display_Clk          | Frequency: N/A       | Target:   0.0 MHz
 Clock: Display_Clk(routed)  | Frequency: N/A       | Target:   0.0 MHz
-Clock: Transmitter_Clk      | Frequency:   9.8 MHz | Target:   0.0 MHz
+Clock: Transmitter_Clk      | Frequency:   7.4 MHz | Target:   0.0 MHz
 Clock: Transmitter_Clk(routed) | Frequency: N/A       | Target:   0.0 MHz
-Clock: UART_1_IntClock      | Frequency:   1.4 MHz | Target:   0.1 MHz
-Clock: timer_clock          | Frequency:  43.8 MHz | Target:  12.0 MHz
+Clock: UART_1_IntClock      | Frequency:   1.5 MHz | Target:   0.1 MHz
+Clock: timer_clock          | Frequency:  48.8 MHz | Target:  12.0 MHz
 
 ======================================================================
                      End of Clock Summary
@@ -173,5 +173,5 @@ D2088: Phase 8, elapsed time : 0.0 (sec)
 
 D2054: Placement of the design completed successfully
 
-I2076: Total run-time: 1.1 sec.
+I2076: Total run-time: 1.3 sec.
 
