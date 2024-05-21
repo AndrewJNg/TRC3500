@@ -12,15 +12,12 @@
 
 // ========================================================================================================================
 #include "project.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 void display_num(double value);
 void draw_7Seg(int number,int dp);
 CY_ISR(seg7_ISR);
-CY_ISR(button1ISR);
-CY_ISR(button2ISR);
-CY_ISR(button3ISR);
-CY_ISR(button4ISR);
-CY_ISR(button5ISR);
 CY_ISR(Receive_Ultra);
 
 void print_uart(int num);
@@ -49,6 +46,11 @@ void ImperialLedOn(void);
 void SingleButtonWait(void);
 void DoubleButtonWait(void);
 
+float find_median(float arr[], int size);
+int compare_qsort(const void *a, const void *b);
+
+double ultra_avg();
+
 
 
 // ========================================================================================================================
@@ -59,12 +61,6 @@ double previous_buzz= 0;
 
 double buzz_duration=0;
 double seg_num =0;
-
-int button1=1;
-int button2=1;
-int button3=1;
-int button4=1;
-int button5=1;
 
 /*
 CY_ISR(MyCustomISR1) //Right button interrupt
@@ -84,36 +80,40 @@ CY_ISR(MyCustomISR2) //Right button interrupt
     //BuzzerSound(0.1);
 }*/
 
-CY_ISR(button1ISR) {button1=!button1;}
-CY_ISR(button2ISR) {button2=!button2;}
-CY_ISR(button3ISR) {button3=!button3;}
-CY_ISR(button4ISR) {button4=!button4;}
-CY_ISR(button5ISR) {button5=!button5;}
-
-
 int mode = 0;
 int group_num = 0;
 char cm_or_inch;
 
 double distance=0;
 
+// Compare two values for qsort
+int compare_qsort(const void *a, const void *b)
+{
+    return (*(int*)a - *(int*)b);
+}
+// Find the median of an array
+float find_median(float arr[], int size) 
+{
+    double median;
+    qsort(arr, size, sizeof(int), compare_qsort); // Sort the array
+
+    // Check if the size of the array is odd or even
+    if (size % 2 == 0) 
+    {
+        median = (arr[(size/2)-2] + arr[(size/2)-1] + arr[size/2] + arr[(size/2)+1] + arr[(size/2)+2]) / 5.0;
+    }
+    else
+    {
+//        median = (arr[(size - 1) / 2] + arr[size / 2]) / 2.0;
+        median = (arr[((size-1)/2)-2] + arr[((size-1)/2)-1] + arr[(size-1)/2] + arr[(size+1)/2]+ arr[((size+1)/2)+1] + arr[((size+1)/2)+2]) / 6.0;
+    }
+    return median;
+}
+
 int main(void)
 {
     // Enable interrupts
     CyGlobalIntEnable; 
-    
-    // Enable button interrupts
-    isr_1_ClearPending(); 
-    isr_2_ClearPending(); 
-    isr_3_ClearPending(); 
-    isr_4_ClearPending(); 
-    isr_5_ClearPending(); 
-    
-    isr_1_StartEx(button1ISR);  
-    isr_2_StartEx(button2ISR);  
-    isr_3_StartEx(button3ISR);  
-    isr_4_StartEx(button4ISR);  
-    isr_5_StartEx(button5ISR);  
     
     // 7 Segment display setup
     isr_7Seg_ClearPending(); 
@@ -141,7 +141,7 @@ int main(void)
     // Setup UART
     UART_1_Start();
     UART_1_PutString("Start UART");
-    
+    UART_1_WriteTxData(0x20);   
     
     double setup_previous_time =current_second();
     while((current_second()-setup_previous_time)<=4)
@@ -154,17 +154,17 @@ int main(void)
     }
     
     // EEPROM Write startup
-    /*
+    //
     // Place your initialization/startup code here (e.g. MyInst_Start())
-    int teamNumber = 200;
-    EEPROM_writeInt(0, teamNumber);
-    int nextAddress = sizeof(int);
-    char measurementSystem = 'c';
-    EEPROM_WriteByte((uint8)measurementSystem, nextAddress);
-    nextAddress += sizeof(char);
-    double calibration[55] = {0.0};
-    writeDoubleArrayToEEPROM(nextAddress, calibration, 55);
-    */
+    //int teamNumber = 200;
+    //EEPROM_writeInt(0, teamNumber);
+    //int nextAddress = sizeof(int);
+    //char measurementSystem = 'c';
+    //EEPROM_WriteByte((uint8)measurementSystem, nextAddress);
+    //nextAddress += sizeof(char);
+    //double calibration[55] = {0.0};
+    //writeDoubleArrayToEEPROM(nextAddress, calibration, 55);
+    //
     
     //int eprom_read = EEPROM_ReadByte(0x00);
     //int eprom_write =eprom_read+1;
@@ -176,53 +176,55 @@ int main(void)
     cm_or_inch = EEPROM_ReadByte(sizeof(int));
     
     
-    
+    double previous_second = current_second();
     for(;;)
     {
-        /*
-    print_uart(mode);
     
-        if (mode==0)
+        
+        //UART_1_WriteTxData(0x20);    
+        //print_uart(mode);
+    
+        /*if (mode==0)
         {
-        print_uart(mode);
             mode_0();
         
         }
         if (mode==1)
         {
-        print_uart(mode);
-        //mode_1();
+            mode_1();
         }
         if (mode==2)
         {
-        print_uart(mode);
-            //mode_2();
+            mode_2();
         }
         if (mode==3)
         {
-        print_uart(mode);
-            //mode_3();
+            mode_3();
         }*/
         
         //mode_0();
-        //display_num( ultra_reading());
+        if(Button_S5_Select_State_Read()==0)
+        {
+           display_num(  ultra_avg());
+            
+            
+        }
+        
         //display_num( current_second());
-        //display_num( current_second());
+        //display_num( 0);
         //if (cm_or_inch =='c') display_num(-1);
         //if (cm_or_inch =='i') display_num(-2);
         
         //display_num( eprom_num);
-        display_num(Button_S5_Select_State_Read());
+        //display_num(Button_S5_Select_State_Read()*1000+ Button_S2_Left_Read()*100+Button_S4_Right_Read()*10);
         //display_num(-3);
         //BuzzerRuntime(0.2);
         runtime();
         
         
     }
+    
 }
-int Button_S2_Left(){return button2;}
-int Button_S4_Right(){return button4;}
-int Button_S5_Select() {return button5;}
 
 // ========================================================================================================================
 //sleep mode
@@ -237,7 +239,7 @@ void mode_0(void)
         {
             display_num(-3); //display decimal
         }
-        else if (time_diff > 1  || time_diff <= 2)
+        else if ((time_diff > 1)  && (time_diff <= 2))
         {
             display_num(-4); //display blank
         }
@@ -248,21 +250,21 @@ void mode_0(void)
       
         
         //check if either button is pressed
-        if (Button_S5_Select() == 0 || Button_S2_Left() == 0)
+        if ((Button_S5_Select_Read() == 0) || (Button_S2_Left_Read() == 0))
         {
             //wait 0.2 seconds to delay check
             double check_second = current_second();
-            while (current_second() - check_second <0.2)
+            while ((current_second() - check_second )<0.2)
             {
                 runtime();
             }
            
             //if both buttons pressed, wait 1 seconds to go to mode 1
-            if (Button_S5_Select() == 0 && Button_S2_Left() == 0)
+            if ((Button_S5_Select_Read() == 0) && (Button_S2_Left_Read() == 0))
             {
                 BuzzerSound(0.2);
                 check_second = current_second();        
-                while (Button_S5_Select() == 0 && Button_S2_Left() == 0)
+                while ((Button_S5_Select_Read() == 0) && (Button_S2_Left_Read() == 0))
                 {
                     runtime();
                     if (current_second()-check_second==1)
@@ -273,7 +275,7 @@ void mode_0(void)
                 }  
             }
             //if instead just button 1 is pressed, go to mode 3
-            else if (Button_S5_Select() == 0 && Button_S2_Left() == 1)
+            else if ((Button_S5_Select_Read() == 0) && (Button_S2_Left_Read() == 1))
             {
                 mode = 3;
             }
@@ -305,21 +307,21 @@ void mode_1(void)
        
        
         // Check to go to mode 2
-        if (Button_S4_Right() == 0) // Assuming active low buttons
+        if (Button_S4_Right_Read() == 0) // Assuming active low buttons
         {
             SingleButtonWait();
             BuzzerSound(0.2);
             mode = 2;
         }
         //check to increment number
-        if (Button_S5_Select() == 0)
+        if (Button_S5_Select_Read() == 0)
         {
             SingleButtonWait();
             BuzzerSound(0.2);
             group_num ++;
         }
         //check to decrement number
-        if (Button_S2_Left() == 0)
+        if (Button_S2_Left_Read() == 0)
         {
             SingleButtonWait();
             BuzzerSound(0.2);
@@ -340,14 +342,14 @@ void mode_2(void)
         if (cm_or_inch =='i') display_num(-2);
         
         //check to go to mode 0
-        if (Button_S4_Right() == 0)
+        if (Button_S4_Right_Read() == 0)
         {
             SingleButtonWait();
             BuzzerSound(0.2);
             mode = 0;
         }
         //Set system to metric (centimeters)
-        if (Button_S5_Select() == 0)
+        if (Button_S5_Select_Read() == 0)
         {
             SingleButtonWait();
             BuzzerSound(0.2);
@@ -356,7 +358,7 @@ void mode_2(void)
             cm_or_inch = 'c'; // set system to use cm
         }
         //Set system to imperial (inches)
-        if (Button_S2_Left() == 0)
+        if (Button_S2_Left_Read() == 0)
         {
             SingleButtonWait();
             BuzzerSound(0.2);
@@ -395,7 +397,7 @@ void mode_3(void)
         if (current_second()-previous_second >=2)
         {
             //if button pressed, reset whole loop from start. else go to mode 0
-            if (Button_S5_Select() == 0)
+            if (Button_S5_Select_Read() == 0)
             {
                 BuzzerSound(0.2);
                 flag_read=1;
@@ -415,20 +417,20 @@ void mode_3(void)
 
 void MetricLedOn(void)
 {
-    LED2_Yellow_Write(0);
-    LED3_Green_Write(1);
+    //LED2_Yellow_Write(0);
+    //LED3_Green_Write(1);
 }
 
 void ImperialLedOn(void)
 {
-    LED3_Green_Write(0);
-    LED2_Yellow_Write(1);
+    //LED3_Green_Write(0);
+    //LED2_Yellow_Write(1);
 
 }
 
 void SingleButtonWait(void)
 {
-    while (Button_S4_Right()==0 || Button_S5_Select()==0 || Button_S2_Left()==0)
+    while (Button_S4_Right_Read()==0 || Button_S5_Select_Read()==0 || Button_S2_Left_Read()==0)
     {
         runtime();
     }
@@ -436,7 +438,7 @@ void SingleButtonWait(void)
 
 void DoubleButtonWait(void)
 {
-    while (Button_S5_Select() == 0 && Button_S2_Left() == 0)
+    while (Button_S5_Select_Read() == 0 && Button_S2_Left_Read() == 0)
     {
         runtime();
     }
@@ -448,6 +450,18 @@ void runtime()
 {
     BuzzerRuntime(buzz_duration);
     seg_runtime(seg_num);
+    LED1_Red_Write(0);
+    LED2_Yellow_Write(0);
+    LED3_Green_Write(0);
+    
+    if(mode==0) LED1_Red_Write(1);
+    if(mode==1) LED2_Yellow_Write(1);
+    if(mode==2) LED3_Green_Write(1);
+    if(mode==3) 
+    {
+        LED2_Yellow_Write(1);
+        LED3_Green_Write(1);
+    }
     
 }
 
@@ -555,13 +569,38 @@ void BuzzerRuntime(double duration)
 
 double value = 0; 
 //double distance = 0;
+int waiting_ultra = 0;
 
+double ultra_avg(){
+ 
+    float vals[10] = {0,0,0,0,0,0,0,0,0,0};
+    float count_median[20] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    double final_dist;
+    for(int x = 0; x< 20 ; x++)
+    {
+        for (int i = 0; i < 10; i++) 
+        {    
+        vals[i] = ultra_reading();
+        }
+        count_median[x] = find_median(vals, 10);
+    }
+            
+    final_dist = find_median(count_median, 20);
+    //display_num( final_dist);
+    return final_dist;
+}
 double ultra_reading()
 {
+    isr_6_ClearPending();
+    isr_6_StartEx(Receive_Ultra);  
+    
     send_ultra_pulse();
     
+    while(waiting_ultra==1)
+    {
+    }
     // TODO: may need to write blocking code to obtain ultrasonic values
-    value =  ((double)time_passed_step/10000)-0.5; //in ms
+    value =  (double)time_passed_step/10000; //in ms
     distance = (34*value)/2;
     
     return distance;
@@ -569,8 +608,12 @@ double ultra_reading()
 void send_ultra_pulse()
 {
     Control_Reg_1_Write(1); // Reset counter to do more pulses
-    Timer_1_Start();        // Start receiver timer
+    CyDelayUs(150);
     Control_Reg_1_Write(0);
+    
+    Timer_1_Start();        // Start receiver timer
+    
+    waiting_ultra =1;
 }
 
 uint8 InterruptCnt;
@@ -578,6 +621,9 @@ CY_ISR(Receive_Ultra)  // Ultrasonic Receiver
 {
     Timer_1_Stop();
     time_passed_step = Timer_1_ReadPeriod()-Timer_1_ReadCounter() ;
+    waiting_ultra =0;
+    
+    print_uart(time_passed_step);
 }
 
 
@@ -607,6 +653,7 @@ void seg_runtime(double value){
       
     if (run_7_Seg==0) return; // Ignore the rest of the code when interrupt is not triggered
     
+    for (int i = 0; i < 4; ++i) dp[i] = 0; // Reset all 0 
     if(value>0)
     {
     
@@ -651,10 +698,11 @@ void seg_runtime(double value){
     }
     else if(value==0)
     {
-        D[0] = 0; //C
-        D[1] = 0; //E
-        D[2] = 0; //N
-        D[3] = 0; //t
+        D[0] = 0; 
+        D[1] = 0;
+        D[2] = 0; 
+        D[3] = 0; 
+        dp[0]=1;
     }
     
     else if(value== -1) //Show cm icon

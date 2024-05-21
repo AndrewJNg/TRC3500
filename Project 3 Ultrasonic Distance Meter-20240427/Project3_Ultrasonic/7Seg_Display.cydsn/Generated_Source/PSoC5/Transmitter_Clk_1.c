@@ -1,5 +1,5 @@
 /*******************************************************************************
-* File Name: Display_Clk.c
+* File Name: Transmitter_Clk_1.c
 * Version 2.20
 *
 *  Description:
@@ -15,7 +15,7 @@
 *******************************************************************************/
 
 #include <cydevice_trm.h>
-#include "Display_Clk.h"
+#include "Transmitter_Clk_1.h"
 
 /* Clock Distribution registers. */
 #define CLK_DIST_LD              (* (reg8 *) CYREG_CLKDIST_LD)
@@ -28,7 +28,7 @@
 
 
 /*******************************************************************************
-* Function Name: Display_Clk_Start
+* Function Name: Transmitter_Clk_1_Start
 ********************************************************************************
 *
 * Summary:
@@ -42,16 +42,16 @@
 *  None
 *
 *******************************************************************************/
-void Display_Clk_Start(void) 
+void Transmitter_Clk_1_Start(void) 
 {
     /* Set the bit to enable the clock. */
-    Display_Clk_CLKEN |= Display_Clk_CLKEN_MASK;
-	Display_Clk_CLKSTBY |= Display_Clk_CLKSTBY_MASK;
+    Transmitter_Clk_1_CLKEN |= Transmitter_Clk_1_CLKEN_MASK;
+	Transmitter_Clk_1_CLKSTBY |= Transmitter_Clk_1_CLKSTBY_MASK;
 }
 
 
 /*******************************************************************************
-* Function Name: Display_Clk_Stop
+* Function Name: Transmitter_Clk_1_Stop
 ********************************************************************************
 *
 * Summary:
@@ -68,11 +68,11 @@ void Display_Clk_Start(void)
 *  None
 *
 *******************************************************************************/
-void Display_Clk_Stop(void) 
+void Transmitter_Clk_1_Stop(void) 
 {
     /* Clear the bit to disable the clock. */
-    Display_Clk_CLKEN &= (uint8)(~Display_Clk_CLKEN_MASK);
-	Display_Clk_CLKSTBY &= (uint8)(~Display_Clk_CLKSTBY_MASK);
+    Transmitter_Clk_1_CLKEN &= (uint8)(~Transmitter_Clk_1_CLKEN_MASK);
+	Transmitter_Clk_1_CLKSTBY &= (uint8)(~Transmitter_Clk_1_CLKSTBY_MASK);
 }
 
 
@@ -80,7 +80,7 @@ void Display_Clk_Stop(void)
 
 
 /*******************************************************************************
-* Function Name: Display_Clk_StopBlock
+* Function Name: Transmitter_Clk_1_StopBlock
 ********************************************************************************
 *
 * Summary:
@@ -97,9 +97,9 @@ void Display_Clk_Stop(void)
 *  None
 *
 *******************************************************************************/
-void Display_Clk_StopBlock(void) 
+void Transmitter_Clk_1_StopBlock(void) 
 {
-    if ((Display_Clk_CLKEN & Display_Clk_CLKEN_MASK) != 0u)
+    if ((Transmitter_Clk_1_CLKEN & Transmitter_Clk_1_CLKEN_MASK) != 0u)
     {
 #if HAS_CLKDIST_LD_DISABLE
         uint16 oldDivider;
@@ -107,18 +107,18 @@ void Display_Clk_StopBlock(void)
         CLK_DIST_LD = 0u;
 
         /* Clear all the mask bits except ours. */
-#if defined(Display_Clk__CFG3)
-        CLK_DIST_AMASK = Display_Clk_CLKEN_MASK;
+#if defined(Transmitter_Clk_1__CFG3)
+        CLK_DIST_AMASK = Transmitter_Clk_1_CLKEN_MASK;
         CLK_DIST_DMASK = 0x00u;
 #else
-        CLK_DIST_DMASK = Display_Clk_CLKEN_MASK;
+        CLK_DIST_DMASK = Transmitter_Clk_1_CLKEN_MASK;
         CLK_DIST_AMASK = 0x00u;
-#endif /* Display_Clk__CFG3 */
+#endif /* Transmitter_Clk_1__CFG3 */
 
         /* Clear mask of bus clock. */
         CLK_DIST_BCFG2 &= (uint8)(~BCFG2_MASK);
 
-        oldDivider = CY_GET_REG16(Display_Clk_DIV_PTR);
+        oldDivider = CY_GET_REG16(Transmitter_Clk_1_DIV_PTR);
         CY_SET_REG16(CYREG_CLKDIST_WRK0, oldDivider);
         CLK_DIST_LD = CYCLK_LD_DISABLE | CYCLK_LD_SYNC_EN | CYCLK_LD_LOAD;
 
@@ -127,13 +127,13 @@ void Display_Clk_StopBlock(void)
 #endif /* HAS_CLKDIST_LD_DISABLE */
 
         /* Clear the bit to disable the clock. */
-        Display_Clk_CLKEN &= (uint8)(~Display_Clk_CLKEN_MASK);
-        Display_Clk_CLKSTBY &= (uint8)(~Display_Clk_CLKSTBY_MASK);
+        Transmitter_Clk_1_CLKEN &= (uint8)(~Transmitter_Clk_1_CLKEN_MASK);
+        Transmitter_Clk_1_CLKSTBY &= (uint8)(~Transmitter_Clk_1_CLKSTBY_MASK);
 
 #if HAS_CLKDIST_LD_DISABLE
         /* Clear the disable bit */
         CLK_DIST_LD = 0x00u;
-        CY_SET_REG16(Display_Clk_DIV_PTR, oldDivider);
+        CY_SET_REG16(Transmitter_Clk_1_DIV_PTR, oldDivider);
 #endif /* HAS_CLKDIST_LD_DISABLE */
     }
 }
@@ -141,7 +141,7 @@ void Display_Clk_StopBlock(void)
 
 
 /*******************************************************************************
-* Function Name: Display_Clk_StandbyPower
+* Function Name: Transmitter_Clk_1_StandbyPower
 ********************************************************************************
 *
 * Summary:
@@ -154,21 +154,21 @@ void Display_Clk_StopBlock(void)
 *  None
 *
 *******************************************************************************/
-void Display_Clk_StandbyPower(uint8 state) 
+void Transmitter_Clk_1_StandbyPower(uint8 state) 
 {
     if(state == 0u)
     {
-        Display_Clk_CLKSTBY &= (uint8)(~Display_Clk_CLKSTBY_MASK);
+        Transmitter_Clk_1_CLKSTBY &= (uint8)(~Transmitter_Clk_1_CLKSTBY_MASK);
     }
     else
     {
-        Display_Clk_CLKSTBY |= Display_Clk_CLKSTBY_MASK;
+        Transmitter_Clk_1_CLKSTBY |= Transmitter_Clk_1_CLKSTBY_MASK;
     }
 }
 
 
 /*******************************************************************************
-* Function Name: Display_Clk_SetDividerRegister
+* Function Name: Transmitter_Clk_1_SetDividerRegister
 ********************************************************************************
 *
 * Summary:
@@ -190,17 +190,17 @@ void Display_Clk_StandbyPower(uint8 state)
 *  None
 *
 *******************************************************************************/
-void Display_Clk_SetDividerRegister(uint16 clkDivider, uint8 restart)
+void Transmitter_Clk_1_SetDividerRegister(uint16 clkDivider, uint8 restart)
                                 
 {
     uint8 enabled;
 
-    uint8 currSrc = Display_Clk_GetSourceRegister();
-    uint16 oldDivider = Display_Clk_GetDividerRegister();
+    uint8 currSrc = Transmitter_Clk_1_GetSourceRegister();
+    uint16 oldDivider = Transmitter_Clk_1_GetDividerRegister();
 
     if (clkDivider != oldDivider)
     {
-        enabled = Display_Clk_CLKEN & Display_Clk_CLKEN_MASK;
+        enabled = Transmitter_Clk_1_CLKEN & Transmitter_Clk_1_CLKEN_MASK;
 
         if ((currSrc == (uint8)CYCLK_SRC_SEL_CLK_SYNC_D) && ((oldDivider == 0u) || (clkDivider == 0u)))
         {
@@ -210,15 +210,15 @@ void Display_Clk_SetDividerRegister(uint16 clkDivider, uint8 restart)
                 /* Moving away from SSS, set the divider first so when SSS is cleared we    */
                 /* don't halt the clock.  Using the shadow load isn't required as the       */
                 /* divider is ignored while SSS is set.                                     */
-                CY_SET_REG16(Display_Clk_DIV_PTR, clkDivider);
-                Display_Clk_MOD_SRC &= (uint8)(~CYCLK_SSS);
+                CY_SET_REG16(Transmitter_Clk_1_DIV_PTR, clkDivider);
+                Transmitter_Clk_1_MOD_SRC &= (uint8)(~CYCLK_SSS);
             }
             else
             {
                 /* Moving to SSS, set SSS which then ignores the divider and we can set     */
                 /* it without bothering with the shadow load.                               */
-                Display_Clk_MOD_SRC |= CYCLK_SSS;
-                CY_SET_REG16(Display_Clk_DIV_PTR, clkDivider);
+                Transmitter_Clk_1_MOD_SRC |= CYCLK_SSS;
+                CY_SET_REG16(Transmitter_Clk_1_DIV_PTR, clkDivider);
             }
         }
         else
@@ -229,18 +229,18 @@ void Display_Clk_SetDividerRegister(uint16 clkDivider, uint8 restart)
                 CLK_DIST_LD = 0x00u;
 
                 /* Clear all the mask bits except ours. */
-#if defined(Display_Clk__CFG3)
-                CLK_DIST_AMASK = Display_Clk_CLKEN_MASK;
+#if defined(Transmitter_Clk_1__CFG3)
+                CLK_DIST_AMASK = Transmitter_Clk_1_CLKEN_MASK;
                 CLK_DIST_DMASK = 0x00u;
 #else
-                CLK_DIST_DMASK = Display_Clk_CLKEN_MASK;
+                CLK_DIST_DMASK = Transmitter_Clk_1_CLKEN_MASK;
                 CLK_DIST_AMASK = 0x00u;
-#endif /* Display_Clk__CFG3 */
+#endif /* Transmitter_Clk_1__CFG3 */
                 /* Clear mask of bus clock. */
                 CLK_DIST_BCFG2 &= (uint8)(~BCFG2_MASK);
 
                 /* If clock is currently enabled, disable it if async or going from N-to-1*/
-                if (((Display_Clk_MOD_SRC & CYCLK_SYNC) == 0u) || (clkDivider == 0u))
+                if (((Transmitter_Clk_1_MOD_SRC & CYCLK_SYNC) == 0u) || (clkDivider == 0u))
                 {
 #if HAS_CLKDIST_LD_DISABLE
                     CY_SET_REG16(CYREG_CLKDIST_WRK0, oldDivider);
@@ -250,7 +250,7 @@ void Display_Clk_SetDividerRegister(uint16 clkDivider, uint8 restart)
                     while ((CLK_DIST_LD & CYCLK_LD_LOAD) != 0u) { }
 #endif /* HAS_CLKDIST_LD_DISABLE */
 
-                    Display_Clk_CLKEN &= (uint8)(~Display_Clk_CLKEN_MASK);
+                    Transmitter_Clk_1_CLKEN &= (uint8)(~Transmitter_Clk_1_CLKEN_MASK);
 
 #if HAS_CLKDIST_LD_DISABLE
                     /* Clear the disable bit */
@@ -260,7 +260,7 @@ void Display_Clk_SetDividerRegister(uint16 clkDivider, uint8 restart)
             }
 
             /* Load divide value. */
-            if ((Display_Clk_CLKEN & Display_Clk_CLKEN_MASK) != 0u)
+            if ((Transmitter_Clk_1_CLKEN & Transmitter_Clk_1_CLKEN_MASK) != 0u)
             {
                 /* If the clock is still enabled, use the shadow registers */
                 CY_SET_REG16(CYREG_CLKDIST_WRK0, clkDivider);
@@ -271,8 +271,8 @@ void Display_Clk_SetDividerRegister(uint16 clkDivider, uint8 restart)
             else
             {
                 /* If the clock is disabled, set the divider directly */
-                CY_SET_REG16(Display_Clk_DIV_PTR, clkDivider);
-				Display_Clk_CLKEN |= enabled;
+                CY_SET_REG16(Transmitter_Clk_1_DIV_PTR, clkDivider);
+				Transmitter_Clk_1_CLKEN |= enabled;
             }
         }
     }
@@ -280,7 +280,7 @@ void Display_Clk_SetDividerRegister(uint16 clkDivider, uint8 restart)
 
 
 /*******************************************************************************
-* Function Name: Display_Clk_GetDividerRegister
+* Function Name: Transmitter_Clk_1_GetDividerRegister
 ********************************************************************************
 *
 * Summary:
@@ -294,14 +294,14 @@ void Display_Clk_SetDividerRegister(uint16 clkDivider, uint8 restart)
 *  divide by 2, the return value will be 1.
 *
 *******************************************************************************/
-uint16 Display_Clk_GetDividerRegister(void) 
+uint16 Transmitter_Clk_1_GetDividerRegister(void) 
 {
-    return CY_GET_REG16(Display_Clk_DIV_PTR);
+    return CY_GET_REG16(Transmitter_Clk_1_DIV_PTR);
 }
 
 
 /*******************************************************************************
-* Function Name: Display_Clk_SetModeRegister
+* Function Name: Transmitter_Clk_1_SetModeRegister
 ********************************************************************************
 *
 * Summary:
@@ -329,14 +329,14 @@ uint16 Display_Clk_GetDividerRegister(void)
 *  None
 *
 *******************************************************************************/
-void Display_Clk_SetModeRegister(uint8 modeBitMask) 
+void Transmitter_Clk_1_SetModeRegister(uint8 modeBitMask) 
 {
-    Display_Clk_MOD_SRC |= modeBitMask & (uint8)Display_Clk_MODE_MASK;
+    Transmitter_Clk_1_MOD_SRC |= modeBitMask & (uint8)Transmitter_Clk_1_MODE_MASK;
 }
 
 
 /*******************************************************************************
-* Function Name: Display_Clk_ClearModeRegister
+* Function Name: Transmitter_Clk_1_ClearModeRegister
 ********************************************************************************
 *
 * Summary:
@@ -364,14 +364,14 @@ void Display_Clk_SetModeRegister(uint8 modeBitMask)
 *  None
 *
 *******************************************************************************/
-void Display_Clk_ClearModeRegister(uint8 modeBitMask) 
+void Transmitter_Clk_1_ClearModeRegister(uint8 modeBitMask) 
 {
-    Display_Clk_MOD_SRC &= (uint8)(~modeBitMask) | (uint8)(~(uint8)(Display_Clk_MODE_MASK));
+    Transmitter_Clk_1_MOD_SRC &= (uint8)(~modeBitMask) | (uint8)(~(uint8)(Transmitter_Clk_1_MODE_MASK));
 }
 
 
 /*******************************************************************************
-* Function Name: Display_Clk_GetModeRegister
+* Function Name: Transmitter_Clk_1_GetModeRegister
 ********************************************************************************
 *
 * Summary:
@@ -385,14 +385,14 @@ void Display_Clk_ClearModeRegister(uint8 modeBitMask)
 *  ClearModeRegister descriptions for details about the mode bits.
 *
 *******************************************************************************/
-uint8 Display_Clk_GetModeRegister(void) 
+uint8 Transmitter_Clk_1_GetModeRegister(void) 
 {
-    return Display_Clk_MOD_SRC & (uint8)(Display_Clk_MODE_MASK);
+    return Transmitter_Clk_1_MOD_SRC & (uint8)(Transmitter_Clk_1_MODE_MASK);
 }
 
 
 /*******************************************************************************
-* Function Name: Display_Clk_SetSourceRegister
+* Function Name: Transmitter_Clk_1_SetSourceRegister
 ********************************************************************************
 *
 * Summary:
@@ -416,39 +416,39 @@ uint8 Display_Clk_GetModeRegister(void)
 *  None
 *
 *******************************************************************************/
-void Display_Clk_SetSourceRegister(uint8 clkSource) 
+void Transmitter_Clk_1_SetSourceRegister(uint8 clkSource) 
 {
-    uint16 currDiv = Display_Clk_GetDividerRegister();
-    uint8 oldSrc = Display_Clk_GetSourceRegister();
+    uint16 currDiv = Transmitter_Clk_1_GetDividerRegister();
+    uint8 oldSrc = Transmitter_Clk_1_GetSourceRegister();
 
     if (((oldSrc != ((uint8)CYCLK_SRC_SEL_CLK_SYNC_D)) && 
         (clkSource == ((uint8)CYCLK_SRC_SEL_CLK_SYNC_D))) && (currDiv == 0u))
     {
         /* Switching to Master and divider is 1, set SSS, which will output master, */
         /* then set the source so we are consistent.                                */
-        Display_Clk_MOD_SRC |= CYCLK_SSS;
-        Display_Clk_MOD_SRC =
-            (Display_Clk_MOD_SRC & (uint8)(~Display_Clk_SRC_SEL_MSK)) | clkSource;
+        Transmitter_Clk_1_MOD_SRC |= CYCLK_SSS;
+        Transmitter_Clk_1_MOD_SRC =
+            (Transmitter_Clk_1_MOD_SRC & (uint8)(~Transmitter_Clk_1_SRC_SEL_MSK)) | clkSource;
     }
     else if (((oldSrc == ((uint8)CYCLK_SRC_SEL_CLK_SYNC_D)) && 
             (clkSource != ((uint8)CYCLK_SRC_SEL_CLK_SYNC_D))) && (currDiv == 0u))
     {
         /* Switching from Master to not and divider is 1, set source, so we don't   */
         /* lock when we clear SSS.                                                  */
-        Display_Clk_MOD_SRC =
-            (Display_Clk_MOD_SRC & (uint8)(~Display_Clk_SRC_SEL_MSK)) | clkSource;
-        Display_Clk_MOD_SRC &= (uint8)(~CYCLK_SSS);
+        Transmitter_Clk_1_MOD_SRC =
+            (Transmitter_Clk_1_MOD_SRC & (uint8)(~Transmitter_Clk_1_SRC_SEL_MSK)) | clkSource;
+        Transmitter_Clk_1_MOD_SRC &= (uint8)(~CYCLK_SSS);
     }
     else
     {
-        Display_Clk_MOD_SRC =
-            (Display_Clk_MOD_SRC & (uint8)(~Display_Clk_SRC_SEL_MSK)) | clkSource;
+        Transmitter_Clk_1_MOD_SRC =
+            (Transmitter_Clk_1_MOD_SRC & (uint8)(~Transmitter_Clk_1_SRC_SEL_MSK)) | clkSource;
     }
 }
 
 
 /*******************************************************************************
-* Function Name: Display_Clk_GetSourceRegister
+* Function Name: Transmitter_Clk_1_GetSourceRegister
 ********************************************************************************
 *
 * Summary:
@@ -461,17 +461,17 @@ void Display_Clk_SetSourceRegister(uint8 clkSource)
 *  The input source of the clock. See SetSourceRegister for details.
 *
 *******************************************************************************/
-uint8 Display_Clk_GetSourceRegister(void) 
+uint8 Transmitter_Clk_1_GetSourceRegister(void) 
 {
-    return Display_Clk_MOD_SRC & Display_Clk_SRC_SEL_MSK;
+    return Transmitter_Clk_1_MOD_SRC & Transmitter_Clk_1_SRC_SEL_MSK;
 }
 
 
-#if defined(Display_Clk__CFG3)
+#if defined(Transmitter_Clk_1__CFG3)
 
 
 /*******************************************************************************
-* Function Name: Display_Clk_SetPhaseRegister
+* Function Name: Transmitter_Clk_1_SetPhaseRegister
 ********************************************************************************
 *
 * Summary:
@@ -489,14 +489,14 @@ uint8 Display_Clk_GetSourceRegister(void)
 *  None
 *
 *******************************************************************************/
-void Display_Clk_SetPhaseRegister(uint8 clkPhase) 
+void Transmitter_Clk_1_SetPhaseRegister(uint8 clkPhase) 
 {
-    Display_Clk_PHASE = clkPhase & Display_Clk_PHASE_MASK;
+    Transmitter_Clk_1_PHASE = clkPhase & Transmitter_Clk_1_PHASE_MASK;
 }
 
 
 /*******************************************************************************
-* Function Name: Display_Clk_GetPhase
+* Function Name: Transmitter_Clk_1_GetPhase
 ********************************************************************************
 *
 * Summary:
@@ -510,12 +510,12 @@ void Display_Clk_SetPhaseRegister(uint8 clkPhase)
 *  Phase of the analog clock. See SetPhaseRegister for details.
 *
 *******************************************************************************/
-uint8 Display_Clk_GetPhaseRegister(void) 
+uint8 Transmitter_Clk_1_GetPhaseRegister(void) 
 {
-    return Display_Clk_PHASE & Display_Clk_PHASE_MASK;
+    return Transmitter_Clk_1_PHASE & Transmitter_Clk_1_PHASE_MASK;
 }
 
-#endif /* Display_Clk__CFG3 */
+#endif /* Transmitter_Clk_1__CFG3 */
 
 
 /* [] END OF FILE */

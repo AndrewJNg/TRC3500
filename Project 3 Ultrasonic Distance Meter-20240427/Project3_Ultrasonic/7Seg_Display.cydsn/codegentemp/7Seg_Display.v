@@ -1,6 +1,6 @@
 // ======================================================================
 // 7Seg_Display.v generated from TopDesign.cysch
-// 05/17/2024 at 12:52
+// 05/21/2024 at 16:05
 // This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 // ======================================================================
 
@@ -144,19 +144,6 @@
 `define CYDEV_CHIP_FAMILY_USED 3
 `define CYDEV_CHIP_MEMBER_USED 2
 `define CYDEV_CHIP_REVISION_USED 0
-// Component: Debouncer_v1_0
-`ifdef CY_BLK_DIR
-`undef CY_BLK_DIR
-`endif
-
-`ifdef WARP
-`define CY_BLK_DIR "D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\Debouncer_v1_0"
-`include "D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\Debouncer_v1_0\Debouncer_v1_0.v"
-`else
-`define CY_BLK_DIR "D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\Debouncer_v1_0"
-`include "D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\Debouncer_v1_0\Debouncer_v1_0.v"
-`endif
-
 // Component: Count7_v1_0
 `ifdef CY_BLK_DIR
 `undef CY_BLK_DIR
@@ -723,18 +710,25 @@ endmodule
 `include "D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\and_v1_0\and_v1_0.v"
 `endif
 
+// Component: Debouncer_v1_0
+`ifdef CY_BLK_DIR
+`undef CY_BLK_DIR
+`endif
+
+`ifdef WARP
+`define CY_BLK_DIR "D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\Debouncer_v1_0"
+`include "D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\Debouncer_v1_0\Debouncer_v1_0.v"
+`else
+`define CY_BLK_DIR "D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\Debouncer_v1_0"
+`include "D:\Monash_Apps\PSoC Creator\4.4\PSoC Creator\psoc\content\CyComponentLibrary\CyComponentLibrary.cylib\Debouncer_v1_0\Debouncer_v1_0.v"
+`endif
+
 // top
 module top ;
 
-          wire  Net_572;
-          wire  Net_571;
-          wire  Net_579;
-          wire  Net_578;
-          wire  Net_562;
-          wire  Net_561;
-    electrical  Net_541;
-          wire  Net_550;
-          wire  Net_549;
+          wire [4:0] Net_615;
+          wire [4:0] Net_614;
+          wire [4:0] Net_630;
           wire  Net_512;
     electrical  Net_408;
     electrical  Net_407;
@@ -775,51 +769,22 @@ module top ;
           wire  Net_453;
           wire  Net_452;
           wire  Net_451;
-          wire  Net_559;
-          wire  Net_547;
-          wire  Net_260;
+          wire  System_clk;
+          wire  Net_714;
           wire  Net_418;
           wire [6:0] Net_417;
-          wire  Net_90;
-          wire  Net_556;
-          wire  Net_555;
-          wire  Net_553;
-          wire  System_clk;
-    electrical  Net_33;
-    electrical  Net_34;
-    electrical  Net_35;
-    electrical  Net_36;
-    electrical  Net_44;
-    electrical  Net_43;
-    electrical  Net_42;
-    electrical  Net_41;
-    electrical  Net_40;
-    electrical  Net_39;
-    electrical  Net_38;
-    electrical  Net_71;
-          wire  Net_610;
-          wire  Net_609;
-          wire  Net_613;
-          wire  Net_605;
-          wire  Net_593;
-          wire  Net_604;
-          wire  Net_584;
-          wire  Net_560;
-          wire  Net_570;
-          wire  Net_577;
-          wire  Net_83;
-          wire  Net_565;
-          wire  Net_491;
+          wire [4:0] Net_605;
+          wire [4:0] Net_547;
           wire  Net_369;
           wire  Net_489;
-          wire  Net_517;
+          wire  Net_711;
           wire  Net_205;
           wire  Net_138;
           wire  Net_386;
           wire  Net_382;
     electrical  Net_1;
           wire  Net_10;
-          wire  Net_502;
+          wire  Net_712;
     electrical  Net_139;
     electrical  Net_11;
     electrical  Net_372;
@@ -876,7 +841,7 @@ module top ;
 		  .sio_vohsel(""),
 		  .slew_rate(1'b0),
 		  .spanning(0),
-		  .use_annotation(1'b1),
+		  .use_annotation(1'b0),
 		  .vtrip(2'b10),
 		  .width(1),
 		  .ovt_hyst_trim(1'b0),
@@ -890,7 +855,6 @@ module top ;
 		  .io({tmpIO_0__Dis_A_net[0:0]}),
 		  .siovref(tmpSIOVREF__Dis_A_net),
 		  .interrupt({tmpINTERRUPT_0__Dis_A_net[0:0]}),
-		  .annotation({Net_71}),
 		  .in_clock({1'b0}),
 		  .in_clock_en({1'b1}),
 		  .in_reset({1'b0}),
@@ -952,7 +916,7 @@ module top ;
 		  .sio_vohsel(""),
 		  .slew_rate(1'b0),
 		  .spanning(0),
-		  .use_annotation(1'b1),
+		  .use_annotation(1'b0),
 		  .vtrip(2'b10),
 		  .width(1),
 		  .ovt_hyst_trim(1'b0),
@@ -966,7 +930,6 @@ module top ;
 		  .io({tmpIO_0__Dis_B_net[0:0]}),
 		  .siovref(tmpSIOVREF__Dis_B_net),
 		  .interrupt({tmpINTERRUPT_0__Dis_B_net[0:0]}),
-		  .annotation({Net_38}),
 		  .in_clock({1'b0}),
 		  .in_clock_en({1'b1}),
 		  .in_reset({1'b0}),
@@ -1028,7 +991,7 @@ module top ;
 		  .sio_vohsel(""),
 		  .slew_rate(1'b0),
 		  .spanning(0),
-		  .use_annotation(1'b1),
+		  .use_annotation(1'b0),
 		  .vtrip(2'b10),
 		  .width(1),
 		  .ovt_hyst_trim(1'b0),
@@ -1042,7 +1005,6 @@ module top ;
 		  .io({tmpIO_0__Dis_C_net[0:0]}),
 		  .siovref(tmpSIOVREF__Dis_C_net),
 		  .interrupt({tmpINTERRUPT_0__Dis_C_net[0:0]}),
-		  .annotation({Net_39}),
 		  .in_clock({1'b0}),
 		  .in_clock_en({1'b1}),
 		  .in_reset({1'b0}),
@@ -1104,7 +1066,7 @@ module top ;
 		  .sio_vohsel(""),
 		  .slew_rate(1'b0),
 		  .spanning(0),
-		  .use_annotation(1'b1),
+		  .use_annotation(1'b0),
 		  .vtrip(2'b10),
 		  .width(1),
 		  .ovt_hyst_trim(1'b0),
@@ -1118,7 +1080,6 @@ module top ;
 		  .io({tmpIO_0__Dis_D_net[0:0]}),
 		  .siovref(tmpSIOVREF__Dis_D_net),
 		  .interrupt({tmpINTERRUPT_0__Dis_D_net[0:0]}),
-		  .annotation({Net_40}),
 		  .in_clock({1'b0}),
 		  .in_clock_en({1'b1}),
 		  .in_reset({1'b0}),
@@ -1180,7 +1141,7 @@ module top ;
 		  .sio_vohsel(""),
 		  .slew_rate(1'b0),
 		  .spanning(0),
-		  .use_annotation(1'b1),
+		  .use_annotation(1'b0),
 		  .vtrip(2'b10),
 		  .width(1),
 		  .ovt_hyst_trim(1'b0),
@@ -1194,7 +1155,6 @@ module top ;
 		  .io({tmpIO_0__Dis_E_net[0:0]}),
 		  .siovref(tmpSIOVREF__Dis_E_net),
 		  .interrupt({tmpINTERRUPT_0__Dis_E_net[0:0]}),
-		  .annotation({Net_41}),
 		  .in_clock({1'b0}),
 		  .in_clock_en({1'b1}),
 		  .in_reset({1'b0}),
@@ -1256,7 +1216,7 @@ module top ;
 		  .sio_vohsel(""),
 		  .slew_rate(1'b0),
 		  .spanning(0),
-		  .use_annotation(1'b1),
+		  .use_annotation(1'b0),
 		  .vtrip(2'b10),
 		  .width(1),
 		  .ovt_hyst_trim(1'b0),
@@ -1270,7 +1230,6 @@ module top ;
 		  .io({tmpIO_0__Dis_F_net[0:0]}),
 		  .siovref(tmpSIOVREF__Dis_F_net),
 		  .interrupt({tmpINTERRUPT_0__Dis_F_net[0:0]}),
-		  .annotation({Net_42}),
 		  .in_clock({1'b0}),
 		  .in_clock_en({1'b1}),
 		  .in_reset({1'b0}),
@@ -1332,7 +1291,7 @@ module top ;
 		  .sio_vohsel(""),
 		  .slew_rate(1'b0),
 		  .spanning(0),
-		  .use_annotation(1'b1),
+		  .use_annotation(1'b0),
 		  .vtrip(2'b10),
 		  .width(1),
 		  .ovt_hyst_trim(1'b0),
@@ -1346,7 +1305,6 @@ module top ;
 		  .io({tmpIO_0__Dis_G_net[0:0]}),
 		  .siovref(tmpSIOVREF__Dis_G_net),
 		  .interrupt({tmpINTERRUPT_0__Dis_G_net[0:0]}),
-		  .annotation({Net_43}),
 		  .in_clock({1'b0}),
 		  .in_clock_en({1'b1}),
 		  .in_reset({1'b0}),
@@ -1408,7 +1366,7 @@ module top ;
 		  .sio_vohsel(""),
 		  .slew_rate(1'b0),
 		  .spanning(0),
-		  .use_annotation(1'b1),
+		  .use_annotation(1'b0),
 		  .vtrip(2'b10),
 		  .width(1),
 		  .ovt_hyst_trim(1'b0),
@@ -1422,7 +1380,6 @@ module top ;
 		  .io({tmpIO_0__Dis_DP_net[0:0]}),
 		  .siovref(tmpSIOVREF__Dis_DP_net),
 		  .interrupt({tmpINTERRUPT_0__Dis_DP_net[0:0]}),
-		  .annotation({Net_44}),
 		  .in_clock({1'b0}),
 		  .in_clock_en({1'b1}),
 		  .in_reset({1'b0}),
@@ -1484,7 +1441,7 @@ module top ;
 		  .sio_vohsel(""),
 		  .slew_rate(1'b0),
 		  .spanning(0),
-		  .use_annotation(1'b1),
+		  .use_annotation(1'b0),
 		  .vtrip(2'b10),
 		  .width(1),
 		  .ovt_hyst_trim(1'b0),
@@ -1498,7 +1455,6 @@ module top ;
 		  .io({tmpIO_0__Dis_D1_net[0:0]}),
 		  .siovref(tmpSIOVREF__Dis_D1_net),
 		  .interrupt({tmpINTERRUPT_0__Dis_D1_net[0:0]}),
-		  .annotation({Net_36}),
 		  .in_clock({1'b0}),
 		  .in_clock_en({1'b1}),
 		  .in_reset({1'b0}),
@@ -1560,7 +1516,7 @@ module top ;
 		  .sio_vohsel(""),
 		  .slew_rate(1'b0),
 		  .spanning(0),
-		  .use_annotation(1'b1),
+		  .use_annotation(1'b0),
 		  .vtrip(2'b10),
 		  .width(1),
 		  .ovt_hyst_trim(1'b0),
@@ -1574,7 +1530,6 @@ module top ;
 		  .io({tmpIO_0__Dis_D2_net[0:0]}),
 		  .siovref(tmpSIOVREF__Dis_D2_net),
 		  .interrupt({tmpINTERRUPT_0__Dis_D2_net[0:0]}),
-		  .annotation({Net_35}),
 		  .in_clock({1'b0}),
 		  .in_clock_en({1'b1}),
 		  .in_reset({1'b0}),
@@ -1636,7 +1591,7 @@ module top ;
 		  .sio_vohsel(""),
 		  .slew_rate(1'b0),
 		  .spanning(0),
-		  .use_annotation(1'b1),
+		  .use_annotation(1'b0),
 		  .vtrip(2'b10),
 		  .width(1),
 		  .ovt_hyst_trim(1'b0),
@@ -1650,7 +1605,6 @@ module top ;
 		  .io({tmpIO_0__Dis_D3_net[0:0]}),
 		  .siovref(tmpSIOVREF__Dis_D3_net),
 		  .interrupt({tmpINTERRUPT_0__Dis_D3_net[0:0]}),
-		  .annotation({Net_34}),
 		  .in_clock({1'b0}),
 		  .in_clock_en({1'b1}),
 		  .in_reset({1'b0}),
@@ -1712,7 +1666,7 @@ module top ;
 		  .sio_vohsel(""),
 		  .slew_rate(1'b0),
 		  .spanning(0),
-		  .use_annotation(1'b1),
+		  .use_annotation(1'b0),
 		  .vtrip(2'b10),
 		  .width(1),
 		  .ovt_hyst_trim(1'b0),
@@ -1726,7 +1680,6 @@ module top ;
 		  .io({tmpIO_0__Dis_D4_net[0:0]}),
 		  .siovref(tmpSIOVREF__Dis_D4_net),
 		  .interrupt({tmpINTERRUPT_0__Dis_D4_net[0:0]}),
-		  .annotation({Net_33}),
 		  .in_clock({1'b0}),
 		  .in_clock_en({1'b1}),
 		  .in_reset({1'b0}),
@@ -1736,24 +1689,80 @@ module top ;
 
 	assign tmpOE__Dis_D4_net = (`CYDEV_CHIP_MEMBER_USED == `CYDEV_CHIP_MEMBER_3A && `CYDEV_CHIP_REVISION_USED < `CYDEV_CHIP_REVISION_3A_ES3) ? ~{1'b1} : {1'b1};
 
-    Debouncer_v1_0 Debouncer_2 (
-        .clock(System_clk),
-        .d(Net_553),
-        .either(Net_584),
-        .neg(Net_555),
-        .pos(Net_556),
-        .q(Net_593));
-    defparam Debouncer_2.EitherEdgeDetect = 1;
-    defparam Debouncer_2.NegEdgeDetect = 0;
-    defparam Debouncer_2.PosEdgeDetect = 0;
-    defparam Debouncer_2.SignalWidth = 1;
+	wire [0:0] tmpOE__LED3_Green_net;
+	wire [0:0] tmpFB_0__LED3_Green_net;
+	wire [0:0] tmpIO_0__LED3_Green_net;
+	wire [0:0] tmpINTERRUPT_0__LED3_Green_net;
+	electrical [0:0] tmpSIOVREF__LED3_Green_net;
 
+	cy_psoc3_pins_v1_10
+		#(.id("4119f6e3-17da-49d5-b7c1-3840bd1b8697"),
+		  .drive_mode(3'b110),
+		  .ibuf_enabled(1'b1),
+		  .init_dr_st(1'b0),
+		  .input_clk_en(0),
+		  .input_sync(1'b1),
+		  .input_sync_mode(1'b0),
+		  .intr_mode(2'b00),
+		  .invert_in_clock(0),
+		  .invert_in_clock_en(0),
+		  .invert_in_reset(0),
+		  .invert_out_clock(0),
+		  .invert_out_clock_en(0),
+		  .invert_out_reset(0),
+		  .io_voltage(""),
+		  .layout_mode("CONTIGUOUS"),
+		  .oe_conn(1'b0),
+		  .oe_reset(0),
+		  .oe_sync(1'b0),
+		  .output_clk_en(0),
+		  .output_clock_mode(1'b0),
+		  .output_conn(1'b0),
+		  .output_mode(1'b0),
+		  .output_reset(0),
+		  .output_sync(1'b0),
+		  .pa_in_clock(-1),
+		  .pa_in_clock_en(-1),
+		  .pa_in_reset(-1),
+		  .pa_out_clock(-1),
+		  .pa_out_clock_en(-1),
+		  .pa_out_reset(-1),
+		  .pin_aliases(""),
+		  .pin_mode("O"),
+		  .por_state(4),
+		  .sio_group_cnt(0),
+		  .sio_hyst(1'b1),
+		  .sio_ibuf(""),
+		  .sio_info(2'b00),
+		  .sio_obuf(""),
+		  .sio_refsel(""),
+		  .sio_vtrip(""),
+		  .sio_hifreq(""),
+		  .sio_vohsel(""),
+		  .slew_rate(1'b0),
+		  .spanning(0),
+		  .use_annotation(1'b0),
+		  .vtrip(2'b10),
+		  .width(1),
+		  .ovt_hyst_trim(1'b0),
+		  .ovt_needed(1'b0),
+		  .ovt_slew_control(2'b00),
+		  .input_buffer_sel(2'b00))
+		LED3_Green
+		 (.oe(tmpOE__LED3_Green_net),
+		  .y({1'b0}),
+		  .fb({tmpFB_0__LED3_Green_net[0:0]}),
+		  .io({tmpIO_0__LED3_Green_net[0:0]}),
+		  .siovref(tmpSIOVREF__LED3_Green_net),
+		  .interrupt({tmpINTERRUPT_0__LED3_Green_net[0:0]}),
+		  .in_clock({1'b0}),
+		  .in_clock_en({1'b1}),
+		  .in_reset({1'b0}),
+		  .out_clock({1'b0}),
+		  .out_clock_en({1'b1}),
+		  .out_reset({1'b0}));
 
-	cy_isr_v1_0
-		#(.int_type(2'b00))
-		isr_2
-		 (.int_signal(Net_584));
-
+	assign tmpOE__LED3_Green_net = (`CYDEV_CHIP_MEMBER_USED == `CYDEV_CHIP_MEMBER_3A && `CYDEV_CHIP_REVISION_USED < `CYDEV_CHIP_REVISION_3A_ES3) ? ~{1'b1} : {1'b1};
 
 	wire [0:0] tmpOE__OP_Out_net;
 	wire [0:0] tmpFB_0__OP_Out_net;
@@ -1835,28 +1844,16 @@ module top ;
 	cy_isr_v1_0
 		#(.int_type(2'b10))
 		isr_7Seg
-		 (.int_signal(Net_83));
-
-
-
-	cy_clock_v1_0
-		#(.id("1a9e21c4-d47e-451d-8868-4a4bb48ad8b7"),
-		  .source_clock_id(""),
-		  .divisor(0),
-		  .period("1000000000000"),
-		  .is_direct(0),
-		  .is_digital(1))
-		Display_Clk
-		 (.clock_out(Net_83));
+		 (.int_signal(System_clk));
 
 
     Count7_v1_0 Count7_1 (
-        .clock(Net_517),
+        .clock(Net_711),
         .cnt(Net_417[6:0]),
         .en(Net_489),
         .load(1'b0),
-        .reset(Net_502),
-        .tc(Net_260));
+        .reset(Net_712),
+        .tc(Net_714));
     defparam Count7_1.EnableSignal = 1;
     defparam Count7_1.LoadSignal = 0;
 
@@ -1921,7 +1918,7 @@ module top ;
 		Button_S4_Right
 		 (.oe(tmpOE__Button_S4_Right_net),
 		  .y({1'b0}),
-		  .fb({Net_565}),
+		  .fb({Net_547[3]}),
 		  .io({tmpIO_0__Button_S4_Right_net[0:0]}),
 		  .siovref(tmpSIOVREF__Button_S4_Right_net),
 		  .interrupt({tmpINTERRUPT_0__Button_S4_Right_net[0:0]}),
@@ -1995,7 +1992,7 @@ module top ;
 		Button_S5_Select
 		 (.oe(tmpOE__Button_S5_Select_net),
 		  .y({1'b0}),
-		  .fb({Net_491}),
+		  .fb({Net_547[4]}),
 		  .io({tmpIO_0__Button_S5_Select_net[0:0]}),
 		  .siovref(tmpSIOVREF__Button_S5_Select_net),
 		  .interrupt({tmpINTERRUPT_0__Button_S5_Select_net[0:0]}),
@@ -2074,7 +2071,7 @@ module top ;
 		Button_S2_Left
 		 (.oe(tmpOE__Button_S2_Left_net),
 		  .y({1'b0}),
-		  .fb({Net_553}),
+		  .fb({Net_547[1]}),
 		  .io({tmpIO_0__Button_S2_Left_net[0:0]}),
 		  .siovref(tmpSIOVREF__Button_S2_Left_net),
 		  .interrupt({tmpINTERRUPT_0__Button_S2_Left_net[0:0]}),
@@ -2148,7 +2145,7 @@ module top ;
 		Button_S1_Bottom
 		 (.oe(tmpOE__Button_S1_Bottom_net),
 		  .y({1'b0}),
-		  .fb({Net_547}),
+		  .fb({Net_547[0]}),
 		  .io({tmpIO_0__Button_S1_Bottom_net[0:0]}),
 		  .siovref(tmpSIOVREF__Button_S1_Bottom_net),
 		  .interrupt({tmpINTERRUPT_0__Button_S1_Bottom_net[0:0]}),
@@ -2222,7 +2219,7 @@ module top ;
 		Button_S3_Top
 		 (.oe(tmpOE__Button_S3_Top_net),
 		  .y({1'b0}),
-		  .fb({Net_559}),
+		  .fb({Net_547[2]}),
 		  .io({tmpIO_0__Button_S3_Top_net[0:0]}),
 		  .siovref(tmpSIOVREF__Button_S3_Top_net),
 		  .interrupt({tmpINTERRUPT_0__Button_S3_Top_net[0:0]}),
@@ -2263,7 +2260,7 @@ module top ;
 		  .oe_sync(1'b0),
 		  .output_clk_en(0),
 		  .output_clock_mode(1'b0),
-		  .output_conn(1'b1),
+		  .output_conn(1'b0),
 		  .output_mode(1'b0),
 		  .output_reset(0),
 		  .output_sync(1'b0),
@@ -2296,7 +2293,7 @@ module top ;
 		  .input_buffer_sel(2'b00))
 		LED2_Yellow
 		 (.oe(tmpOE__LED2_Yellow_net),
-		  .y({Net_369}),
+		  .y({1'b0}),
 		  .fb({tmpFB_0__LED2_Yellow_net[0:0]}),
 		  .io({tmpIO_0__LED2_Yellow_net[0:0]}),
 		  .siovref(tmpSIOVREF__LED2_Yellow_net),
@@ -2521,7 +2518,7 @@ module top ;
 		  .oe_sync(1'b0),
 		  .output_clk_en(0),
 		  .output_clock_mode(1'b0),
-		  .output_conn(1'b1),
+		  .output_conn(1'b0),
 		  .output_mode(1'b0),
 		  .output_reset(0),
 		  .output_sync(1'b0),
@@ -2554,7 +2551,7 @@ module top ;
 		  .input_buffer_sel(2'b00))
 		LED1_Red
 		 (.oe(tmpOE__LED1_Red_net),
-		  .y({Net_138}),
+		  .y({1'b0}),
 		  .fb({tmpFB_0__LED1_Red_net[0:0]}),
 		  .io({tmpIO_0__LED1_Red_net[0:0]}),
 		  .siovref(tmpSIOVREF__LED1_Red_net),
@@ -2587,7 +2584,7 @@ module top ;
 
     CyControlReg_v1_80 Control_Reg_1 (
         .clock(1'b0),
-        .control_0(Net_502),
+        .control_0(Net_712),
         .control_1(Net_420),
         .control_2(Net_421),
         .control_3(Net_422),
@@ -2610,7 +2607,7 @@ module top ;
     defparam Control_Reg_1.NumOutputs = 1;
 
 
-    assign Net_489 = ~Net_260;
+    assign Net_489 = ~Net_714;
 
     VDAC8_v1_90_3 VDAC8_1 (
         .data(8'b00000000),
@@ -2727,7 +2724,7 @@ module top ;
         .clock(Net_10),
         .enable(1'b1),
         .interrupt(Net_369),
-        .reset(Net_502),
+        .reset(Net_712),
         .tc(Net_414),
         .trigger(1'b1));
     defparam Timer_1.CaptureCount = 2;
@@ -2737,81 +2734,6 @@ module top ;
     defparam Timer_1.InterruptOnTC = 1;
     defparam Timer_1.Resolution = 16;
     defparam Timer_1.SiliconRevision = "0";
-
-	wire [0:0] tmpOE__LED3_Green_net;
-	wire [0:0] tmpFB_0__LED3_Green_net;
-	wire [0:0] tmpIO_0__LED3_Green_net;
-	wire [0:0] tmpINTERRUPT_0__LED3_Green_net;
-	electrical [0:0] tmpSIOVREF__LED3_Green_net;
-
-	cy_psoc3_pins_v1_10
-		#(.id("e09f2d9a-86c1-4e69-b545-8a4344715416"),
-		  .drive_mode(3'b110),
-		  .ibuf_enabled(1'b1),
-		  .init_dr_st(1'b0),
-		  .input_clk_en(0),
-		  .input_sync(1'b1),
-		  .input_sync_mode(1'b0),
-		  .intr_mode(2'b00),
-		  .invert_in_clock(0),
-		  .invert_in_clock_en(0),
-		  .invert_in_reset(0),
-		  .invert_out_clock(0),
-		  .invert_out_clock_en(0),
-		  .invert_out_reset(0),
-		  .io_voltage(""),
-		  .layout_mode("CONTIGUOUS"),
-		  .oe_conn(1'b0),
-		  .oe_reset(0),
-		  .oe_sync(1'b0),
-		  .output_clk_en(0),
-		  .output_clock_mode(1'b0),
-		  .output_conn(1'b1),
-		  .output_mode(1'b0),
-		  .output_reset(0),
-		  .output_sync(1'b0),
-		  .pa_in_clock(-1),
-		  .pa_in_clock_en(-1),
-		  .pa_in_reset(-1),
-		  .pa_out_clock(-1),
-		  .pa_out_clock_en(-1),
-		  .pa_out_reset(-1),
-		  .pin_aliases(""),
-		  .pin_mode("O"),
-		  .por_state(4),
-		  .sio_group_cnt(0),
-		  .sio_hyst(1'b1),
-		  .sio_ibuf(""),
-		  .sio_info(2'b00),
-		  .sio_obuf(""),
-		  .sio_refsel(""),
-		  .sio_vtrip(""),
-		  .sio_hifreq(""),
-		  .sio_vohsel(""),
-		  .slew_rate(1'b0),
-		  .spanning(0),
-		  .use_annotation(1'b0),
-		  .vtrip(2'b10),
-		  .width(1),
-		  .ovt_hyst_trim(1'b0),
-		  .ovt_needed(1'b0),
-		  .ovt_slew_control(2'b00),
-		  .input_buffer_sel(2'b00))
-		LED3_Green
-		 (.oe(tmpOE__LED3_Green_net),
-		  .y({Net_593}),
-		  .fb({tmpFB_0__LED3_Green_net[0:0]}),
-		  .io({tmpIO_0__LED3_Green_net[0:0]}),
-		  .siovref(tmpSIOVREF__LED3_Green_net),
-		  .interrupt({tmpINTERRUPT_0__LED3_Green_net[0:0]}),
-		  .in_clock({1'b0}),
-		  .in_clock_en({1'b1}),
-		  .in_reset({1'b0}),
-		  .out_clock({1'b0}),
-		  .out_clock_en({1'b1}),
-		  .out_reset({1'b0}));
-
-	assign tmpOE__LED3_Green_net = (`CYDEV_CHIP_MEMBER_USED == `CYDEV_CHIP_MEMBER_3A && `CYDEV_CHIP_REVISION_USED < `CYDEV_CHIP_REVISION_3A_ES3) ? ~{1'b1} : {1'b1};
 
 
     assign Net_474 = ~Net_205;
@@ -2965,13 +2887,6 @@ module top ;
 		  .out_reset({1'b0}));
 
 	assign tmpOE__TX1_Ultra_net = (`CYDEV_CHIP_MEMBER_USED == `CYDEV_CHIP_MEMBER_3A && `CYDEV_CHIP_REVISION_USED < `CYDEV_CHIP_REVISION_3A_ES3) ? ~{1'b1} : {1'b1};
-
-
-	cy_isr_v1_0
-		#(.int_type(2'b00))
-		isr_1
-		 (.int_signal(Net_604));
-
 
     Comp_v2_0_5 Comp_1 (
         .clock(1'b0),
@@ -3155,23 +3070,23 @@ module top ;
 		  .is_direct(0),
 		  .is_digital(1))
 		Transmitter_Clk
-		 (.clock_out(Net_517));
+		 (.clock_out(Net_711));
 
 
 
-    assign Net_205 = Net_489 & Net_517;
+    assign Net_205 = Net_489 & Net_711;
 
     Debouncer_v1_0 Debouncer_1 (
         .clock(System_clk),
-        .d(Net_547),
-        .either(Net_604),
-        .neg(Net_549),
-        .pos(Net_550),
-        .q(Net_605));
-    defparam Debouncer_1.EitherEdgeDetect = 1;
+        .d(Net_547[4:0]),
+        .either(Net_630[4:0]),
+        .neg(Net_614[4:0]),
+        .pos(Net_615[4:0]),
+        .q(Net_605[4:0]));
+    defparam Debouncer_1.EitherEdgeDetect = 0;
     defparam Debouncer_1.NegEdgeDetect = 0;
     defparam Debouncer_1.PosEdgeDetect = 0;
-    defparam Debouncer_1.SignalWidth = 1;
+    defparam Debouncer_1.SignalWidth = 5;
 
 	wire [0:0] tmpOE__Buzzer_net;
 	wire [0:0] tmpFB_0__Buzzer_net;
@@ -3225,7 +3140,7 @@ module top ;
 		  .sio_vohsel(""),
 		  .slew_rate(1'b0),
 		  .spanning(0),
-		  .use_annotation(1'b1),
+		  .use_annotation(1'b0),
 		  .vtrip(2'b10),
 		  .width(1),
 		  .ovt_hyst_trim(1'b0),
@@ -3239,7 +3154,6 @@ module top ;
 		  .io({tmpIO_0__Buzzer_net[0:0]}),
 		  .siovref(tmpSIOVREF__Buzzer_net),
 		  .interrupt({tmpINTERRUPT_0__Buzzer_net[0:0]}),
-		  .annotation({Net_541}),
 		  .in_clock({1'b0}),
 		  .in_clock_en({1'b1}),
 		  .in_reset({1'b0}),
@@ -3248,63 +3162,6 @@ module top ;
 		  .out_reset({1'b0}));
 
 	assign tmpOE__Buzzer_net = (`CYDEV_CHIP_MEMBER_USED == `CYDEV_CHIP_MEMBER_3A && `CYDEV_CHIP_REVISION_USED < `CYDEV_CHIP_REVISION_3A_ES3) ? ~{1'b1} : {1'b1};
-
-    Debouncer_v1_0 Debouncer_3 (
-        .clock(System_clk),
-        .d(Net_559),
-        .either(Net_560),
-        .neg(Net_561),
-        .pos(Net_562),
-        .q(Net_613));
-    defparam Debouncer_3.EitherEdgeDetect = 1;
-    defparam Debouncer_3.NegEdgeDetect = 0;
-    defparam Debouncer_3.PosEdgeDetect = 0;
-    defparam Debouncer_3.SignalWidth = 1;
-
-    Debouncer_v1_0 Debouncer_4 (
-        .clock(System_clk),
-        .d(Net_565),
-        .either(Net_577),
-        .neg(Net_578),
-        .pos(Net_579),
-        .q(Net_609));
-    defparam Debouncer_4.EitherEdgeDetect = 1;
-    defparam Debouncer_4.NegEdgeDetect = 0;
-    defparam Debouncer_4.PosEdgeDetect = 0;
-    defparam Debouncer_4.SignalWidth = 1;
-
-    Debouncer_v1_0 Debouncer_5 (
-        .clock(System_clk),
-        .d(Net_491),
-        .either(Net_570),
-        .neg(Net_571),
-        .pos(Net_572),
-        .q(Net_610));
-    defparam Debouncer_5.EitherEdgeDetect = 1;
-    defparam Debouncer_5.NegEdgeDetect = 0;
-    defparam Debouncer_5.PosEdgeDetect = 0;
-    defparam Debouncer_5.SignalWidth = 1;
-
-
-	cy_isr_v1_0
-		#(.int_type(2'b00))
-		isr_4
-		 (.int_signal(Net_577));
-
-
-
-	cy_isr_v1_0
-		#(.int_type(2'b00))
-		isr_5
-		 (.int_signal(Net_570));
-
-
-
-	cy_isr_v1_0
-		#(.int_type(2'b00))
-		isr_3
-		 (.int_signal(Net_560));
-
 
 	wire [0:0] tmpOE__Button_S1_Bottom_State_net;
 	wire [0:0] tmpFB_0__Button_S1_Bottom_State_net;
@@ -3367,7 +3224,7 @@ module top ;
 		  .input_buffer_sel(2'b00))
 		Button_S1_Bottom_State
 		 (.oe(tmpOE__Button_S1_Bottom_State_net),
-		  .y({Net_605}),
+		  .y({Net_605[0]}),
 		  .fb({tmpFB_0__Button_S1_Bottom_State_net[0:0]}),
 		  .io({tmpIO_0__Button_S1_Bottom_State_net[0:0]}),
 		  .siovref(tmpSIOVREF__Button_S1_Bottom_State_net),
@@ -3442,7 +3299,7 @@ module top ;
 		  .input_buffer_sel(2'b00))
 		Button_S2_Left_State
 		 (.oe(tmpOE__Button_S2_Left_State_net),
-		  .y({Net_593}),
+		  .y({Net_605[1]}),
 		  .fb({tmpFB_0__Button_S2_Left_State_net[0:0]}),
 		  .io({tmpIO_0__Button_S2_Left_State_net[0:0]}),
 		  .siovref(tmpSIOVREF__Button_S2_Left_State_net),
@@ -3517,7 +3374,7 @@ module top ;
 		  .input_buffer_sel(2'b00))
 		Button_S3_Top_State
 		 (.oe(tmpOE__Button_S3_Top_State_net),
-		  .y({Net_613}),
+		  .y({Net_605[2]}),
 		  .fb({tmpFB_0__Button_S3_Top_State_net[0:0]}),
 		  .io({tmpIO_0__Button_S3_Top_State_net[0:0]}),
 		  .siovref(tmpSIOVREF__Button_S3_Top_State_net),
@@ -3592,7 +3449,7 @@ module top ;
 		  .input_buffer_sel(2'b00))
 		Button_S4_Right_State
 		 (.oe(tmpOE__Button_S4_Right_State_net),
-		  .y({Net_609}),
+		  .y({Net_605[3]}),
 		  .fb({tmpFB_0__Button_S4_Right_State_net[0:0]}),
 		  .io({tmpIO_0__Button_S4_Right_State_net[0:0]}),
 		  .siovref(tmpSIOVREF__Button_S4_Right_State_net),
@@ -3667,7 +3524,7 @@ module top ;
 		  .input_buffer_sel(2'b00))
 		Button_S5_Select_State
 		 (.oe(tmpOE__Button_S5_Select_State_net),
-		  .y({Net_610}),
+		  .y({Net_605[4]}),
 		  .fb({tmpFB_0__Button_S5_Select_State_net[0:0]}),
 		  .io({tmpIO_0__Button_S5_Select_State_net[0:0]}),
 		  .siovref(tmpSIOVREF__Button_S5_Select_State_net),

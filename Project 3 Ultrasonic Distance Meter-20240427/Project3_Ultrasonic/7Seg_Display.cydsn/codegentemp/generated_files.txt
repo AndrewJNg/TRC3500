@@ -54,15 +54,14 @@
   <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\Dis_D4_aliases.h" value="HEADER;;;;;Dis_D4" />
   <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\Dis_D4.c" value="SOURCE_C;CortexM3;;;;Dis_D4" />
   <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\Dis_D4.h" value="HEADER;;;;;Dis_D4" />
-  <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\isr_2.c" value="SOURCE_C;CortexM3;;;;isr_2" />
-  <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\isr_2.h" value="HEADER;;;;;isr_2" />
+  <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\LED3_Green_aliases.h" value="HEADER;;;;;LED3_Green" />
+  <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\LED3_Green.c" value="SOURCE_C;CortexM3;;;;LED3_Green" />
+  <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\LED3_Green.h" value="HEADER;;;;;LED3_Green" />
   <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\OP_Out_aliases.h" value="HEADER;;;;;OP_Out" />
   <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\OP_Out.c" value="SOURCE_C;CortexM3;;;;OP_Out" />
   <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\OP_Out.h" value="HEADER;;;;;OP_Out" />
   <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\isr_7Seg.c" value="SOURCE_C;CortexM3;;;;isr_7Seg" />
   <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\isr_7Seg.h" value="HEADER;;;;;isr_7Seg" />
-  <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\Display_Clk.c" value="SOURCE_C;CortexM3;;;;Display_Clk" />
-  <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\Display_Clk.h" value="HEADER;;;;;Display_Clk" />
   <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\Count7_1.c" value="SOURCE_C;CortexM3;;;;Count7_1" />
   <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\Count7_1.h" value="HEADER;;;;;Count7_1" />
   <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\Count7_1_PM.c" value="SOURCE_C;CortexM3;;;;Count7_1" />
@@ -118,17 +117,12 @@
   <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\Timer_1.c" value="SOURCE_C;CortexM3;;;;Timer_1" />
   <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\Timer_1.h" value="HEADER;;;;;Timer_1" />
   <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\Timer_1_PM.c" value="SOURCE_C;CortexM3;;;;Timer_1" />
-  <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\LED3_Green_aliases.h" value="HEADER;;;;;LED3_Green" />
-  <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\LED3_Green.c" value="SOURCE_C;CortexM3;;;;LED3_Green" />
-  <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\LED3_Green.h" value="HEADER;;;;;LED3_Green" />
   <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\TX2_Ultra_aliases.h" value="HEADER;;;;;TX2_Ultra" />
   <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\TX2_Ultra.c" value="SOURCE_C;CortexM3;;;;TX2_Ultra" />
   <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\TX2_Ultra.h" value="HEADER;;;;;TX2_Ultra" />
   <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\TX1_Ultra_aliases.h" value="HEADER;;;;;TX1_Ultra" />
   <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\TX1_Ultra.c" value="SOURCE_C;CortexM3;;;;TX1_Ultra" />
   <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\TX1_Ultra.h" value="HEADER;;;;;TX1_Ultra" />
-  <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\isr_1.c" value="SOURCE_C;CortexM3;;;;isr_1" />
-  <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\isr_1.h" value="HEADER;;;;;isr_1" />
   <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\Comp_1.c" value="SOURCE_C;CortexM3;;;;Comp_1" />
   <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\Comp_1.h" value="HEADER;;;;;Comp_1" />
   <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\Comp_1_PM.c" value="SOURCE_C;CortexM3;;;;Comp_1" />
@@ -146,12 +140,6 @@
   <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\Buzzer_aliases.h" value="HEADER;;;;;Buzzer" />
   <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\Buzzer.c" value="SOURCE_C;CortexM3;;;;Buzzer" />
   <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\Buzzer.h" value="HEADER;;;;;Buzzer" />
-  <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\isr_4.c" value="SOURCE_C;CortexM3;;;;isr_4" />
-  <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\isr_4.h" value="HEADER;;;;;isr_4" />
-  <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\isr_5.c" value="SOURCE_C;CortexM3;;;;isr_5" />
-  <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\isr_5.h" value="HEADER;;;;;isr_5" />
-  <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\isr_3.c" value="SOURCE_C;CortexM3;;;;isr_3" />
-  <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\isr_3.h" value="HEADER;;;;;isr_3" />
   <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\Button_S1_Bottom_State_aliases.h" value="HEADER;;;;;Button_S1_Bottom_State" />
   <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\Button_S1_Bottom_State.c" value="SOURCE_C;CortexM3;;;;Button_S1_Bottom_State" />
   <file name="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\codegentemp\Button_S1_Bottom_State.h" value="HEADER;;;;;Button_S1_Bottom_State" />

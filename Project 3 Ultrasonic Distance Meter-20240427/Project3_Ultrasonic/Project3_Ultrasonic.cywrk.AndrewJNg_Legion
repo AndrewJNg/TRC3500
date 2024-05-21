@@ -120,13 +120,7 @@
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Dis_E.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Dis_F.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Dis_G.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\Display_Clk.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\EEPROM.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\isr_1.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\isr_2.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\isr_3.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\isr_4.lst</v>
-<v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\isr_5.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\isr_6.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\isr_7Seg.lst</v>
 <v>Project3_Ultrasonic\7Seg_Display\CortexM3\ARM_GCC_541\Debug\Listing Files\LED1_Red.lst</v>
@@ -193,8 +187,7 @@
 <v>Project3_Ultrasonic\7Seg_Display\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\cy_vref_v1_70.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\CyControlReg_v1_80.pdf</v>
-<v>Project3_Ultrasonic\7Seg_Display\Debouncer_v1_0</v>
-<v>Project3_Ultrasonic\7Seg_Display\Debouncer_v1_0\Debouncer_v1_0.pdf</v>
+<v>Project3_Ultrasonic\7Seg_Display\Debouncer_v1_0.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\EEPROM_v3_0.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\not_v1_0</v>
 <v>Project3_Ultrasonic\7Seg_Display\not_v1_0\not_v1_0.pdf</v>
@@ -224,8 +217,7 @@
 <v>Project3_Ultrasonic\7Seg_Display\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\cy_vref_v1_70.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\CyControlReg_v1_80.pdf</v>
-<v>Project3_Ultrasonic\7Seg_Display\Debouncer_v1_0</v>
-<v>Project3_Ultrasonic\7Seg_Display\Debouncer_v1_0\Debouncer_v1_0.pdf</v>
+<v>Project3_Ultrasonic\7Seg_Display\Debouncer_v1_0.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\EEPROM_v3_0.pdf</v>
 <v>Project3_Ultrasonic\7Seg_Display\not_v1_0</v>
 <v>Project3_Ultrasonic\7Seg_Display\not_v1_0\not_v1_0.pdf</v>
@@ -259,7 +251,7 @@
   Copyright (c) 2001-2016 Actipro Software LLC.  All rights reserved.
   http://www.actiprosoftware.com
 
---><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="2018, 1109" SelectedTabbedMdiWindow="624663d3-b3aa-435d-a744-79f033d87ff5"><DocumentWindow Key="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\TopDesign\TopDesign.cysch" Guid="4dbf9801-a0d9-4e17-9256-938c9111f341" /><DocumentWindow Key="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\7Seg_Display.cydwr" Guid="279ec16b-817d-466e-ae82-2c328681f1aa" /><DocumentWindow Key="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\main.c" Guid="624663d3-b3aa-435d-a744-79f033d87ff5" /><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="4c5062ca-7c5c-4036-9339-a2d340a00f95" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
+--><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="2018, 1063" SelectedTabbedMdiWindow="624663d3-b3aa-435d-a744-79f033d87ff5"><DocumentWindow Key="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\TopDesign\TopDesign.cysch" Guid="4dbf9801-a0d9-4e17-9256-938c9111f341" /><DocumentWindow Key="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\7Seg_Display.cydwr" Guid="279ec16b-817d-466e-ae82-2c328681f1aa" /><DocumentWindow Key="D:\Monash\Y3S2\TRC3500\TRC3500-Lab\Project 3 Ultrasonic Distance Meter-20240427\Project3_Ultrasonic\7Seg_Display.cydsn\main.c" Guid="624663d3-b3aa-435d-a744-79f033d87ff5" /><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="4c5062ca-7c5c-4036-9339-a2d340a00f95" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
 <config v="" />
 <AutoUpdate v="true" />
 </CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>
