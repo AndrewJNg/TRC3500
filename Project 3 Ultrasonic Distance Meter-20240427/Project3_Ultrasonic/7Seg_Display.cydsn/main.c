@@ -127,6 +127,7 @@ int main(void)
     
     
     //int eprom_num = EEPROM_ReadByte(55*sizeof(double)+sizeof(char));
+    
     group_num = EEPROM_ReadByte(0);
     cm_or_inch = EEPROM_ReadByte(sizeof(int));
     
@@ -141,33 +142,35 @@ int main(void)
         
         if (mode==0)
         {
-            UART_1_PutString("Mode 0");
+            UART_1_PutString("Mode 0\n");
             CyDelay(5);
-            UART_1_WriteTxData(0x20);   
+            
             mode_0();
         
         }
         if (mode==1)
         {
-            UART_1_PutString("Mode 1");
+            UART_1_PutString("Mode 1\n");
             CyDelay(5);
-            UART_1_WriteTxData(0x20); 
-            //mode_1();
+            
+            mode_1();
         }
         if (mode==2)
         {
-            UART_1_PutString("Mode 2");
-            CyDelay(5);
-            UART_1_WriteTxData(0x20); 
-           // mode_2();
+           UART_1_PutString("Mode 2\n");
+           CyDelay(5);
+        
+           // TODO problem with EEPROM write
+           //EEPROM_writeInt(0, group_num);
+           mode_2();
         }
         if (mode==3)
         {
             
-            UART_1_PutString("Mode 3");
+            UART_1_PutString("Mode 3\n");
             CyDelay(5);
-            UART_1_WriteTxData(0x20); 
-            //mode_3();
+            
+            mode_3();
         }
         CyDelay(5);
         //mode_0();
@@ -214,28 +217,16 @@ void mode_0(void)
         else previous_second_decimal = current_second();
         
       
-        /*if (Button_S5_Select_State_Read() == 0)
-        {
-            
-                clear_7_seg();
-                display_num(ultra_avg());
-            
-        }*/
-        
         //check if either button is pressed
         if ((Button_S5_Select_State_Read() == 0) || (Button_S2_Left_State_Read() == 0))
         {
             
-        //UART_1_PutString("2");
-        //CyDelay(5);
             //wait 0.2 seconds to delay check
             double check_second = current_second();
-            while ((current_second() - check_second )<0.2)
-            {
-                runtime();
-            }
+            while ((current_second() - check_second )<0.2)  runtime();
             
-           
+            
+            
             //if both buttons pressed, wait 1 seconds to go to mode 1
             if ((Button_S5_Select_State_Read() == 0) && (Button_S2_Left_State_Read() == 0))
             {
@@ -249,29 +240,16 @@ void mode_0(void)
                         
                         UART_1_PutString("Enter Mode 1\n");
                         CyDelay(5);
-                        //mode = 1;
+                        mode = 1;
                         break;
                     }
                 }  
             }
+            
             //if instead just button 1 is pressed, go to mode 3
             else if ((Button_S5_Select_State_Read() == 0) && (Button_S2_Left_State_Read() == 1))
             {
-                UART_1_PutString("Enter mode 3\n");
-                CyDelay(5);
-                BuzzerSound(0.2);
-                //mode = 3;
-                clear_7_seg();
-                display_num(ultra_avg());
-                double previous_mode3_second=current_second();
-                
-                while ( (current_second()-previous_mode3_second) <= 2)  
-                {
-                    //display_num(distance); //display distance for 2 second
-                    runtime();
-                    
-                }
-                
+                mode =3;
             }
         }
         runtime();
@@ -292,9 +270,10 @@ void mode_1(void)
         double time_diff = current_second()-previous_second;
         if (time_diff<=1)
         {
-            display_num(group_num); // group_num
+           display_num(group_num); // group_num
+            //display_num(200); // group_num
         }
-        else if ((time_diff>1) || (time_diff<=1.5))
+        else if ((time_diff>1) && (time_diff<=1.5))
         {
             display_num(-4); // Blank
         }
@@ -305,21 +284,21 @@ void mode_1(void)
        
        
         // Check to go to mode 2
-        if (Button_S4_Right_Read() == 0) // Assuming active low buttons
+        if (Button_S4_Right_State_Read() == 0) // Assuming active low buttons
         {
             SingleButtonWait();
             BuzzerSound(0.2);
             mode = 2;
         }
         //check to increment number
-        if (Button_S5_Select_Read() == 0)
+        if (Button_S5_Select_State_Read() == 0)
         {
             SingleButtonWait();
             BuzzerSound(0.2);
             group_num ++;
         }
         //check to decrement number
-        if (Button_S2_Left_Read() == 0)
+        if (Button_S2_Left_State_Read() == 0)
         {
             SingleButtonWait();
             BuzzerSound(0.2);
@@ -340,14 +319,14 @@ void mode_2(void)
         if (cm_or_inch =='i') display_num(-2);
         
         //check to go to mode 0
-        if (Button_S4_Right_Read() == 0)
+        if (Button_S4_Right_State_Read() == 0)
         {
             SingleButtonWait();
             BuzzerSound(0.2);
             mode = 0;
         }
         //Set system to metric (centimeters)
-        if (Button_S5_Select_Read() == 0)
+        if (Button_S5_Select_State_Read() == 0)
         {
             SingleButtonWait();
             BuzzerSound(0.2);
@@ -356,7 +335,7 @@ void mode_2(void)
             cm_or_inch = 'c'; // set system to use cm
         }
         //Set system to imperial (inches)
-        if (Button_S2_Left_Read() == 0)
+        if (Button_S2_Left_State_Read() == 0)
         {
             SingleButtonWait();
             BuzzerSound(0.2);
@@ -380,26 +359,33 @@ void mode_3(void)
     double previous_second;
     while (mode == 3)
     {
-        runtime();
         //check if first time entering loop
         if (flag_read == 1)
         {
+            
+            BuzzerSound(0.2);
             distance = ultra_avg();
+            
             previous_second= current_second();
             
             clear_7_seg();
             flag_read = 0;
             
+            
+            
+            
         }
        
         display_num(distance);
+        runtime();
        
         //check if loop has gone for over 2 seconds
         if (current_second()-previous_second >=2)
         {
             //if button pressed, reset whole loop from start. else go to mode 0
-            if (Button_S5_Select_Read() == 0)
+            if (Button_S5_Select_State_Read() == 0)
             {
+                clear_7_seg();
                 BuzzerSound(0.2);
                 flag_read=1;
             }
@@ -418,6 +404,7 @@ void mode_3(void)
 
 void MetricLedOn(void)
 {
+    // TODO enable metric LED back again
     //LED2_Yellow_Write(0);
     //LED3_Green_Write(1);
 }
@@ -431,7 +418,7 @@ void ImperialLedOn(void)
 
 void SingleButtonWait(void)
 {
-    while (Button_S4_Right_Read()==0 || Button_S5_Select_Read()==0 || Button_S2_Left_Read()==0)
+    while (Button_S4_Right_State_Read()==0 || Button_S5_Select_State_Read()==0 || Button_S2_Left_State_Read()==0)
     {
         runtime();
     }
@@ -439,7 +426,7 @@ void SingleButtonWait(void)
 
 void DoubleButtonWait(void)
 {
-    while (Button_S5_Select_Read() == 0 && Button_S2_Left_Read() == 0)
+    while (Button_S5_Select_State_Read() == 0 && Button_S2_Left_State_Read() == 0)
     {
         runtime();
     }
@@ -557,9 +544,9 @@ void BuzzerSound(double duration)
 }
 void BuzzerRuntime(double duration)
 {
-    double time_diff = current_second()-previous_buzz;
+    double buzz_time_diff = current_second()-previous_buzz;
     
-    if(time_diff<duration) Buzzer_Write(0);  // Turn on buzzer
+    if(buzz_time_diff<duration) Buzzer_Write(0);  // Turn on buzzer
     else Buzzer_Write(1); // Turn off buzzer
 }
 
@@ -582,10 +569,13 @@ double ultra_avg(){
     //CyDelay(5);
     for(int x = 0; x< 20 ; x++)
     {
+        
+        //runtime();
         //UART_1_PutString("3");
         //CyDelay(5);
         for (int i = 0; i < 10; i++) 
         {    
+        BuzzerRuntime(buzz_duration);
             
         //UART_1_PutString("4");
         //CyDelay(5);
@@ -616,7 +606,13 @@ double ultra_reading()
     
     // Wait for response
     // TODO: may need to write blocking code to obtain ultrasonic values
-    //while(waiting_ultra==1){}
+    double previous_ultra_second=current_second();
+    double time_diff = current_second()-previous_ultra_second;
+    
+    
+    //while(waiting_ultra==1 && (current_second()-previous_ultra_second)<1){
+    //    runtime();
+    //}
     CyDelay(10);
 
     double value =  (double)time_passed_step/10000; //in ms

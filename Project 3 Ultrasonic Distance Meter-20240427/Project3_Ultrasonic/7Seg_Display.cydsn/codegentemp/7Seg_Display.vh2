@@ -2,7 +2,7 @@
 --	Conversion of 7Seg_Display.v to vh2:
 --
 --	Cypress Semiconductor - WARP Version 6.3 IR 41
---	Tue May 21 16:05:45 2024
+--	Wed May 22 12:11:48 2024
 --
 
 USE cypress.cypress.all;

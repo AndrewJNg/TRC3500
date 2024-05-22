@@ -1,6 +1,6 @@
 // ======================================================================
 // 7Seg_Display.v generated from TopDesign.cysch
-// 05/21/2024 at 16:05
+// 05/22/2024 at 12:11
 // This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 // ======================================================================
 
@@ -763,13 +763,13 @@ module top ;
           wire  Net_459;
           wire  Net_458;
           wire  Net_457;
+          wire  System_clk;
           wire  Net_456;
           wire  Net_455;
           wire  Net_454;
           wire  Net_453;
           wire  Net_452;
           wire  Net_451;
-          wire  System_clk;
           wire  Net_714;
           wire  Net_418;
           wire [6:0] Net_417;
