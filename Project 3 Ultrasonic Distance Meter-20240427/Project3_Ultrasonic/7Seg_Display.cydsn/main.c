@@ -1,14 +1,3 @@
-/* ========================================
- *
- * Copyright YOUR COMPANY, THE YEAR
- * All Rights Reserved
- * UNPUBLISHED, LICENSED SOFTWARE.
- *
- * CONFIDENTIAL AND PROPRIETARY INFORMATION
- * WHICH IS THE PROPERTY OF your company.
- *
- * ========================================
-*/
 
 // ========================================================================================================================
 #include "project.h"
@@ -21,13 +10,11 @@ CY_ISR(seg7_ISR);
 CY_ISR(Receive_Ultra);
 
 void print_uart(int num);
-void send_ultra_pulse();
-double ultra_reading();
 double current_second();
 void BuzzerSound(double duration);
 void BuzzerRuntime(double duration);
 void seg_runtime(double value);
-void runtime();
+int clear_7_seg();
 
 void EEPROM_writeDouble(uint16 address, double value);
 double EEPROM_readDouble(uint16 address);
@@ -50,6 +37,10 @@ float find_median(float arr[], int size);
 int compare_qsort(const void *a, const void *b);
 
 double ultra_avg();
+double ultra_reading();
+
+void runtime();
+
 
 
 
@@ -62,23 +53,7 @@ double previous_buzz= 0;
 double buzz_duration=0;
 double seg_num =0;
 
-/*
-CY_ISR(MyCustomISR1) //Right button interrupt
-{
-    button1=1;
-    send_ultra_pulse();
-}
 
-CY_ISR(MyCustomISR2) //Right button interrupt
-{
-    button2=!button2;
-    //Timer_1_Stop();
-    //time_passed_step = Timer_1_ReadPeriod()-Timer_1_ReadCounter() ;
-    
-    //previous_buzz = current_second();
-    //buzz_duration=0.2;
-    //BuzzerSound(0.1);
-}*/
 
 int mode = 0;
 int group_num = 0;
@@ -86,29 +61,7 @@ char cm_or_inch;
 
 double distance=0;
 
-// Compare two values for qsort
-int compare_qsort(const void *a, const void *b)
-{
-    return (*(int*)a - *(int*)b);
-}
-// Find the median of an array
-float find_median(float arr[], int size) 
-{
-    double median;
-    qsort(arr, size, sizeof(int), compare_qsort); // Sort the array
 
-    // Check if the size of the array is odd or even
-    if (size % 2 == 0) 
-    {
-        median = (arr[(size/2)-2] + arr[(size/2)-1] + arr[size/2] + arr[(size/2)+1] + arr[(size/2)+2]) / 5.0;
-    }
-    else
-    {
-//        median = (arr[(size - 1) / 2] + arr[size / 2]) / 2.0;
-        median = (arr[((size-1)/2)-2] + arr[((size-1)/2)-1] + arr[(size-1)/2] + arr[(size+1)/2]+ arr[((size+1)/2)+1] + arr[((size+1)/2)+2]) / 6.0;
-    }
-    return median;
-}
 
 int main(void)
 {
@@ -141,7 +94,9 @@ int main(void)
     // Setup UART
     UART_1_Start();
     UART_1_PutString("Start UART");
+    CyDelay(5);
     UART_1_WriteTxData(0x20);   
+    CyDelay(5);
     
     double setup_previous_time =current_second();
     while((current_second()-setup_previous_time)<=4)
@@ -183,32 +138,47 @@ int main(void)
         
         //UART_1_WriteTxData(0x20);    
         //print_uart(mode);
-    
-        /*if (mode==0)
+        
+        if (mode==0)
         {
+            UART_1_PutString("Mode 0");
+            CyDelay(5);
+            UART_1_WriteTxData(0x20);   
             mode_0();
         
         }
         if (mode==1)
         {
-            mode_1();
+            UART_1_PutString("Mode 1");
+            CyDelay(5);
+            UART_1_WriteTxData(0x20); 
+            //mode_1();
         }
         if (mode==2)
         {
-            mode_2();
+            UART_1_PutString("Mode 2");
+            CyDelay(5);
+            UART_1_WriteTxData(0x20); 
+           // mode_2();
         }
         if (mode==3)
         {
-            mode_3();
-        }*/
-        
-        //mode_0();
-        if(Button_S5_Select_State_Read()==0)
-        {
-           display_num(  ultra_avg());
             
-            
+            UART_1_PutString("Mode 3");
+            CyDelay(5);
+            UART_1_WriteTxData(0x20); 
+            //mode_3();
         }
+        CyDelay(5);
+        //mode_0();
+        
+        
+        //if(Button_S5_Select_State_Read()==0)
+        //{
+        //   clear_7_seg();
+        //   display_num(ultra_avg());
+        //}
+        
         
         //display_num( current_second());
         //display_num( 0);
@@ -230,56 +200,84 @@ int main(void)
 //sleep mode
 void mode_0(void)
 {
-    double previous_second=current_second();
+    double previous_second_decimal=current_second();
     while (mode == 0) {
-        runtime();
+        
+        //UART_1_PutString("1");
+        //CyDelay(5);
+        
         //flash decimal point 1 second on, off
-        double time_diff = current_second()-previous_second;
-        if (time_diff<=1)
-        {
-            display_num(-3); //display decimal
-        }
-        else if ((time_diff > 1)  && (time_diff <= 2))
-        {
-            display_num(-4); //display blank
-        }
-        else
-        {
-            previous_second = current_second();
-        }
+        double time_diff = current_second()-previous_second_decimal;
+            
+        if (time_diff<=1)                               display_num(-3); //display decimal
+        else if ((time_diff > 1)  && (time_diff <= 2))  display_num(-4); //display blank
+        else previous_second_decimal = current_second();
+        
       
+        /*if (Button_S5_Select_State_Read() == 0)
+        {
+            
+                clear_7_seg();
+                display_num(ultra_avg());
+            
+        }*/
         
         //check if either button is pressed
-        if ((Button_S5_Select_Read() == 0) || (Button_S2_Left_Read() == 0))
+        if ((Button_S5_Select_State_Read() == 0) || (Button_S2_Left_State_Read() == 0))
         {
+            
+        //UART_1_PutString("2");
+        //CyDelay(5);
             //wait 0.2 seconds to delay check
             double check_second = current_second();
             while ((current_second() - check_second )<0.2)
             {
                 runtime();
             }
+            
            
             //if both buttons pressed, wait 1 seconds to go to mode 1
-            if ((Button_S5_Select_Read() == 0) && (Button_S2_Left_Read() == 0))
+            if ((Button_S5_Select_State_Read() == 0) && (Button_S2_Left_State_Read() == 0))
             {
                 BuzzerSound(0.2);
                 check_second = current_second();        
-                while ((Button_S5_Select_Read() == 0) && (Button_S2_Left_Read() == 0))
+                while ((Button_S5_Select_State_Read() == 0) && (Button_S2_Left_State_Read() == 0))
                 {
                     runtime();
                     if (current_second()-check_second==1)
                     {
-                        mode = 1;
+                        
+                        UART_1_PutString("Enter Mode 1\n");
+                        CyDelay(5);
+                        //mode = 1;
                         break;
                     }
                 }  
             }
             //if instead just button 1 is pressed, go to mode 3
-            else if ((Button_S5_Select_Read() == 0) && (Button_S2_Left_Read() == 1))
+            else if ((Button_S5_Select_State_Read() == 0) && (Button_S2_Left_State_Read() == 1))
             {
-                mode = 3;
+                UART_1_PutString("Enter mode 3\n");
+                CyDelay(5);
+                BuzzerSound(0.2);
+                //mode = 3;
+                clear_7_seg();
+                display_num(ultra_avg());
+                double previous_mode3_second=current_second();
+                
+                while ( (current_second()-previous_mode3_second) <= 2)  
+                {
+                    //display_num(distance); //display distance for 2 second
+                    runtime();
+                    
+                }
+                
             }
         }
+        runtime();
+        
+        
+        
     }
 }
 
@@ -386,9 +384,12 @@ void mode_3(void)
         //check if first time entering loop
         if (flag_read == 1)
         {
-            distance = ultra_reading();
+            distance = ultra_avg();
             previous_second= current_second();
+            
+            clear_7_seg();
             flag_read = 0;
+            
         }
        
         display_num(distance);
@@ -445,7 +446,7 @@ void DoubleButtonWait(void)
 }
 
 // ========================================================================================================================
-
+/* System timer*/
 void runtime()
 {
     BuzzerRuntime(buzz_duration);
@@ -567,40 +568,58 @@ void BuzzerRuntime(double duration)
 // ========================================================================================================================
 /* Ultrasinic launch function*/
 
-double value = 0; 
-//double distance = 0;
 int waiting_ultra = 0;
 
 double ultra_avg(){
  
+    //UART_1_PutString("1");
+    //CyDelay(5);
     float vals[10] = {0,0,0,0,0,0,0,0,0,0};
     float count_median[20] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     double final_dist;
+    
+    //UART_1_PutString("2");
+    //CyDelay(5);
     for(int x = 0; x< 20 ; x++)
     {
+        //UART_1_PutString("3");
+        //CyDelay(5);
         for (int i = 0; i < 10; i++) 
         {    
+            
+        //UART_1_PutString("4");
+        //CyDelay(5);
         vals[i] = ultra_reading();
         }
+        
+        //UART_1_PutString("5");
+        //CyDelay(5);
         count_median[x] = find_median(vals, 10);
     }
             
     final_dist = find_median(count_median, 20);
-    //display_num( final_dist);
     return final_dist;
 }
+
 double ultra_reading()
 {
     isr_6_ClearPending();
     isr_6_StartEx(Receive_Ultra);  
     
-    send_ultra_pulse();
+    // Send pulse
+    Control_Reg_1_Write(1); // Reset counter to do more pulses
+    CyDelayUs(150);
+    Control_Reg_1_Write(0);
     
-    while(waiting_ultra==1)
-    {
-    }
+    Timer_1_Start();        // Start receiver timer
+    waiting_ultra =1;
+    
+    // Wait for response
     // TODO: may need to write blocking code to obtain ultrasonic values
-    value =  (double)time_passed_step/10000; //in ms
+    //while(waiting_ultra==1){}
+    CyDelay(10);
+
+    double value =  (double)time_passed_step/10000; //in ms
     distance = (34*value)/2;
     
     return distance;
@@ -623,10 +642,33 @@ CY_ISR(Receive_Ultra)  // Ultrasonic Receiver
     time_passed_step = Timer_1_ReadPeriod()-Timer_1_ReadCounter() ;
     waiting_ultra =0;
     
-    print_uart(time_passed_step);
+    //print_uart(time_passed_step);
 }
 
+// Compare two values for quick sort
+int compare_qsort(const void *a, const void *b)
+{
+    return (*(int*)a - *(int*)b);
+}
 
+// Find the median of a given array
+float find_median(float arr[], int size) 
+{
+    double median;
+    qsort(arr, size, sizeof(int), compare_qsort); // Sort the array
+
+    // Check if the size of the array is odd or even
+    if (size % 2 == 0) 
+    {
+        median = (arr[(size/2)-2] + arr[(size/2)-1] + arr[size/2] + arr[(size/2)+1] + arr[(size/2)+2]) / 5.0;
+    }
+    else
+    {
+//        median = (arr[(size - 1) / 2] + arr[size / 2]) / 2.0;
+        median = (arr[((size-1)/2)-2] + arr[((size-1)/2)-1] + arr[(size-1)/2] + arr[(size+1)/2]+ arr[((size+1)/2)+1] + arr[((size+1)/2)+2]) / 6.0;
+    }
+    return median;
+}
 // ========================================================================================================================
 /* Mid Level 7 Segment display code*/
 
@@ -734,6 +776,7 @@ void seg_runtime(double value){
         D[1] = 10; //space
         D[2] = 10; //space
         D[3] = 10; //space
+        
     }
     else // reserve for startup
     {
@@ -769,9 +812,18 @@ void seg_runtime(double value){
     else if(count==1)Dis_D2_Write(0);
     else if(count==2)Dis_D3_Write(0);
     else if(count==3)Dis_D4_Write(0);
-        
+    
     run_7_Seg =0;
     
+}
+
+int clear_7_seg()
+{
+    // Turn off all sections
+    Dis_D1_Write(1);
+    Dis_D2_Write(1);
+    Dis_D3_Write(1);
+    Dis_D4_Write(1);
 }
 
 // ========================================================================================================================
