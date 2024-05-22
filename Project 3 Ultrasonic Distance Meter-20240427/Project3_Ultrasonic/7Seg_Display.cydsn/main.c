@@ -109,17 +109,25 @@ int main(void)
         runtime();
     }
     
+    double B[55] = 
+    {4.86, 5.37,6.21,6.89,7.41,7.92,8.44,8.94,9.45,9.96,
+     10.46,11.49,12.00,12.79,13.50,14.05,15.73,16.27,16.59,16.59,
+     17.43,17.94,18.46,18.97,19.48,19.87,20.47,21.51,22.02,22.50,
+     23.31,23.77,24.57,25.08,25.52,26.09,26.62,27.29,28.20,28.90,
+     29.67,30.19,30.93,31.72,32.38, 33.23,33.76,34.26,35.18,35.76,
+     36.30,36.83,37.75,38.64,40.15};
+    
     // EEPROM Write startup
     //
     // Place your initialization/startup code here (e.g. MyInst_Start())
     //int teamNumber = 200;
     //EEPROM_writeInt(0, teamNumber);
-    //int nextAddress = sizeof(int);
+    int nextAddress = sizeof(int);
     //char measurementSystem = 'c';
     //EEPROM_WriteByte((uint8)measurementSystem, nextAddress);
-    //nextAddress += sizeof(char);
+    nextAddress += sizeof(char);
     //double calibration[55] = {0.0};
-    //writeDoubleArrayToEEPROM(nextAddress, calibration, 55);
+    writeDoubleArrayToEEPROM(nextAddress, B, 55);
     //
     
     //int eprom_read = EEPROM_ReadByte(0x00);
@@ -175,25 +183,7 @@ int main(void)
             mode_3();
         }
         CyDelay(5);
-        //mode_0();
         
-        
-        //if(Button_S5_Select_State_Read()==0)
-        //{
-        //   clear_7_seg();
-        //   display_num(ultra_avg());
-        //}
-        
-        
-        //display_num( current_second());
-        //display_num( 0);
-        //if (cm_or_inch =='c') display_num(-1);
-        //if (cm_or_inch =='i') display_num(-2);
-        
-        //display_num( eprom_num);
-        //display_num(Button_S5_Select_State_Read()*1000+ Button_S2_Left_Read()*100+Button_S4_Right_Read()*10);
-        //display_num(-3);
-        //BuzzerRuntime(0.2);
         runtime();
         
         
@@ -218,9 +208,9 @@ void mode_0(void)
         else if ((time_diff > 1)  && (time_diff <= 2))  display_num(-4); //display blank
         else previous_second_decimal = current_second();
         
-      
+        
         //check if either button is pressed
-        if ((Button_S5_Select_State_Read() == 0) || (Button_S2_Left_State_Read() == 0))
+        if ((Button_S2_Left_State_Read() == 0) || (Button_S4_Right_State_Read() == 0))
         {
             
             //wait 0.2 seconds to delay check
@@ -230,11 +220,11 @@ void mode_0(void)
             
             
             //if both buttons pressed, wait 1 seconds to go to mode 1
-            if ((Button_S5_Select_State_Read() == 0) && (Button_S2_Left_State_Read() == 0))
+            if ((Button_S2_Left_State_Read() == 0) && (Button_S4_Right_State_Read() == 0))
             {
                 BuzzerSound(0.2);
                 check_second = current_second();        
-                while ((Button_S5_Select_State_Read() == 0) && (Button_S2_Left_State_Read() == 0))
+                while ((Button_S2_Left_State_Read() == 0) && (Button_S4_Right_State_Read() == 0))
                 {
                     runtime();
                     if (current_second()-check_second==1)
@@ -249,7 +239,7 @@ void mode_0(void)
             }
             
             //if instead just button 1 is pressed, go to mode 3
-            else if ((Button_S5_Select_State_Read() == 0) && (Button_S2_Left_State_Read() == 1))
+            else if ((Button_S2_Left_State_Read() == 1) && (Button_S4_Right_State_Read() == 0))
             {
                 mode =3;
             }
@@ -284,23 +274,23 @@ void mode_1(void)
             previous_second = current_second();
         }
        
-       
+        
         // Check to go to mode 2
-        if (Button_S4_Right_State_Read() == 0) // Assuming active low buttons
+        if (Button_S5_Select_State_Read() == 0) // Assuming active low buttons
         {
             SingleButtonWait();
             BuzzerSound(0.2);
             mode = 2;
         }
         //check to increment number
-        if (Button_S5_Select_State_Read() == 0)
+        if (Button_S3_Top_State_Read() == 0)
         {
             SingleButtonWait();
             BuzzerSound(0.2);
             group_num ++;
         }
         //check to decrement number
-        if (Button_S2_Left_State_Read() == 0)
+        if (Button_S1_Bottom_State_Read() == 0)
         {
             SingleButtonWait();
             BuzzerSound(0.2);
@@ -320,15 +310,16 @@ void mode_2(void)
         if (cm_or_inch =='c') display_num(-1);
         if (cm_or_inch =='i') display_num(-2);
         
+        
         //check to go to mode 0
-        if (Button_S4_Right_State_Read() == 0)
+        if (Button_S5_Select_State_Read() == 0)
         {
             SingleButtonWait();
             BuzzerSound(0.2);
             mode = 0;
         }
         //Set system to metric (centimeters)
-        if (Button_S5_Select_State_Read() == 0)
+        if (Button_S3_Top_State_Read() == 0)
         {
             SingleButtonWait();
             BuzzerSound(0.2);
@@ -337,7 +328,7 @@ void mode_2(void)
             cm_or_inch = 'c'; // set system to use cm
         }
         //Set system to imperial (inches)
-        if (Button_S2_Left_State_Read() == 0)
+        if (Button_S1_Bottom_State_Read() == 0)
         {
             SingleButtonWait();
             BuzzerSound(0.2);
@@ -386,10 +377,11 @@ void mode_3(void)
         //check if loop has gone for over 2 seconds
         if (current_second()-previous_second >=2)
         {
+            
             //if button pressed, reset whole loop from start. else go to mode 0
-            if (Button_S5_Select_State_Read() == 0)
+            if (Button_S4_Right_State_Read() == 0)
             {
-                clear_7_seg();
+                //clear_7_seg();
                 BuzzerSound(0.2);
                 flag_read=1;
             }
@@ -420,9 +412,10 @@ void ImperialLedOn(void)
 
 }
 
+        
 void SingleButtonWait(void)
 {
-    while (Button_S4_Right_State_Read()==0 || Button_S5_Select_State_Read()==0 || Button_S2_Left_State_Read()==0)
+    while (Button_S3_Top_State_Read()==0 || Button_S5_Select_State_Read()==0 || Button_S1_Bottom_State_Read()==0)
     {
         runtime();
     }
@@ -474,9 +467,9 @@ void EEPROM_writeInt(uint16 address, int value) {
     }
 }
 
-/*
+
 void EEPROM_writeDouble(uint16 address, double value) {
-    uint8 ptr = (uint8)(void*)&value;  // Convert double to byte array
+    uint8* ptr = (uint8*)&value;  // Convert double to byte array
     for (uint8 i = 0; i < sizeof(double); i++) {
         EEPROM_WriteByte(ptr[i], address + i);
     }
@@ -484,7 +477,7 @@ void EEPROM_writeDouble(uint16 address, double value) {
 
 double EEPROM_readDouble(uint16 address) {
     double value = 0.0;
-    uint8 ptr = (uint8)(void*)&value;
+    uint8* ptr = (uint8*)&value;
     for (uint8 i = 0; i < sizeof(double); i++) {
         ptr[i] = EEPROM_ReadByte(address + i);
     }
@@ -502,7 +495,7 @@ void readDoubleArrayFromEEPROM(uint16 startAddress, double* array, uint16 arrayS
         array[i] = EEPROM_readDouble(startAddress + i * sizeof(double));
     }
 }
-
+/*
 void EEPROM_writeInt(uint16 address, int value) {
     uint8 ptr = (uint8)(void*)&value;  // Convert int to byte array
     for (uint8 i = 0; i < sizeof(int); i++) {
@@ -601,10 +594,44 @@ double ultra_avg(){
             
     predicted_dist = find_median(count_median, 20);
     
+    /*
     // Linear fitting using eeprom values
     float a1 = 0.798;
     float a0 = -0.789;
     actual_dist = a1* predicted_dist + a0;
+    */
+    //double A[55] = [0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,5.5,6,6.5,7,8.5,9,9.5,10,
+    //                0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,5.5,6,6.5,7,8.5,9,9.5,10
+    //]
+    
+    
+    
+    /*double B[55] = 
+    {4.86, 5.37,6.21,6.89,7.41,7.92,8.44,8.94,9.45,9.96,
+     10.46,11.49,12.00,12.79,13.50,14.05,15.73,16.27,16.59,16.59,
+     17.43,17.94,18.46,18.97,19.48,19.87,20.47,21.51,22.02,22.50,
+     23.31,23.77,24.57,25.08,25.52,26.09,26.62,27.29,28.20,28.90,
+     29.67,30.19,30.93,31.72,32.38, 33.23,33.76,34.26,35.18,35.76,
+     36.30,36.83,37.75,38.64,40.15};*/
+    double B[55];
+    
+    int nextAddress = sizeof(int);
+    nextAddress += sizeof(char);
+    
+    readDoubleArrayFromEEPROM(nextAddress , B, 55);
+    
+    double value = predicted_dist;
+    int index = 0;
+    while(value > B[index])
+    {
+        index++;
+    }
+    
+    double actual = 3+ 0.5*(index-1); 
+    double precentage = (value -  B[index-1]) / (B[index]-B[index-1]);
+    actual_dist = precentage*0.5 + actual;
+    
+    
     return actual_dist;
 }
 
@@ -630,6 +657,7 @@ double ultra_reading()
     //while(waiting_ultra==1 && (current_second()-previous_ultra_second)<1){
     //    runtime();
     //}
+    runtime();
     CyDelay(10);
 
     double value =  (double)time_passed_step/10000; //in ms
