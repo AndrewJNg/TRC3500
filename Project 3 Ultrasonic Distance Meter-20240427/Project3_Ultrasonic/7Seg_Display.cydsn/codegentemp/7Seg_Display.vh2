@@ -2,7 +2,7 @@
 --	Conversion of 7Seg_Display.v to vh2:
 --
 --	Cypress Semiconductor - WARP Version 6.3 IR 41
---	Wed May 22 15:34:16 2024
+--	Wed May 22 17:37:39 2024
 --
 
 USE cypress.cypress.all;
@@ -494,6 +494,7 @@ SIGNAL Net_539 : bit;
 SIGNAL \Timer_2:Net_55\ : bit;
 SIGNAL Net_524 : bit;
 SIGNAL \Timer_2:Net_53\ : bit;
+SIGNAL Net_546 : bit;
 SIGNAL \Timer_2:TimerUDB:ClockOutFromEnBlock\ : bit;
 SIGNAL \Timer_2:TimerUDB:Clk_Ctl_i\ : bit;
 SIGNAL \Timer_2:TimerUDB:control_7\ : bit;
@@ -3387,12 +3388,12 @@ LED3_Green:cy_psoc3_pins_v1_10
 		interrupt=>tmpINTERRUPT_0__LED3_Green_net_0);
 \Timer_2:TimerUDB:clock_enable_block\:cy_psoc3_udb_clock_enable_v1_0
 	GENERIC MAP(sync_mode=>'1')
-	PORT MAP(clock_in=>System_clk,
+	PORT MAP(clock_in=>Net_546,
 		enable=>tmpOE__Dis_A_net_0,
 		clock_out=>\Timer_2:TimerUDB:ClockOutFromEnBlock\);
 \Timer_2:TimerUDB:sCTRLReg:SyncCtl:cy_psoc3_udb_Ctl_Clk_Sync\:cy_psoc3_udb_clock_enable_v1_0
 	GENERIC MAP(sync_mode=>'1')
-	PORT MAP(clock_in=>System_clk,
+	PORT MAP(clock_in=>Net_546,
 		enable=>tmpOE__Dis_A_net_0,
 		clock_out=>\Timer_2:TimerUDB:Clk_Ctl_i\);
 \Timer_2:TimerUDB:sCTRLReg:SyncCtl:ctrlreg\:cy_psoc3_control
@@ -4812,6 +4813,16 @@ Button_S5_Select_State:cy_psoc3_pins_v1_10
 		out_clock_en=>tmpOE__Dis_A_net_0,
 		out_reset=>zero,
 		interrupt=>tmpINTERRUPT_0__Button_S5_Select_State_net_0);
+Clock_2:cy_clock_v1_0
+	GENERIC MAP(cy_registers=>"",
+		id=>"24ee81cf-2b12-4b34-965c-838f2a0db49a",
+		source_clock_id=>"",
+		divisor=>0,
+		period=>"10000000000",
+		is_direct=>'0',
+		is_digital=>'1')
+	PORT MAP(clock_out=>Net_546,
+		dig_domain_out=>open);
 \UART_1:BUART:reset_reg\:cy_dff
 	PORT MAP(d=>zero,
 		clk=>\UART_1:BUART:clock_op\,

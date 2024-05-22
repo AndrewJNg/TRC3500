@@ -98,6 +98,7 @@
 #include "Button_S4_Right_State.h"
 #include "Button_S5_Select_State_aliases.h"
 #include "Button_S5_Select_State.h"
+#include "Clock_2.h"
 #include "UART_1_IntClock.h"
 #include "core_cm3_psoc5.h"
 #include "CyDmac.h"

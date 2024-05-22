@@ -1,5 +1,5 @@
 -- Project:   7Seg_Display
--- Generated: 05/22/2024 15:34:17
+-- Generated: 05/22/2024 17:37:41
 -- PSoC Creator  4.4
 
 ENTITY \7Seg_Display\ IS
@@ -103,6 +103,10 @@ ARCHITECTURE __DEFAULT__ OF \7Seg_Display\ IS
     SIGNAL Net_417_6 : bit;
     SIGNAL Net_474 : bit;
     SIGNAL Net_489 : bit;
+    SIGNAL Net_546 : bit;
+    ATTRIBUTE udbclken_assigned OF Net_546 : SIGNAL IS "True";
+    ATTRIBUTE global_signal OF Net_546 : SIGNAL IS true;
+    SIGNAL Net_546_local : bit;
     SIGNAL Net_547_0 : bit;
     SIGNAL Net_547_1 : bit;
     SIGNAL Net_547_2 : bit;
@@ -769,12 +773,14 @@ BEGIN
             dsi_glb_div => open,
             dclk_glb_0 => Net_10,
             dclk_0 => Net_10_local,
-            dclk_glb_1 => \UART_1:Net_9\,
-            dclk_1 => \UART_1:Net_9_local\,
-            dclk_glb_2 => Net_711,
-            dclk_2 => Net_711_local,
-            dclk_glb_3 => System_clk,
-            dclk_3 => System_clk_local);
+            dclk_glb_1 => Net_546,
+            dclk_1 => Net_546_local,
+            dclk_glb_2 => \UART_1:Net_9\,
+            dclk_2 => \UART_1:Net_9_local\,
+            dclk_glb_3 => Net_711,
+            dclk_3 => Net_711_local,
+            dclk_glb_4 => System_clk,
+            dclk_4 => System_clk_local);
 
     Dis_A:logicalport
         GENERIC MAP(
@@ -4232,7 +4238,7 @@ BEGIN
             clk_inv => '0',
             clken_mode => 1)
         PORT MAP(
-            clock => System_clk,
+            clock => Net_546,
             control_7 => \Timer_2:TimerUDB:control_7\,
             control_6 => \Timer_2:TimerUDB:control_6\,
             control_5 => \Timer_2:TimerUDB:control_5\,
@@ -4251,7 +4257,7 @@ BEGIN
             clk_inv => '0',
             clken_mode => 1)
         PORT MAP(
-            clock => System_clk,
+            clock => Net_546,
             status_6 => open,
             status_5 => open,
             status_4 => open,
@@ -4288,7 +4294,7 @@ BEGIN
             clk_inv => '0',
             clken_mode => 1)
         PORT MAP(
-            clock => System_clk,
+            clock => Net_546,
             cs_addr_1 => \Timer_2:TimerUDB:control_7\,
             cs_addr_0 => \Timer_2:TimerUDB:per_zero\,
             busclk => ClockBlock_BUS_CLK,
@@ -4334,7 +4340,7 @@ BEGIN
             clk_inv => '0',
             clken_mode => 1)
         PORT MAP(
-            clock => System_clk,
+            clock => Net_546,
             cs_addr_1 => \Timer_2:TimerUDB:control_7\,
             cs_addr_0 => \Timer_2:TimerUDB:per_zero\,
             busclk => ClockBlock_BUS_CLK,
@@ -4393,7 +4399,7 @@ BEGIN
             clk_inv => '0',
             clken_mode => 1)
         PORT MAP(
-            clock => System_clk,
+            clock => Net_546,
             cs_addr_1 => \Timer_2:TimerUDB:control_7\,
             cs_addr_0 => \Timer_2:TimerUDB:per_zero\,
             busclk => ClockBlock_BUS_CLK,
@@ -4452,7 +4458,7 @@ BEGIN
             clk_inv => '0',
             clken_mode => 1)
         PORT MAP(
-            clock => System_clk,
+            clock => Net_546,
             cs_addr_1 => \Timer_2:TimerUDB:control_7\,
             cs_addr_0 => \Timer_2:TimerUDB:per_zero\,
             z0_comb => \Timer_2:TimerUDB:per_zero\,

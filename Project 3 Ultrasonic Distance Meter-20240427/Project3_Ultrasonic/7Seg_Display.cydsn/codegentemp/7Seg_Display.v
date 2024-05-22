@@ -1,6 +1,6 @@
 // ======================================================================
 // 7Seg_Display.v generated from TopDesign.cysch
-// 05/22/2024 at 15:34
+// 05/22/2024 at 17:37
 // This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 // ======================================================================
 
@@ -726,6 +726,7 @@ endmodule
 // top
 module top ;
 
+          wire  Net_743;
           wire [4:0] Net_615;
           wire [4:0] Net_614;
           wire [4:0] Net_630;
@@ -762,8 +763,8 @@ module top ;
           wire  Net_460;
           wire  Net_459;
           wire  Net_458;
-          wire  Net_457;
           wire  System_clk;
+          wire  Net_457;
           wire  Net_456;
           wire  Net_455;
           wire  Net_454;
@@ -773,6 +774,7 @@ module top ;
           wire  Net_714;
           wire  Net_418;
           wire [6:0] Net_417;
+          wire  Net_546;
           wire  Net_369;
           wire [4:0] Net_605;
           wire [4:0] Net_547;
@@ -2568,7 +2570,7 @@ module top ;
     Timer_v2_80_2 Timer_2 (
         .capture(1'b0),
         .capture_out(Net_519),
-        .clock(System_clk),
+        .clock(Net_546),
         .enable(1'b1),
         .interrupt(Net_539),
         .reset(Net_523),
@@ -3537,6 +3539,18 @@ module top ;
 		  .out_reset({1'b0}));
 
 	assign tmpOE__Button_S5_Select_State_net = (`CYDEV_CHIP_MEMBER_USED == `CYDEV_CHIP_MEMBER_3A && `CYDEV_CHIP_REVISION_USED < `CYDEV_CHIP_REVISION_3A_ES3) ? ~{1'b1} : {1'b1};
+
+
+	cy_clock_v1_0
+		#(.id("24ee81cf-2b12-4b34-965c-838f2a0db49a"),
+		  .source_clock_id(""),
+		  .divisor(0),
+		  .period("10000000000"),
+		  .is_direct(0),
+		  .is_digital(1))
+		Clock_2
+		 (.clock_out(Net_546));
+
 
 
 

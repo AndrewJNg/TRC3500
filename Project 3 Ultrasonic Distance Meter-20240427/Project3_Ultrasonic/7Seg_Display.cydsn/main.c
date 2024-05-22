@@ -14,7 +14,7 @@ double current_second();
 void BuzzerSound(double duration);
 void BuzzerRuntime(double duration);
 void seg_runtime(double value);
-int clear_7_seg();
+void  clear_7_seg();
 
 void EEPROM_writeDouble(uint16 address, double value);
 double EEPROM_readDouble(uint16 address);
@@ -99,36 +99,86 @@ int main(void)
     UART_1_WriteTxData(0x20);   
     CyDelay(5);
     
+    
+    group_num = EEPROM_ReadByte(0);
+    cm_or_inch = EEPROM_ReadByte(sizeof(int));
+    
+    
     double setup_previous_time =current_second();
-    while((current_second()-setup_previous_time)<=4)
+    while((current_second()-setup_previous_time)<=6)
     {
         if((int)(current_second()-setup_previous_time) ==0) display_num(-5);
         if((int)(current_second()-setup_previous_time) ==1) display_num(-6);
         if((int)(current_second()-setup_previous_time) ==2) display_num(-7);
         if((int)(current_second()-setup_previous_time) ==3) display_num(-8);
+        if((int)(current_second()-setup_previous_time) ==4) display_num(group_num);
+        if((int)(current_second()-setup_previous_time) ==5) 
+        {
+            if (cm_or_inch =='c') display_num(-1);
+            if (cm_or_inch =='i') display_num(-2);
+        }
+        
         runtime();
     }
     
+    /*
     double B[55] = 
-    {4.86, 5.37,6.21,6.89,7.41,7.92,8.44,8.94,9.45,9.96,
-     10.46,11.49,12.00,12.79,13.50,14.05,15.73,16.27,16.59,16.59,
-     17.43,17.94,18.46,18.97,19.48,19.87,20.47,21.51,22.02,22.50,
-     23.31,23.77,24.57,25.08,25.52,26.09,26.62,27.29,28.20,28.90,
-     29.67,30.19,30.93,31.72,32.38, 33.23,33.76,34.26,35.18,35.76,
-     36.30,36.83,37.75,38.64,40.15};
+    {4.86, 5.37,6.21,6.89,7.41,
+     7.92,8.44,8.94,9.45,9.96, //7.5
+     10.46,11.49,12.00,12.79,13.50,//10
+     14.05,15.73,16.27,16.59,16.59, //12.5
+     17.43,17.94,18.46,18.97,19.48, //15
+     19.87,20.47,21.51,22.02,22.50, //17.5
+     23.31,23.77,24.57,25.08, 25.68, //20
+        
+    26.26, 27.08, 27.58, 28.36, 28.92, //22.5
+    29.7, 30.32, 31.19, 31.87, 32.82, //25
+    33.54, 34.54, 35.51, 36.14, 36.4, //27.5
+    36.93, 37.79, 38, 38.92, 39.68}; //30   
+    */
     
+    //26.19, 26.83, 27.75, 28.55, //22.5
+    //29.56, 30.10, 30.34, 30.92, 31.94, //25
+    //32.52, 33.48, 34.12, 34.44,35.22, //27.5
+    //35.83, 36.49, 37.42, 38.1, 39.42,40.44}; //30  
+    
+    /*double B[55] = 
+    {4.86, 5.37,6.21,6.89,7.41,
+     7.92,8.44,8.94,9.45,9.96, //7.5
+     10.46,11.49,12.00,12.79,13.50,//10
+     14.05,15.73,16.27,16.59,16.59, //12.5
+     17.43,17.94,18.46,18.97,19.48, //15
+     19.87,20.47,21.51,22.02,22.50, //17.5
+     23.31,23.77,24.57,25.08,// 25.52, //
+        
+    25.68, 
+        26.19, 26.83, 27.75, 28.55, //22
+    29.56, 30.10, 30.34, 30.92, 31.94,
+    32.52, 33.48, 34.12, 34.44,35.22,
+    35.83, 36.49, 37.42, 38.1, 39.42,40.44};    
+        */
+        
+    //26.09,26.62,27.29,28.20,28.50, //22
+    //29.67,30.19,30.93,31.72,32.38, 
+    //33.23,33.76,34.26,35.18,35.76,
+    //36.30,36.83,37.75,38.64,40.15};
+    
+    //28.5
     // EEPROM Write startup
     //
     // Place your initialization/startup code here (e.g. MyInst_Start())
     //int teamNumber = 200;
     //EEPROM_writeInt(0, teamNumber);
-    int nextAddress = sizeof(int);
+    //int nextAddress = sizeof(int);
     //char measurementSystem = 'c';
     //EEPROM_WriteByte((uint8)measurementSystem, nextAddress);
-    nextAddress += sizeof(char);
+    //nextAddress += sizeof(char);
     //double calibration[55] = {0.0};
-    writeDoubleArrayToEEPROM(nextAddress, B, 55);
-    //
+    
+    //int nextAddress = sizeof(int);
+    //nextAddress += sizeof(char);
+    //writeDoubleArrayToEEPROM(nextAddress, B, 55);
+    
     
     //int eprom_read = EEPROM_ReadByte(0x00);
     //int eprom_write =eprom_read+1;
@@ -137,8 +187,6 @@ int main(void)
     
     //int eprom_num = EEPROM_ReadByte(55*sizeof(double)+sizeof(char));
     
-    group_num = EEPROM_ReadByte(0);
-    cm_or_inch = EEPROM_ReadByte(sizeof(int));
     
     
     double previous_second = current_second();
@@ -151,8 +199,8 @@ int main(void)
         
         if (mode==0)
         {
-            UART_1_PutString("Mode 0\n");
-            CyDelay(5);
+            //UART_1_PutString("Mode 0\n");
+            //CyDelay(5);
             
             EEPROM_WriteByte((uint8)cm_or_inch, sizeof(int));
             mode_0();
@@ -160,15 +208,15 @@ int main(void)
         }
         if (mode==1)
         {
-            UART_1_PutString("Mode 1\n");
-            CyDelay(5);
+            //UART_1_PutString("Mode 1\n");
+            //CyDelay(5);
             
             mode_1();
         }
         if (mode==2)
         {
-           UART_1_PutString("Mode 2\n");
-           CyDelay(5);
+           //UART_1_PutString("Mode 2\n");
+           //CyDelay(5);
         
            // TODO problem with EEPROM write
            EEPROM_writeInt(0, group_num);
@@ -177,12 +225,12 @@ int main(void)
         if (mode==3)
         {
             
-            UART_1_PutString("Mode 3\n");
-            CyDelay(5);
+            //UART_1_PutString("Mode 3\n");
+            //CyDelay(5);
             
             mode_3();
         }
-        CyDelay(5);
+        //CyDelay(5);
         
         runtime();
         
@@ -227,7 +275,7 @@ void mode_0(void)
                 while ((Button_S2_Left_State_Read() == 0) && (Button_S4_Right_State_Read() == 0))
                 {
                     runtime();
-                    if (current_second()-check_second==1)
+                    if ((current_second()-check_second)>=1)
                     {
                         
                         UART_1_PutString("Enter Mode 1\n");
@@ -355,13 +403,13 @@ void mode_3(void)
         //check if first time entering loop
         if (flag_read == 1)
         {
-            
+            //display_num(-4);
             BuzzerSound(0.2);
             distance = ultra_avg();
             
             previous_second= current_second();
             
-            clear_7_seg();
+            //clear_7_seg();
             flag_read = 0;
             
             // output distance in cm currently
@@ -369,9 +417,9 @@ void mode_3(void)
             // convert to inch if needed
             
             if (cm_or_inch =='i') distance = distance/2.54;
+            display_num(distance);
         }
        
-        display_num(distance);
         runtime();
        
         //check if loop has gone for over 2 seconds
@@ -453,7 +501,7 @@ void runtime()
 double current_second()
 {
     double time = (double)(Timer_2_ReadPeriod()-Timer_2_ReadCounter());
-    time = time/1000;
+    time = time/100000;
     
     return time;
 }
@@ -578,10 +626,11 @@ double ultra_avg(){
         //runtime();
         //UART_1_PutString("3");
         //CyDelay(5);
+         BuzzerRuntime(buzz_duration);
         for (int i = 0; i < 10; i++) 
         {    
-        BuzzerRuntime(buzz_duration);
-            
+        //BuzzerRuntime(buzz_duration);
+            //runtime();
         //UART_1_PutString("4");
         //CyDelay(5);
         vals[i] = ultra_reading();
@@ -607,11 +656,16 @@ double ultra_avg(){
     
     
     /*double B[55] = 
-    {4.86, 5.37,6.21,6.89,7.41,7.92,8.44,8.94,9.45,9.96,
-     10.46,11.49,12.00,12.79,13.50,14.05,15.73,16.27,16.59,16.59,
-     17.43,17.94,18.46,18.97,19.48,19.87,20.47,21.51,22.02,22.50,
-     23.31,23.77,24.57,25.08,25.52,26.09,26.62,27.29,28.20,28.90,
-     29.67,30.19,30.93,31.72,32.38, 33.23,33.76,34.26,35.18,35.76,
+    {4.86, 5.37,6.21,6.89,7.41,
+     7.92,8.44,8.94,9.45,9.96,
+     10.46,11.49,12.00,12.79,13.50,
+     14.05,15.73,16.27,16.59,16.59,
+     17.43,17.94,18.46,18.97,19.48,
+     19.87,20.47,21.51,22.02,22.50,
+     23.31,23.77,24.57,25.08,25.52,
+     26.09,26.62,27.29,28.20,28.90,
+     29.67,30.19,30.93,31.72,32.38, 
+     33.23,33.76,34.26,35.18,35.76,
      36.30,36.83,37.75,38.64,40.15};*/
     double B[55];
     
@@ -633,6 +687,7 @@ double ultra_avg(){
     
     
     return actual_dist;
+    //return predicted_dist;
 }
 
 double ultra_reading()
@@ -648,17 +703,27 @@ double ultra_reading()
     Timer_1_Start();        // Start receiver timer
     waiting_ultra =1;
     
+    ////////////////////////////////////////////////////////////////////////////
     // Wait for response
     // TODO: may need to write blocking code to obtain ultrasonic values
-    double previous_ultra_second=current_second();
+    double previous_ultra_second = current_second();
     double time_diff = current_second()-previous_ultra_second;
     
-    
-    //while(waiting_ultra==1 && (current_second()-previous_ultra_second)<1){
+    while((current_second()-previous_ultra_second)*1000 <=10)
+    {
+        //seg_runtime(seg_num);
+        runtime();
+    }
+    //while(waiting_ultra==1 && (current_second()-previous_ultra_second)<0.01)
+   // {
     //    runtime();
     //}
-    runtime();
-    CyDelay(10);
+    
+    //runtime();
+    //seg_runtime(seg_num);
+    //CyDelay(10);
+    //seg_runtime(seg_num);
+    //runtime();
 
     double value =  (double)time_passed_step/10000; //in ms
     distance = (34*value)/2;
@@ -736,10 +801,49 @@ void seg_runtime(double value){
       
     if (run_7_Seg==0) return; // Ignore the rest of the code when interrupt is not triggered
     
+    //value_in = (int)(value_in*10);
+    //float value = (float) value_in / 10;
+    
+    
+    
+    
     for (int i = 0; i < 4; ++i) dp[i] = 0; // Reset all 0 
     if(value>0)
     {
-    
+        
+        if((value != old_dis_val))
+        {
+            for (int i = 0; i < 4; ++i) dp[i] = 0; // Reset all 0 
+            dp[1]=1; 
+            
+            value = (int)(value*10);
+            float digits = (float) value / 10;
+            
+            if(digits <10) 
+            {
+                D[0] =  10;
+                D[1] = 10;
+                D[2] = (int)(digits/1)%10;
+                D[3] = (int)(digits*10) %10;
+                
+            }
+            else if(digits <100)  
+            {
+                D[0] =  10;
+                D[1] = (int)(digits/10)%10;
+                D[2] = (int)(digits/1)%10;
+                D[3] = (int)(digits*10) %10;
+            }
+            else
+            {
+                D[0] = (int)(digits/100)%10;
+                D[1] = (int)(digits/10)%10;
+                D[2] = (int)(digits/1)%10;
+                D[3] = (int)(digits*10) %10;
+            }
+        }
+        
+        /*
         //////////////// Code after this would only run once per interrupt////////////////
         // Only update the value when it gets a new value (for consistency and save computation for pooling loop)
         if((value != old_dis_val)){ 
@@ -777,6 +881,8 @@ void seg_runtime(double value){
                 
             old_dis_val = value;
         }
+        */
+        
             
     }
     else if(value==0)
@@ -858,7 +964,7 @@ void seg_runtime(double value){
     
 }
 
-int clear_7_seg()
+void clear_7_seg()
 {
     // Turn off all sections
     Dis_D1_Write(1);
