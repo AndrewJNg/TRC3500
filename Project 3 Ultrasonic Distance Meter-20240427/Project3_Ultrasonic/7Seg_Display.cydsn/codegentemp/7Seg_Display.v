@@ -1,6 +1,6 @@
 // ======================================================================
 // 7Seg_Display.v generated from TopDesign.cysch
-// 05/22/2024 at 12:11
+// 05/22/2024 at 15:34
 // This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 // ======================================================================
 
@@ -773,9 +773,9 @@ module top ;
           wire  Net_714;
           wire  Net_418;
           wire [6:0] Net_417;
+          wire  Net_369;
           wire [4:0] Net_605;
           wire [4:0] Net_547;
-          wire  Net_369;
           wire  Net_489;
           wire  Net_711;
           wire  Net_205;
@@ -1689,17 +1689,17 @@ module top ;
 
 	assign tmpOE__Dis_D4_net = (`CYDEV_CHIP_MEMBER_USED == `CYDEV_CHIP_MEMBER_3A && `CYDEV_CHIP_REVISION_USED < `CYDEV_CHIP_REVISION_3A_ES3) ? ~{1'b1} : {1'b1};
 
-	wire [0:0] tmpOE__LED3_Green_net;
-	wire [0:0] tmpFB_0__LED3_Green_net;
-	wire [0:0] tmpIO_0__LED3_Green_net;
-	wire [0:0] tmpINTERRUPT_0__LED3_Green_net;
-	electrical [0:0] tmpSIOVREF__LED3_Green_net;
+	wire [0:0] tmpOE__LED1_Red_net;
+	wire [0:0] tmpFB_0__LED1_Red_net;
+	wire [0:0] tmpIO_0__LED1_Red_net;
+	wire [0:0] tmpINTERRUPT_0__LED1_Red_net;
+	electrical [0:0] tmpSIOVREF__LED1_Red_net;
 
 	cy_psoc3_pins_v1_10
-		#(.id("4119f6e3-17da-49d5-b7c1-3840bd1b8697"),
+		#(.id("e5ca0116-26fc-4bcd-b12b-d22a53312e8b"),
 		  .drive_mode(3'b110),
 		  .ibuf_enabled(1'b1),
-		  .init_dr_st(1'b0),
+		  .init_dr_st(1'b1),
 		  .input_clk_en(0),
 		  .input_sync(1'b1),
 		  .input_sync_mode(1'b0),
@@ -1748,13 +1748,13 @@ module top ;
 		  .ovt_needed(1'b0),
 		  .ovt_slew_control(2'b00),
 		  .input_buffer_sel(2'b00))
-		LED3_Green
-		 (.oe(tmpOE__LED3_Green_net),
+		LED1_Red
+		 (.oe(tmpOE__LED1_Red_net),
 		  .y({1'b0}),
-		  .fb({tmpFB_0__LED3_Green_net[0:0]}),
-		  .io({tmpIO_0__LED3_Green_net[0:0]}),
-		  .siovref(tmpSIOVREF__LED3_Green_net),
-		  .interrupt({tmpINTERRUPT_0__LED3_Green_net[0:0]}),
+		  .fb({tmpFB_0__LED1_Red_net[0:0]}),
+		  .io({tmpIO_0__LED1_Red_net[0:0]}),
+		  .siovref(tmpSIOVREF__LED1_Red_net),
+		  .interrupt({tmpINTERRUPT_0__LED1_Red_net[0:0]}),
 		  .in_clock({1'b0}),
 		  .in_clock_en({1'b1}),
 		  .in_reset({1'b0}),
@@ -1762,7 +1762,7 @@ module top ;
 		  .out_clock_en({1'b1}),
 		  .out_reset({1'b0}));
 
-	assign tmpOE__LED3_Green_net = (`CYDEV_CHIP_MEMBER_USED == `CYDEV_CHIP_MEMBER_3A && `CYDEV_CHIP_REVISION_USED < `CYDEV_CHIP_REVISION_3A_ES3) ? ~{1'b1} : {1'b1};
+	assign tmpOE__LED1_Red_net = (`CYDEV_CHIP_MEMBER_USED == `CYDEV_CHIP_MEMBER_3A && `CYDEV_CHIP_REVISION_USED < `CYDEV_CHIP_REVISION_3A_ES3) ? ~{1'b1} : {1'b1};
 
 	wire [0:0] tmpOE__OP_Out_net;
 	wire [0:0] tmpFB_0__OP_Out_net;
@@ -2242,7 +2242,7 @@ module top ;
 		#(.id("4f89ffd6-82e6-4034-b00b-a5c9a108344e"),
 		  .drive_mode(3'b110),
 		  .ibuf_enabled(1'b1),
-		  .init_dr_st(1'b0),
+		  .init_dr_st(1'b1),
 		  .input_clk_en(0),
 		  .input_sync(1'b1),
 		  .input_sync_mode(1'b0),
@@ -2490,14 +2490,14 @@ module top ;
 
 	assign tmpOE__Tx_1_net = (`CYDEV_CHIP_MEMBER_USED == `CYDEV_CHIP_MEMBER_3A && `CYDEV_CHIP_REVISION_USED < `CYDEV_CHIP_REVISION_3A_ES3) ? ~{1'b1} : {1'b1};
 
-	wire [0:0] tmpOE__LED1_Red_net;
-	wire [0:0] tmpFB_0__LED1_Red_net;
-	wire [0:0] tmpIO_0__LED1_Red_net;
-	wire [0:0] tmpINTERRUPT_0__LED1_Red_net;
-	electrical [0:0] tmpSIOVREF__LED1_Red_net;
+	wire [0:0] tmpOE__LED3_Green_net;
+	wire [0:0] tmpFB_0__LED3_Green_net;
+	wire [0:0] tmpIO_0__LED3_Green_net;
+	wire [0:0] tmpINTERRUPT_0__LED3_Green_net;
+	electrical [0:0] tmpSIOVREF__LED3_Green_net;
 
 	cy_psoc3_pins_v1_10
-		#(.id("e5ca0116-26fc-4bcd-b12b-d22a53312e8b"),
+		#(.id("4119f6e3-17da-49d5-b7c1-3840bd1b8697"),
 		  .drive_mode(3'b110),
 		  .ibuf_enabled(1'b1),
 		  .init_dr_st(1'b0),
@@ -2549,13 +2549,13 @@ module top ;
 		  .ovt_needed(1'b0),
 		  .ovt_slew_control(2'b00),
 		  .input_buffer_sel(2'b00))
-		LED1_Red
-		 (.oe(tmpOE__LED1_Red_net),
+		LED3_Green
+		 (.oe(tmpOE__LED3_Green_net),
 		  .y({1'b0}),
-		  .fb({tmpFB_0__LED1_Red_net[0:0]}),
-		  .io({tmpIO_0__LED1_Red_net[0:0]}),
-		  .siovref(tmpSIOVREF__LED1_Red_net),
-		  .interrupt({tmpINTERRUPT_0__LED1_Red_net[0:0]}),
+		  .fb({tmpFB_0__LED3_Green_net[0:0]}),
+		  .io({tmpIO_0__LED3_Green_net[0:0]}),
+		  .siovref(tmpSIOVREF__LED3_Green_net),
+		  .interrupt({tmpINTERRUPT_0__LED3_Green_net[0:0]}),
 		  .in_clock({1'b0}),
 		  .in_clock_en({1'b1}),
 		  .in_reset({1'b0}),
@@ -2563,7 +2563,7 @@ module top ;
 		  .out_clock_en({1'b1}),
 		  .out_reset({1'b0}));
 
-	assign tmpOE__LED1_Red_net = (`CYDEV_CHIP_MEMBER_USED == `CYDEV_CHIP_MEMBER_3A && `CYDEV_CHIP_REVISION_USED < `CYDEV_CHIP_REVISION_3A_ES3) ? ~{1'b1} : {1'b1};
+	assign tmpOE__LED3_Green_net = (`CYDEV_CHIP_MEMBER_USED == `CYDEV_CHIP_MEMBER_3A && `CYDEV_CHIP_REVISION_USED < `CYDEV_CHIP_REVISION_3A_ES3) ? ~{1'b1} : {1'b1};
 
     Timer_v2_80_2 Timer_2 (
         .capture(1'b0),

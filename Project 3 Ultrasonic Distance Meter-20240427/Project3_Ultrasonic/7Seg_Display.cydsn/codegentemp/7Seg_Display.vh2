@@ -2,7 +2,7 @@
 --	Conversion of 7Seg_Display.v to vh2:
 --
 --	Cypress Semiconductor - WARP Version 6.3 IR 41
---	Wed May 22 12:11:48 2024
+--	Wed May 22 15:34:16 2024
 --
 
 USE cypress.cypress.all;
@@ -74,11 +74,11 @@ SIGNAL tmpFB_0__Dis_D4_net_0 : bit;
 SIGNAL tmpIO_0__Dis_D4_net_0 : bit;
 TERMINAL tmpSIOVREF__Dis_D4_net_0 : bit;
 SIGNAL tmpINTERRUPT_0__Dis_D4_net_0 : bit;
-SIGNAL tmpOE__LED3_Green_net_0 : bit;
-SIGNAL tmpFB_0__LED3_Green_net_0 : bit;
-SIGNAL tmpIO_0__LED3_Green_net_0 : bit;
-TERMINAL tmpSIOVREF__LED3_Green_net_0 : bit;
-SIGNAL tmpINTERRUPT_0__LED3_Green_net_0 : bit;
+SIGNAL tmpOE__LED1_Red_net_0 : bit;
+SIGNAL tmpFB_0__LED1_Red_net_0 : bit;
+SIGNAL tmpIO_0__LED1_Red_net_0 : bit;
+TERMINAL tmpSIOVREF__LED1_Red_net_0 : bit;
+SIGNAL tmpINTERRUPT_0__LED1_Red_net_0 : bit;
 SIGNAL tmpOE__OP_Out_net_0 : bit;
 SIGNAL tmpFB_0__OP_Out_net_0 : bit;
 TERMINAL Net_11 : bit;
@@ -484,11 +484,11 @@ SIGNAL tmpFB_0__Tx_1_net_0 : bit;
 SIGNAL tmpIO_0__Tx_1_net_0 : bit;
 TERMINAL tmpSIOVREF__Tx_1_net_0 : bit;
 SIGNAL tmpINTERRUPT_0__Tx_1_net_0 : bit;
-SIGNAL tmpOE__LED1_Red_net_0 : bit;
-SIGNAL tmpFB_0__LED1_Red_net_0 : bit;
-SIGNAL tmpIO_0__LED1_Red_net_0 : bit;
-TERMINAL tmpSIOVREF__LED1_Red_net_0 : bit;
-SIGNAL tmpINTERRUPT_0__LED1_Red_net_0 : bit;
+SIGNAL tmpOE__LED3_Green_net_0 : bit;
+SIGNAL tmpFB_0__LED3_Green_net_0 : bit;
+SIGNAL tmpIO_0__LED3_Green_net_0 : bit;
+TERMINAL tmpSIOVREF__LED3_Green_net_0 : bit;
+SIGNAL tmpINTERRUPT_0__LED3_Green_net_0 : bit;
 SIGNAL \Timer_2:Net_260\ : bit;
 SIGNAL Net_539 : bit;
 SIGNAL \Timer_2:Net_55\ : bit;
@@ -2272,11 +2272,11 @@ Dis_D4:cy_psoc3_pins_v1_10
 		out_clock_en=>tmpOE__Dis_A_net_0,
 		out_reset=>zero,
 		interrupt=>tmpINTERRUPT_0__Dis_D4_net_0);
-LED3_Green:cy_psoc3_pins_v1_10
-	GENERIC MAP(id=>"4119f6e3-17da-49d5-b7c1-3840bd1b8697",
+LED1_Red:cy_psoc3_pins_v1_10
+	GENERIC MAP(id=>"e5ca0116-26fc-4bcd-b12b-d22a53312e8b",
 		drive_mode=>"110",
 		ibuf_enabled=>"1",
-		init_dr_st=>"0",
+		init_dr_st=>"1",
 		input_sync=>"1",
 		input_clk_en=>'0',
 		input_sync_mode=>"0",
@@ -2330,10 +2330,10 @@ LED3_Green:cy_psoc3_pins_v1_10
 		input_buffer_sel=>"00")
 	PORT MAP(oe=>(tmpOE__Dis_A_net_0),
 		y=>(zero),
-		fb=>(tmpFB_0__LED3_Green_net_0),
+		fb=>(tmpFB_0__LED1_Red_net_0),
 		analog=>(open),
-		io=>(tmpIO_0__LED3_Green_net_0),
-		siovref=>(tmpSIOVREF__LED3_Green_net_0),
+		io=>(tmpIO_0__LED1_Red_net_0),
+		siovref=>(tmpSIOVREF__LED1_Red_net_0),
 		annotation=>(open),
 		in_clock=>zero,
 		in_clock_en=>tmpOE__Dis_A_net_0,
@@ -2341,7 +2341,7 @@ LED3_Green:cy_psoc3_pins_v1_10
 		out_clock=>zero,
 		out_clock_en=>tmpOE__Dis_A_net_0,
 		out_reset=>zero,
-		interrupt=>tmpINTERRUPT_0__LED3_Green_net_0);
+		interrupt=>tmpINTERRUPT_0__LED1_Red_net_0);
 OP_Out:cy_psoc3_pins_v1_10
 	GENERIC MAP(id=>"f446bebb-9fa5-4c86-80c7-999d39ca74ef",
 		drive_mode=>"000",
@@ -2800,7 +2800,7 @@ LED2_Yellow:cy_psoc3_pins_v1_10
 	GENERIC MAP(id=>"4f89ffd6-82e6-4034-b00b-a5c9a108344e",
 		drive_mode=>"110",
 		ibuf_enabled=>"1",
-		init_dr_st=>"0",
+		init_dr_st=>"1",
 		input_sync=>"1",
 		input_clk_en=>'0',
 		input_sync_mode=>"0",
@@ -3315,8 +3315,8 @@ Tx_1:cy_psoc3_pins_v1_10
 		out_clock_en=>tmpOE__Dis_A_net_0,
 		out_reset=>zero,
 		interrupt=>tmpINTERRUPT_0__Tx_1_net_0);
-LED1_Red:cy_psoc3_pins_v1_10
-	GENERIC MAP(id=>"e5ca0116-26fc-4bcd-b12b-d22a53312e8b",
+LED3_Green:cy_psoc3_pins_v1_10
+	GENERIC MAP(id=>"4119f6e3-17da-49d5-b7c1-3840bd1b8697",
 		drive_mode=>"110",
 		ibuf_enabled=>"1",
 		init_dr_st=>"0",
@@ -3373,10 +3373,10 @@ LED1_Red:cy_psoc3_pins_v1_10
 		input_buffer_sel=>"00")
 	PORT MAP(oe=>(tmpOE__Dis_A_net_0),
 		y=>(zero),
-		fb=>(tmpFB_0__LED1_Red_net_0),
+		fb=>(tmpFB_0__LED3_Green_net_0),
 		analog=>(open),
-		io=>(tmpIO_0__LED1_Red_net_0),
-		siovref=>(tmpSIOVREF__LED1_Red_net_0),
+		io=>(tmpIO_0__LED3_Green_net_0),
+		siovref=>(tmpSIOVREF__LED3_Green_net_0),
 		annotation=>(open),
 		in_clock=>zero,
 		in_clock_en=>tmpOE__Dis_A_net_0,
@@ -3384,7 +3384,7 @@ LED1_Red:cy_psoc3_pins_v1_10
 		out_clock=>zero,
 		out_clock_en=>tmpOE__Dis_A_net_0,
 		out_reset=>zero,
-		interrupt=>tmpINTERRUPT_0__LED1_Red_net_0);
+		interrupt=>tmpINTERRUPT_0__LED3_Green_net_0);
 \Timer_2:TimerUDB:clock_enable_block\:cy_psoc3_udb_clock_enable_v1_0
 	GENERIC MAP(sync_mode=>'1')
 	PORT MAP(clock_in=>System_clk,

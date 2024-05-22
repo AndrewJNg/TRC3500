@@ -40,6 +40,7 @@ double ultra_avg();
 double ultra_reading();
 
 void runtime();
+void EEPROM_writeInt(uint16 address, int value);
 
 
 
@@ -145,6 +146,7 @@ int main(void)
             UART_1_PutString("Mode 0\n");
             CyDelay(5);
             
+            EEPROM_WriteByte((uint8)cm_or_inch, sizeof(int));
             mode_0();
         
         }
@@ -161,7 +163,7 @@ int main(void)
            CyDelay(5);
         
            // TODO problem with EEPROM write
-           //EEPROM_writeInt(0, group_num);
+           EEPROM_writeInt(0, group_num);
            mode_2();
         }
         if (mode==3)
@@ -371,9 +373,11 @@ void mode_3(void)
             clear_7_seg();
             flag_read = 0;
             
+            // output distance in cm currently
             
+            // convert to inch if needed
             
-            
+            if (cm_or_inch =='i') distance = distance/2.54;
         }
        
         display_num(distance);
@@ -405,14 +409,14 @@ void mode_3(void)
 void MetricLedOn(void)
 {
     // TODO enable metric LED back again
-    //LED2_Yellow_Write(0);
-    //LED3_Green_Write(1);
+    LED2_Yellow_Write(0);
+    LED3_Green_Write(1);
 }
 
 void ImperialLedOn(void)
 {
-    //LED3_Green_Write(0);
-    //LED2_Yellow_Write(1);
+    LED3_Green_Write(0);
+    LED2_Yellow_Write(1);
 
 }
 
@@ -438,18 +442,18 @@ void runtime()
 {
     BuzzerRuntime(buzz_duration);
     seg_runtime(seg_num);
-    LED1_Red_Write(0);
-    LED2_Yellow_Write(0);
-    LED3_Green_Write(0);
     
-    if(mode==0) LED1_Red_Write(1);
+    if (cm_or_inch =='i')ImperialLedOn();
+    else  MetricLedOn();
+    
+    /*if(mode==0) LED1_Red_Write(1);
     if(mode==1) LED2_Yellow_Write(1);
     if(mode==2) LED3_Green_Write(1);
     if(mode==3) 
     {
         LED2_Yellow_Write(1);
         LED3_Green_Write(1);
-    }
+    }*/
     
 }
 
@@ -462,6 +466,14 @@ double current_second()
 }
 // ========================================================================================================================
 /* EEPROM */
+
+void EEPROM_writeInt(uint16 address, int value) {
+    uint8* ptr = (uint8*) &value;  // Convert int to byte array
+    for (uint8 i = 0; i < sizeof(int); i++) {
+        EEPROM_WriteByte(ptr[i], address + i);
+    }
+}
+
 /*
 void EEPROM_writeDouble(uint16 address, double value) {
     uint8 ptr = (uint8)(void*)&value;  // Convert double to byte array
@@ -505,8 +517,7 @@ int EEPROM_readInt(uint16 address) {
         ptr[i] = EEPROM_ReadByte(address + i);
     }
     return value;
-}
-*/
+}*/
 
 // ========================================================================================================================
 /* UART communications */
@@ -563,7 +574,8 @@ double ultra_avg(){
     //CyDelay(5);
     float vals[10] = {0,0,0,0,0,0,0,0,0,0};
     float count_median[20] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-    double final_dist;
+    double predicted_dist;
+    double actual_dist;
     
     //UART_1_PutString("2");
     //CyDelay(5);
@@ -587,8 +599,13 @@ double ultra_avg(){
         count_median[x] = find_median(vals, 10);
     }
             
-    final_dist = find_median(count_median, 20);
-    return final_dist;
+    predicted_dist = find_median(count_median, 20);
+    
+    // Linear fitting using eeprom values
+    float a1 = 0.798;
+    float a0 = -0.789;
+    actual_dist = a1* predicted_dist + a0;
+    return actual_dist;
 }
 
 double ultra_reading()

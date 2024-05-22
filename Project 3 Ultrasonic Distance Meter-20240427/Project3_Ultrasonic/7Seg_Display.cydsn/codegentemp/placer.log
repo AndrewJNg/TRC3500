@@ -6,7 +6,7 @@
 
 #Build Date:         Sep  9 2019 11:47:43
 
-#File Generated:     May 22 2024 12:11:49
+#File Generated:     May 22 2024 15:34:17
 
 #Purpose:            
 
@@ -250,15 +250,15 @@ analysis after routing.
 Number of clocks: 11
 Clock: Clock_1              | Frequency:  35.7 MHz | Target:   0.0 MHz
 Clock: Clock_1(routed)      | Frequency: N/A       | Target:   0.0 MHz
-Clock: CyBUS_CLK            | Frequency:   1.4 MHz | Target:  24.0 MHz
+Clock: CyBUS_CLK            | Frequency:   1.5 MHz | Target:  24.0 MHz
 Clock: CyILO                | Frequency: N/A       | Target:   0.0 MHz
 Clock: CyIMO                | Frequency: N/A       | Target:   3.0 MHz
 Clock: CyMASTER_CLK         | Frequency: N/A       | Target:  24.0 MHz
 Clock: CyPLL_OUT            | Frequency: N/A       | Target:  24.0 MHz
-Clock: Transmitter_Clk      | Frequency:   7.4 MHz | Target:   0.0 MHz
+Clock: Transmitter_Clk      | Frequency:   6.3 MHz | Target:   0.0 MHz
 Clock: Transmitter_Clk(routed) | Frequency: N/A       | Target:   0.0 MHz
-Clock: UART_1_IntClock      | Frequency:   1.4 MHz | Target:   0.1 MHz
-Clock: timer_clock          | Frequency:  47.5 MHz | Target:  12.0 MHz
+Clock: UART_1_IntClock      | Frequency:   1.5 MHz | Target:   0.1 MHz
+Clock: timer_clock          | Frequency:  46.1 MHz | Target:  12.0 MHz
 
 ======================================================================
                      End of Clock Summary

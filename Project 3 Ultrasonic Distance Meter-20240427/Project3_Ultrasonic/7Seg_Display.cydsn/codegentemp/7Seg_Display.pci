@@ -1,5 +1,5 @@
 # 7Seg_Display
-# 2024-05-22 02:11:49Z
+# 2024-05-22 05:34:17Z
 
 # IO_0@[IOP=(1)][IoId=(0)] is reserved: SWDDebugEnabled
 dont_use_io iocell 1 0
@@ -19,6 +19,7 @@ set_io "Dis_D1(0)" iocell 1 7
 set_io "Dis_D2(0)" iocell 1 5
 set_io "Dis_D3(0)" iocell 1 6
 set_io "Dis_D4(0)" iocell 1 4
+set_io "LED1_Red(0)" iocell 3 7
 set_io "OP_Out(0)" iocell 3 0
 set_io "Button_S4_Right(0)" iocell 0 4
 set_io "Button_S5_Select(0)" iocell 3 4
@@ -28,15 +29,15 @@ set_io "Button_S3_Top(0)" iocell 0 3
 set_io "LED2_Yellow(0)" iocell 3 6
 set_io "Rx_1(0)" iocell 12 6
 set_io "Tx_1(0)" iocell 12 7
-set_io "LED1_Red(0)" iocell 3 7
+set_io "LED3_Green(0)" iocell 3 5
 set_io "OP_Out_1(0)" iocell 3 1
 set_io "TX2_Ultra(0)" iocell 12 5
 set_io "TX1_Ultra(0)" iocell 12 4
 set_io "Rec1(0)" iocell 0 6
 set_io "Rec2(0)" iocell 0 7
 set_io "Buzzer(0)" iocell 3 3
-set_location "\PGA_1:SC\" sccell -1 -1 0
-set_location "\VDAC8_1:viDAC8\" vidaccell -1 -1 3
+set_location "\PGA_1:SC\" sccell -1 -1 2
+set_location "\VDAC8_1:viDAC8\" vidaccell -1 -1 1
 set_location "\Comp_1:ctComp\" comparatorcell -1 -1 3
 set_location "\Opamp_1:ABuf\" abufcell -1 -1 2
 set_io "Dedicated_Output" iocell 0 0
